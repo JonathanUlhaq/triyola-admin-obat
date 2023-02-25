@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Admin Obat Triyola</string>
+
+    <!--    Login-->
+    <string name="login_title">Masuk</string>
+    <string name="login_desc">Masukkan nomor telepon untuk mengakses layanan digital Klinik Triyola</string>
+    <string name="belum_punya_akun">Belum Punya Akun ?</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="masuk">Masuk</string>
+
+<!--    Daftar Obat-->
+    <string name="obat">Obat</string>
+    <string name="riwayat">Riwayat</string>
+    <string name="pengajuan">Pengajuan</string>
+    <string name="simpan">Simpan</string>
+    <string name="ubah">Ubah</string>
+    <string name="title_daftar_obat">Daftar Obat</string>
+    <string name="jumlah_text">Jumlah:</string>
+
+<!--    Tambah Obat-->
+    <string name="tambah_obat">Tambah Obat</string>
+
+</resources>
