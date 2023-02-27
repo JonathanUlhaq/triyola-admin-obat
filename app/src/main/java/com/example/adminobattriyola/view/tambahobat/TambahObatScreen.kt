@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -12,7 +11,6 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -32,7 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.adminobattriyola.R
-import com.example.adminobattriyola.components.*
+import com.example.adminobattriyola.components.ButtonClick
+import com.example.adminobattriyola.components.ButtonClickSecond
+import com.example.adminobattriyola.components.ButtonDropDown
+import com.example.adminobattriyola.components.OutlinedTextFields
 import com.example.adminobattriyola.models.TambahObatModel
 import com.example.adminobattriyola.util.Vibrate
 import com.example.adminobattriyola.view.navigation.AppRoute
@@ -49,15 +50,12 @@ fun TambahObatScreen(
 ) {
     model.getAllData()
     val uiState = model.uiState.collectAsState().value
-
     val addForm = remember {
         mutableStateOf(false)
     }
-
     val isError = remember {
         mutableStateOf(false)
     }
-
     val saveDialogShow = remember {
         mutableStateOf(false)
     }
@@ -75,7 +73,7 @@ fun TambahObatScreen(
             ButtonClickSecond(
                 backgroundColor = MaterialTheme.colors.primary,
                 contentColor = MaterialTheme.colors.onSurface,
-                text = "Simpan",
+                text = stringResource(id = R.string.simpan),
                 modifier = Modifier
                     .padding(start = 14.dp, end = 14.dp, top = 20.dp, bottom = 20.dp)
                     .fillMaxWidth()
@@ -86,23 +84,10 @@ fun TambahObatScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        text = stringResource(R.string.tambah_obat),
-                        style = MaterialTheme.typography.h1,
-                        fontSize = 20.sp,
-                        color = MaterialTheme.colors.onSurface
-                    )
+                    TextTitle(stringResource(R.string.tambah_obat))
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.back_arrow),
-                            contentDescription = null,
-                            tint = MaterialTheme.colors.onSurface,
-                            modifier = Modifier
-                                .size(12.dp)
-                        )
-                    }
+                    BackIcon(navController)
                 },
                 backgroundColor = MaterialTheme.colors.onPrimary,
                 elevation = 0.dp,
@@ -110,16 +95,7 @@ fun TambahObatScreen(
                     val showAdviceDialog = remember {
                         mutableStateOf(false)
                     }
-                    AdviceDialog(boolean = showAdviceDialog)
-                    IconButton(onClick = { showAdviceDialog.value = true }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.question_icon),
-                            contentDescription = null,
-                            tint = MaterialTheme.colors.onSurface,
-                            modifier = Modifier
-                                .size(16.dp)
-                        )
-                    }
+                    IconFAQ(showAdviceDialog)
                 }
             )
         }
@@ -129,28 +105,77 @@ fun TambahObatScreen(
                 .padding(it),
             color = Color.Transparent
         ) {
-            Column {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
-                        .background(MaterialTheme.colors.onPrimary)
-                        .height(30.dp)
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-                Column(
-                    modifier = Modifier
-                        .padding(start = 14.dp, end = 14.dp)
-                ) {
-                    ListObat(uiState, model, addForm, isError) {
-                        model.deleteDatabyId(it)
-                    }
-
-                }
-
-            }
+            TambahObatMain(uiState, model, addForm, isError)
         }
+    }
+}
+
+@Composable
+fun TambahObatMain(
+    uiState: List<TambahObatModel>,
+    model: TambahObatViewModel,
+    addForm: MutableState<Boolean>,
+    isError: MutableState<Boolean>
+) {
+    Column {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
+                .background(MaterialTheme.colors.onPrimary)
+                .height(30.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+        Column(
+            modifier = Modifier
+                .padding(start = 14.dp, end = 14.dp)
+        ) {
+            ListObat(uiState, model, addForm, isError) { item ->
+                model.deleteDatabyId(item)
+            }
+
+        }
+
+    }
+}
+
+@Composable
+fun TextTitle(
+    title:String
+) {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.h1,
+        fontSize = 20.sp,
+        color = MaterialTheme.colors.onSurface
+    )
+}
+
+@Composable
+fun BackIcon(navController: NavController) {
+    IconButton(onClick = { navController.popBackStack() }) {
+        Icon(
+            painter = painterResource(id = R.drawable.back_arrow),
+            contentDescription = null,
+            tint = MaterialTheme.colors.onSurface,
+            modifier = Modifier
+                .size(12.dp)
+        )
+    }
+}
+
+@Composable
+fun IconFAQ(showAdviceDialog: MutableState<Boolean>) {
+    AdviceDialog(boolean = showAdviceDialog)
+    IconButton(onClick = { showAdviceDialog.value = true }) {
+        Icon(
+            painter = painterResource(id = R.drawable.question_icon),
+            contentDescription = null,
+            tint = MaterialTheme.colors.onSurface,
+            modifier = Modifier
+                .size(16.dp)
+        )
     }
 }
 
@@ -164,7 +189,7 @@ fun ListObat(
 ) {
 
     LazyColumn(content = {
-        itemsIndexed(uiState) { index, item ->
+        items(uiState) { item ->
             ItemObat(
                 value = item,
                 model
@@ -265,7 +290,53 @@ private fun ItemObat(
 
         }
     }
+    SwipeDismissEffect(dismissState) {
+        Surface(
+            color = MaterialTheme.colors.onBackground,
+            contentColor = MaterialTheme.colors.onPrimary,
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier
+                .combinedClickable(
+                    onLongClick = {
+                        showUpdateDialog.value = true
+                    },
+                    onClick = {
+                        Log.d("TAP, ", "Tap")
+                    }
+                )
+        ) {
 
+            Column(
+                modifier = Modifier
+                    .padding(14.dp)
+            ) {
+
+                PreviewForm(
+                    icon = R.drawable.obat,
+                    label = value.jenisObat
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                PreviewForm(
+                    icon = R.drawable.obat,
+                    label = value.namaObat
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                PreviewForm(
+                    icon = R.drawable.obat_quantity,
+                    label = value.jumlahObat
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
+    }
+
+
+}
+
+@Composable
+@OptIn(ExperimentalMaterialApi::class)
+fun SwipeDismissEffect(dismissState: DismissState,
+        content:@Composable () -> Unit) {
     SwipeToDismiss(state = dismissState,
         directions = setOf(DismissDirection.EndToStart),
         dismissThresholds = { direction ->
@@ -302,46 +373,8 @@ private fun ItemObat(
                 )
             }
         }) {
-        Surface(
-            color = MaterialTheme.colors.onBackground,
-            contentColor = MaterialTheme.colors.onPrimary,
-            shape = RoundedCornerShape(20.dp),
-            modifier = Modifier
-                .combinedClickable(
-                    onLongClick = {
-                        showUpdateDialog.value = true
-                    },
-                    onClick = {
-                        Log.d("Pencet aku, ", "y dipencet")
-                    }
-                )
-        ) {
-
-            Column(
-                modifier = Modifier
-                    .padding(14.dp)
-            ) {
-
-                PreviewForm(
-                    icon = R.drawable.obat,
-                    label = value.jenisObat
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                PreviewForm(
-                    icon = R.drawable.obat,
-                    label = value.namaObat
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                PreviewForm(
-                    icon = R.drawable.obat_quantity,
-                    label = value.jumlahObat
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-        }
+    content.invoke()
     }
-
-
 }
 
 @Composable
@@ -400,7 +433,7 @@ private fun FormAddObat(
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextFields(
                 value = model.obatName,
-                label = "Nama Obat",
+                label = stringResource(R.string.nama_obat),
                 icon = R.drawable.obat,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Text,
@@ -409,7 +442,7 @@ private fun FormAddObat(
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextFields(
                 value = model.obatQuantity,
-                label = "Jumlah Obat",
+                label = stringResource(R.string.jumlah_obat),
                 icon = R.drawable.obat_quantity,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Number,
@@ -429,7 +462,7 @@ private fun FormAddObat(
                     ButtonClickSecond(
                         backgroundColor = MaterialTheme.colors.error,
                         contentColor = MaterialTheme.colors.onSurface,
-                        text = "Urungkan"
+                        text = stringResource(R.string.urungkan)
                     ) {
                         remove.invoke()
                     }
@@ -438,7 +471,7 @@ private fun FormAddObat(
                     ButtonClickSecond(
                         backgroundColor = MaterialTheme.colors.primary,
                         contentColor = MaterialTheme.colors.onSurface,
-                        text = "Tambah"
+                        text = stringResource(R.string.tambah)
                     ) {
                         add.invoke()
                     }

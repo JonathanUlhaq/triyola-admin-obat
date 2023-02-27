@@ -1,22 +1,17 @@
 package com.example.adminobattriyola.widgets.tambahobat
 
-import android.icu.text.ListFormatter.Width
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -24,14 +19,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.adminobattriyola.R
-import com.example.adminobattriyola.components.ButtonClickSecond
 import com.example.adminobattriyola.components.ButtonDropDown
 import com.example.adminobattriyola.components.OutlinedTextFields
 import com.example.adminobattriyola.models.TambahObatModel
-import com.example.adminobattriyola.view.tambahobat.DetailTambahObatViewModel
 import com.example.adminobattriyola.view.tambahobat.TambahObatViewModel
 
 @Composable
@@ -82,7 +74,7 @@ fun DialogContent(
                 )
                 Spacer(modifier = Modifier.height(18.dp))
                 Text(
-                    text = "Apakah anda yakin ingin menghapus data ini ?",
+                    text = stringResource(R.string.confirm_delete),
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center
                 )
@@ -97,7 +89,7 @@ fun DialogContent(
             ) {
                 TextButton(onClick = { cancel.invoke() }) {
                     Text(
-                        text = "Tidak",
+                        text = stringResource(R.string.tidak),
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colors.surface.copy(0.4F)
@@ -105,7 +97,7 @@ fun DialogContent(
                 }
                 TextButton(onClick = { confirm.invoke() }) {
                     Text(
-                        text = "Iya",
+                        text = stringResource(R.string.iya),
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colors.onPrimary
@@ -175,7 +167,7 @@ fun UpdateDialogUI(
                    .padding(start = 16.dp, end = 16.dp, top = 16.dp),
                horizontalAlignment = Alignment.CenterHorizontally
            ) {
-               Text(text = "Ubah Obat",
+               Text(text = stringResource(R.string.ubah_obat),
                     style = MaterialTheme.typography.h2,
                     color = MaterialTheme.colors.onPrimary)
                Spacer(modifier = Modifier.height(24.dp))
@@ -185,7 +177,7 @@ fun UpdateDialogUI(
                Spacer(modifier = Modifier.height(16.dp))
                OutlinedTextFields(
                    value = model.obatCurrentName,
-                   label = "Nama Obat",
+                   label = stringResource(R.string.nama_obat),
                    icon = R.drawable.obat,
                    color = MaterialTheme.colors.onPrimary,
                    keyboardType = KeyboardType.Text,
@@ -194,7 +186,7 @@ fun UpdateDialogUI(
                Spacer(modifier = Modifier.height(16.dp))
                OutlinedTextFields(
                    value = model.obatCurrentQuantity,
-                   label = "Jumlah Obat",
+                   label = stringResource(R.string.jumlah_obat),
                    icon = R.drawable.obat_quantity,
                    color = MaterialTheme.colors.onPrimary,
                    keyboardType = KeyboardType.Number,
@@ -211,7 +203,7 @@ fun UpdateDialogUI(
             ) {
                 TextButton(onClick = { batal.invoke()  }) {
                     Text(
-                        text = "Tidak",
+                        text = stringResource(R.string.tidak),
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colors.surface.copy(0.4F)
@@ -264,12 +256,12 @@ fun SaveConfirmDialogUI(
                     .padding(top = 16.dp, end = 24.dp, start = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "Konfirmasi Penambahan Data Obat",
+                Text(text = stringResource(R.string.confirm_add_obat),
                     style = MaterialTheme.typography.h2,
                     color = MaterialTheme.colors.onPrimary)
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
-                    text = "Apakah anda yakin ingin menambahkan data - data tersebut ?",
+                    text = stringResource(R.string.confirm_add_obat_question),
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center
                 )
@@ -284,7 +276,7 @@ fun SaveConfirmDialogUI(
             ) {
                 TextButton(onClick = { cancel.invoke() }) {
                     Text(
-                        text = "Tidak",
+                        text = stringResource(R.string.tidak),
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
                         color =  MaterialTheme.colors.surface.copy(0.4F)
@@ -292,7 +284,7 @@ fun SaveConfirmDialogUI(
                 }
                 TextButton(onClick = { confirm.invoke() }) {
                     Text(
-                        text = "Iya",
+                        text = stringResource(R.string.iya),
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colors.onPrimary
@@ -334,7 +326,7 @@ fun AdviceDialogUI(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "Panduan",
+                    Text(text = stringResource(R.string.panduan),
                         style = MaterialTheme.typography.h2,
                         color = MaterialTheme.colors.onPrimary)
                     Spacer(modifier = Modifier.width(14.dp))
@@ -357,11 +349,11 @@ fun AdviceDialogUI(
                     Text(
                         style = MaterialTheme.typography.body1 ,
                         text = buildAnnotatedString {
-                        append("Tap tahan pada form obat yang telah terisi untuk melakukan ")
+                        append(stringResource(R.string.guide_1))
                         withStyle(style = SpanStyle(
                             color = MaterialTheme.colors.onPrimary,
                             fontWeight = FontWeight.Bold)) {
-                            append("Update Data")
+                            append(stringResource(R.string.guide_1_desc))
                         }
                     })
                 }
@@ -377,11 +369,11 @@ fun AdviceDialogUI(
                     Text(
                         style = MaterialTheme.typography.body1 ,
                         text = buildAnnotatedString {
-                            append("Swipe kiri pada form obat yang telah terisi untuk melakukan ")
+                            append(stringResource(R.string.guide_2))
                             withStyle(style = SpanStyle(
                                 color = MaterialTheme.colors.onPrimary,
                                 fontWeight = FontWeight.Bold)) {
-                                append("Penghapusan Data")
+                                append(stringResource(R.string.guide_2_desc))
                             }
                         })
                 }
@@ -397,17 +389,17 @@ fun AdviceDialogUI(
                     Text(
                         style = MaterialTheme.typography.body1 ,
                         text = buildAnnotatedString {
-                            append("Tap ")
+                            append(stringResource(R.string.guide_3_a))
                             withStyle(style = SpanStyle(
                                 color = MaterialTheme.colors.onPrimary,
                                 fontWeight = FontWeight.Bold)) {
-                                append("tambah form obat + ")
+                                append(stringResource(R.string.guide_3_b))
                             }
-                            append("untuk ")
+                            append(stringResource(R.string.guide_3_c))
                             withStyle(style = SpanStyle(
                                 color = MaterialTheme.colors.onPrimary,
                                 fontWeight = FontWeight.Bold)) {
-                                append("Menambahkan form obat")
+                                append(stringResource(R.string.guide_3_d))
                             }
                         })
                 }
@@ -425,7 +417,7 @@ fun AdviceDialogUI(
                         .fillMaxWidth(),
                     onClick = { close.invoke() }) {
                     Text(
-                        text = "Tutup",
+                        text = stringResource(R.string.tutup),
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colors.onPrimary

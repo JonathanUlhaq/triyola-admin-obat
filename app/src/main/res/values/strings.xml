@@ -18,7 +18,29 @@
     <string name="title_daftar_obat">Daftar Obat</string>
     <string name="jumlah_text">Jumlah:</string>
 
-<!--    Tambah Obat-->
+<!--    Custom Dialog-->
+    <string name="confirm_delete">Apakah anda yakin ingin menghapus data ini ?</string>
+    <string name="tidak">Tidak</string>
+    <string name="iya">Iya</string>
+    <string name="nama_obat">Nama Obat</string>
+    <string name="jumlah_obat">Jumlah Obat</string>
+    <string name="ubah_obat">Ubah Obat</string>
+    <string name="confirm_add_obat">Konfirmasi Penambahan Data Obat</string>
+    <string name="confirm_add_obat_question">Apakah anda yakin ingin menambahkan data - data tersebut ?</string>
+    <string name="panduan">Panduan</string>
+    <string name="guide_1">\ Tap tahan pada form obat yang telah terisi untuk melakukan \"</string>
+    <string name="guide_2">\ Swipe kiri pada form obat yang telah terisi untuk melakukan \"</string>
+    <string name="guide_1_desc">Update Data</string>
+    <string name="guide_2_desc">Penghapusan Data</string>
+    <string name="guide_3_a">\ Tap \"</string>
+    <string name="guide_3_b">\ tambah form obat + \"</string>
+    <string name="guide_3_c">\"untuk \"</string>
+    <string name="guide_3_d">Menambahkan form obat</string>
+    <string name="tutup">Tutup</string>
+
+    <!--    Tambah Obat-->
     <string name="tambah_obat">Tambah Obat</string>
+    <string name="tambah">Tambah</string>
+    <string name="urungkan">Urungkan</string>
 
 </resources>
