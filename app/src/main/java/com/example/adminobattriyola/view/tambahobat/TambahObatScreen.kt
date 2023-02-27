@@ -36,6 +36,7 @@ import com.example.adminobattriyola.components.*
 import com.example.adminobattriyola.models.TambahObatModel
 import com.example.adminobattriyola.util.Vibrate
 import com.example.adminobattriyola.view.navigation.AppRoute
+import com.example.adminobattriyola.widgets.tambahobat.AdviceDialog
 import com.example.adminobattriyola.widgets.tambahobat.CustomDialog
 import com.example.adminobattriyola.widgets.tambahobat.SaveConfirmDialog
 import com.example.adminobattriyola.widgets.tambahobat.UpdateDialog
@@ -46,7 +47,7 @@ fun TambahObatScreen(
     navController: NavController,
     model: TambahObatViewModel,
 ) {
-   model.getAllData()
+    model.getAllData()
     val uiState = model.uiState.collectAsState().value
 
     val addForm = remember {
@@ -61,7 +62,7 @@ fun TambahObatScreen(
         mutableStateOf(false)
     }
 
-    SaveConfirmDialog(boolean = saveDialogShow ) {
+    SaveConfirmDialog(boolean = saveDialogShow) {
         navController.navigate(AppRoute.DaftarObat.route) {
             popUpTo(0)
         }
@@ -71,15 +72,16 @@ fun TambahObatScreen(
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
         bottomBar = {
-
-                    ButtonClickSecond(backgroundColor = MaterialTheme.colors.primary,
-                        contentColor = MaterialTheme.colors.onSurface ,
-                        text = "Simpan",
-                        modifier = Modifier
-                            .padding(start = 14.dp, end = 14.dp, top = 20.dp, bottom = 20.dp)
-                            .fillMaxWidth()) {
-                            saveDialogShow.value =true
-                    }
+            ButtonClickSecond(
+                backgroundColor = MaterialTheme.colors.primary,
+                contentColor = MaterialTheme.colors.onSurface,
+                text = "Simpan",
+                modifier = Modifier
+                    .padding(start = 14.dp, end = 14.dp, top = 20.dp, bottom = 20.dp)
+                    .fillMaxWidth()
+            ) {
+                saveDialogShow.value = true
+            }
         },
         topBar = {
             TopAppBar(
@@ -103,7 +105,22 @@ fun TambahObatScreen(
                     }
                 },
                 backgroundColor = MaterialTheme.colors.onPrimary,
-                elevation = 0.dp
+                elevation = 0.dp,
+                actions = {
+                    val showAdviceDialog = remember {
+                        mutableStateOf(false)
+                    }
+                    AdviceDialog(boolean = showAdviceDialog)
+                    IconButton(onClick = { showAdviceDialog.value = true }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.question_icon),
+                            contentDescription = null,
+                            tint = MaterialTheme.colors.onSurface,
+                            modifier = Modifier
+                                .size(16.dp)
+                        )
+                    }
+                }
             )
         }
     ) {
@@ -143,7 +160,7 @@ fun ListObat(
     model: TambahObatViewModel,
     addForm: MutableState<Boolean>,
     isError: MutableState<Boolean>,
-    onDelete:(TambahObatModel) -> Unit
+    onDelete: (TambahObatModel) -> Unit
 ) {
 
     LazyColumn(content = {
@@ -204,7 +221,7 @@ fun ListObat(
 private fun ItemObat(
     value: TambahObatModel,
     model: TambahObatViewModel,
-    delete:() -> Unit
+    delete: () -> Unit
 ) {
     val showDialog = remember {
         mutableStateOf(false)
@@ -216,23 +233,30 @@ private fun ItemObat(
     val dismissState = rememberDismissState()
     val context = LocalContext.current
 
-    UpdateDialog(model = model, id = value.id, type = value.jenisObat , name = value.namaObat , quantity = value.jumlahObat , boolean = showUpdateDialog )
+    UpdateDialog(
+        model = model,
+        id = value.id,
+        type = value.jenisObat,
+        name = value.namaObat,
+        quantity = value.jumlahObat,
+        boolean = showUpdateDialog
+    )
 
 
-    if (dismissState.isDismissed(DismissDirection.EndToStart)){
+    if (dismissState.isDismissed(DismissDirection.EndToStart)) {
         Vibrate(context = context)
-        showDialog.value =true
+        showDialog.value = true
         CustomDialog(boolean = showDialog, cancel = {
             showDialog.value = false
             coroutine.launch {
                 dismissState.reset()
             }
         },
-        dismiss = {
-            coroutine.launch {
-                dismissState.reset()
-            }
-        }) {
+            dismiss = {
+                coroutine.launch {
+                    dismissState.reset()
+                }
+            }) {
             delete.invoke()
             showDialog.value = false
             coroutine.launch {
@@ -244,9 +268,8 @@ private fun ItemObat(
 
     SwipeToDismiss(state = dismissState,
         directions = setOf(DismissDirection.EndToStart),
-        dismissThresholds = {
-           direction ->
-           FractionalThreshold(if (direction == DismissDirection.EndToStart) 0.4F else 0.05F)
+        dismissThresholds = { direction ->
+            FractionalThreshold(if (direction == DismissDirection.EndToStart) 0.4F else 0.05F)
         },
         background = {
             val color by animateColorAsState(
@@ -299,14 +322,20 @@ private fun ItemObat(
                     .padding(14.dp)
             ) {
 
-                PreviewForm(icon = R.drawable.obat,
-                    label = value.jenisObat )
+                PreviewForm(
+                    icon = R.drawable.obat,
+                    label = value.jenisObat
+                )
                 Spacer(modifier = Modifier.height(16.dp))
-                PreviewForm(icon = R.drawable.obat,
-                    label = value.namaObat )
+                PreviewForm(
+                    icon = R.drawable.obat,
+                    label = value.namaObat
+                )
                 Spacer(modifier = Modifier.height(16.dp))
-                PreviewForm(icon = R.drawable.obat_quantity,
-                    label = value.jumlahObat )
+                PreviewForm(
+                    icon = R.drawable.obat_quantity,
+                    label = value.jumlahObat
+                )
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
@@ -317,8 +346,8 @@ private fun ItemObat(
 
 @Composable
 fun PreviewForm(
-    icon:Int,
-    label:String
+    icon: Int,
+    label: String
 ) {
     Surface(
         color = Color.Transparent,

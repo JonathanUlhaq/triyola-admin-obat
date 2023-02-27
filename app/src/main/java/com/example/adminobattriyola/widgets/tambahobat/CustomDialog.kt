@@ -1,20 +1,30 @@
 package com.example.adminobattriyola.widgets.tambahobat
 
+import android.icu.text.ListFormatter.Width
 import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.adminobattriyola.R
 import com.example.adminobattriyola.components.ButtonClickSecond
@@ -54,8 +64,7 @@ fun DialogContent(
         shape = RoundedCornerShape(20.dp),
         backgroundColor = MaterialTheme.colors.onSurface,
         contentColor = MaterialTheme.colors.surface,
-        modifier = Modifier
-            .width(250.dp)
+
     ) {
         Column {
             Column(
@@ -91,7 +100,7 @@ fun DialogContent(
                         text = "Tidak",
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.onPrimary
+                        color = MaterialTheme.colors.surface.copy(0.4F)
                     )
                 }
                 TextButton(onClick = { confirm.invoke() }) {
@@ -99,7 +108,7 @@ fun DialogContent(
                         text = "Iya",
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.surface.copy(0.4F)
+                        color = MaterialTheme.colors.onPrimary
                     )
                 }
             }
@@ -205,7 +214,7 @@ fun UpdateDialogUI(
                         text = "Tidak",
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.surface.copy(0.6F)
+                        color = MaterialTheme.colors.surface.copy(0.4F)
                     )
                 }
                 TextButton(onClick = { ubah.invoke() }) {
@@ -217,15 +226,6 @@ fun UpdateDialogUI(
                     )
                 }
             }
-//            ButtonClickSecond(
-//                backgroundColor = MaterialTheme.colors.error,
-//                contentColor = MaterialTheme.colors.onSurface,
-//                text = "Ubah",
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//            ) {
-//
-//            }
         }
     }
 }
@@ -256,8 +256,7 @@ fun SaveConfirmDialogUI(
         shape = RoundedCornerShape(20.dp),
         backgroundColor = MaterialTheme.colors.onSurface,
         contentColor = MaterialTheme.colors.surface,
-        modifier = Modifier
-            .width(250.dp)
+
     ) {
         Column {
             Column(
@@ -265,7 +264,10 @@ fun SaveConfirmDialogUI(
                     .padding(top = 16.dp, end = 24.dp, start = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
+                Text(text = "Konfirmasi Penambahan Data Obat",
+                    style = MaterialTheme.typography.h2,
+                    color = MaterialTheme.colors.onPrimary)
+                Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = "Apakah anda yakin ingin menambahkan data - data tersebut ?",
                     style = MaterialTheme.typography.body1,
@@ -273,7 +275,7 @@ fun SaveConfirmDialogUI(
                 )
 
             }
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(28.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -285,7 +287,7 @@ fun SaveConfirmDialogUI(
                         text = "Tidak",
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.onPrimary
+                        color =  MaterialTheme.colors.surface.copy(0.4F)
                     )
                 }
                 TextButton(onClick = { confirm.invoke() }) {
@@ -293,7 +295,140 @@ fun SaveConfirmDialogUI(
                         text = "Iya",
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.surface.copy(0.4F)
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun AdviceDialog(
+    boolean: MutableState<Boolean>
+) {
+    if (boolean.value)
+        Dialog(onDismissRequest = { boolean.value = false }) {
+            AdviceDialogUI {
+                boolean.value = false
+            }
+        }
+}
+
+@Composable
+fun AdviceDialogUI(
+    close:() -> Unit
+) {
+    Card(
+        shape = RoundedCornerShape(20.dp),
+        backgroundColor = MaterialTheme.colors.onSurface,
+        contentColor = MaterialTheme.colors.surface,
+
+    ) {
+        Column {
+            Column(
+                modifier = Modifier
+                    .padding(top = 16.dp, end = 24.dp, start = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Panduan",
+                        style = MaterialTheme.typography.h2,
+                        color = MaterialTheme.colors.onPrimary)
+                    Spacer(modifier = Modifier.width(14.dp))
+                    Icon(painter = painterResource(id = R.drawable.question_icon),
+                        contentDescription = null,
+                        tint = MaterialTheme.colors.onPrimary.copy(0.6F),
+                        modifier = Modifier
+                            .size(14.dp))
+                }
+
+                Spacer(modifier = Modifier.height(28.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colors.onPrimary.copy(0.8F))
+                        .size(12.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        style = MaterialTheme.typography.body1 ,
+                        text = buildAnnotatedString {
+                        append("Tap tahan pada form obat yang telah terisi untuk melakukan ")
+                        withStyle(style = SpanStyle(
+                            color = MaterialTheme.colors.onPrimary,
+                            fontWeight = FontWeight.Bold)) {
+                            append("Update Data")
+                        }
+                    })
+                }
+                Spacer(modifier = Modifier.height(28.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colors.onPrimary.copy(0.8F))
+                        .size(12.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        style = MaterialTheme.typography.body1 ,
+                        text = buildAnnotatedString {
+                            append("Swipe kiri pada form obat yang telah terisi untuk melakukan ")
+                            withStyle(style = SpanStyle(
+                                color = MaterialTheme.colors.onPrimary,
+                                fontWeight = FontWeight.Bold)) {
+                                append("Penghapusan Data")
+                            }
+                        })
+                }
+                Spacer(modifier = Modifier.height(28.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colors.onPrimary.copy(0.8F))
+                        .size(12.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        style = MaterialTheme.typography.body1 ,
+                        text = buildAnnotatedString {
+                            append("Tap ")
+                            withStyle(style = SpanStyle(
+                                color = MaterialTheme.colors.onPrimary,
+                                fontWeight = FontWeight.Bold)) {
+                                append("tambah form obat + ")
+                            }
+                            append("untuk ")
+                            withStyle(style = SpanStyle(
+                                color = MaterialTheme.colors.onPrimary,
+                                fontWeight = FontWeight.Bold)) {
+                                append("Menambahkan form obat")
+                            }
+                        })
+                }
+
+            }
+            Spacer(modifier = Modifier.height(30.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.onPrimary.copy(0.2F)),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                TextButton(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onClick = { close.invoke() }) {
+                    Text(
+                        text = "Tutup",
+                        style = MaterialTheme.typography.h2,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.onPrimary
                     )
                 }
             }
