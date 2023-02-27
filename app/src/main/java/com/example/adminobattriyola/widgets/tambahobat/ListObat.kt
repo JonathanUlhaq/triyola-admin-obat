@@ -1,6 +1,10 @@
 package com.example.adminobattriyola.widgets.tambahobat
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.adminobattriyola.components.ButtonClick
@@ -36,7 +41,10 @@ fun ListObat(
         }
 
         item {
-            AnimatedVisibility(visible = addForm.value) {
+            AnimatedVisibility(visible = addForm.value,
+                enter = expandVertically(tween(700), expandFrom = Alignment.Top),
+                exit = shrinkVertically(tween(700), shrinkTowards = Alignment.Top)
+                ) {
                 FormAddObat(
                     model, boolean = isError.value,
                     add = {
@@ -61,7 +69,9 @@ fun ListObat(
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            AnimatedVisibility(visible = !addForm.value) {
+            AnimatedVisibility(visible = !addForm.value,
+                enter = expandVertically(tween(700), expandFrom = Alignment.Top),
+                exit = shrinkVertically(tween(700), shrinkTowards = Alignment.Top)) {
                 ButtonClick(
                     backgroundColor = MaterialTheme.colors.onBackground,
                     contentColor = MaterialTheme.colors.primary,
