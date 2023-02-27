@@ -10,7 +10,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.adminobattriyola.view.daftarobat.DaftarObatScreen
 import com.example.adminobattriyola.view.daftarobat.DaftarObatViewModel
+import com.example.adminobattriyola.view.tambahobat.DetailTambahObatViewModel
 import com.example.adminobattriyola.view.tambahobat.TambahObatScreen
+import com.example.adminobattriyola.view.tambahobat.TambahObatViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -23,6 +25,9 @@ fun HomeNavigation(
 ) {
     val systemUiController = rememberSystemUiController()
     val daftarObat = hiltViewModel<DaftarObatViewModel>()
+    val tambahObat = hiltViewModel<TambahObatViewModel>()
+    val detailObat = hiltViewModel<DetailTambahObatViewModel>()
+
     AnimatedNavHost(navController = navController, startDestination = AppRoute.DaftarObat.route) {
         composable(AppRoute.DaftarObat.route,
             enterTransition = {fadeIn(tween(700))}
@@ -49,7 +54,7 @@ fun HomeNavigation(
                 color = MaterialTheme.colors.background
             )
             hideBotNavBar.value = true
-            TambahObatScreen(navController)
+            TambahObatScreen(navController,tambahObat)
         }
 
     }

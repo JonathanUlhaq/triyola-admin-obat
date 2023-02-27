@@ -25,8 +25,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun LoginScree(
     navController: NavController,
-    viewModel: LoginViewModel
-) {
+    viewModel: LoginViewModel) {
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(
         color = MaterialTheme.colors.background
@@ -102,30 +101,22 @@ fun LoginScree(
                                 viewModel.id,
                                 label = stringResource(id = R.string.username),
                                 R.drawable.username ,
-                                eventFocus = {
-//                                    hide.value = true
-                                },
                                 keyboardType = KeyboardType.Text
-                            ) {
-//                                hide.value = false
-                            }
+                            )
                             Spacer(modifier = Modifier.height(16.dp))
 //                             Password
                             OutlinedTextFields(
                                 viewModel.password,
                                 label = stringResource(id = R.string.password),
                                 R.drawable.password ,
-                                eventFocus = {
-//                                    hide.value = true
-                                },
                                 keyboardType = KeyboardType.Password
-                            ) {
-//                                hide.value = false
-                            }
+                            )
                             Spacer(modifier = Modifier.height(20.dp))
                             ButtonClick(backgroundColor = MaterialTheme.colors.onSurface,
                                 contentColor = MaterialTheme.colors.primary ,
-                                text = stringResource(R.string.masuk) ) {
+                                text = stringResource(R.string.masuk),
+                                modifier = Modifier
+                                    .fillMaxWidth()) {
                                 navController.navigate(AppRoute.HomeNavigation.route) {
                                     popUpTo(0)
                                 }
