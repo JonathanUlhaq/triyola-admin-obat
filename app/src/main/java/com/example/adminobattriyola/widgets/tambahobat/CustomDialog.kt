@@ -84,7 +84,7 @@ fun DialogContent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colors.onPrimary.copy(0.2F)),
+                    .background(MaterialTheme.colors.error.copy(0.2F)),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 TextButton(onClick = { cancel.invoke() }) {
@@ -100,7 +100,7 @@ fun DialogContent(
                         text = stringResource(R.string.iya),
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.onPrimary
+                        color = MaterialTheme.colors.error
                     )
                 }
             }
@@ -198,7 +198,7 @@ fun UpdateDialogUI(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colors.surface.copy(0.05F)),
+                    .background(MaterialTheme.colors.onPrimary.copy(0.05F)),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 TextButton(onClick = { batal.invoke()  }) {
