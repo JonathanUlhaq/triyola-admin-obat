@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.adminobattriyola.R
@@ -23,13 +24,12 @@ import com.example.adminobattriyola.R
 fun ButtonDropDown(
     dropDown: MutableState<Boolean>,
     poli: MutableState<String>,
+    listObat:List<String>,
+    icon:Int,
     onCLick:() -> Unit ={}
 ) {
 
-    val listObat = listOf(
-        "Obat Bebas",
-        "Obat Keras"
-    )
+
 
     val icons by animateIntAsState(targetValue = if (dropDown.value) R.drawable.arrow_down else R.drawable.arrow_right)
 
@@ -53,14 +53,14 @@ fun ButtonDropDown(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.obat_type),
+                        painter = painterResource(icon),
                         contentDescription = null,
                         modifier = Modifier
                             .size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
-                        text = if(poli.value.isEmpty()) "Jenis Obat" else poli.value,
+                        text = poli.value.ifEmpty { stringResource(R.string.if_poli_empty) },
                         style = MaterialTheme.typography.h1,
                         fontSize = 12.sp,
                     )

@@ -1,10 +1,7 @@
 package com.example.adminobattriyola.view.daftarobat
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.animateIntAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
@@ -16,12 +13,15 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.adminobattriyola.R
 import com.example.adminobattriyola.components.SearchField
+import com.example.adminobattriyola.util.Vibrate
+import com.example.adminobattriyola.widgets.daftarobat.ListObat
+import com.example.adminobattriyola.widgets.daftarobat.ObatCategory
 
 @Suppress("FrequentlyChangedStateReadInComposition")
 @Composable
@@ -30,17 +30,20 @@ fun DaftarObatScreen(
 ) {
 
     val state = rememberLazyListState()
-
+    val listObat = viewModel.selectedObatList.value
     val percent = viewModel.getPercentList(
         state.firstVisibleItemIndex,
         viewModel.obatType.size,
         state.layoutInfo.visibleItemsInfo.size
     )
+    val context = LocalContext.current
+    val vibrateState = remember {
+        mutableStateOf(false)
+    }
 
-
-    val buttonText by animateIntAsState(targetValue = if (viewModel.enable.value) R.string.simpan else R.string.ubah)
-    val buttonIcon by animateIntAsState(targetValue = if (viewModel.enable.value) R.drawable.download_icon else R.drawable.edit_icon)
-
+    val multipleSelect = remember {
+        mutableStateOf(false)
+    }
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
 
@@ -143,31 +146,69 @@ fun DaftarObatScreen(
                                         .clip(RoundedCornerShape(50))
                                 )
                                 Spacer(modifier = Modifier.height(14.dp))
-                                SmallButton(
-                                    boolean = viewModel.enable.value,
-                                    text = stringResource(buttonText),
-                                    icon = buttonIcon
-                                ) {
-                                    viewModel.enable.value = !viewModel.enable.value
+
+                                AnimatedVisibility(visible = (multipleSelect.value)) {
+                                    Column {
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.SpaceBetween,
+                                            verticalAlignment = CenterVertically
+                                        ) {
+                                            Text(text = stringResource(R.string.batalkan),
+                                                color = MaterialTheme.colors.primary,
+                                                style = MaterialTheme.typography.body1,
+                                                modifier = Modifier
+                                                    .clickable {
+                                                        viewModel.selectedObatList.value =
+                                                            listObat.map {
+                                                                it.copy(isSelected = false)
+                                                            }
+                                                        multipleSelect.value = false
+                                                    })
+
+                                            Text(text = stringResource(R.string.bersihkan),
+                                                color = MaterialTheme.colors.primary,
+                                                style = MaterialTheme.typography.body1,
+                                                modifier = Modifier
+                                                    .clickable {
+                                                        viewModel.selectedObatList.value =
+                                                            listObat.map {
+                                                                it.copy(isSelected = false)
+                                                            }
+                                                    })
+                                        }
+                                        Spacer(modifier = Modifier.height(14.dp))
+                                    }
                                 }
-                                Spacer(modifier = Modifier.height(14.dp))
                                 LazyColumn(
                                     state = state,
                                     content = {
-                                        itemsIndexed(viewModel.obatName) { index, item ->
+                                        items(viewModel.obatName.size) { index ->
+                                            if (vibrateState.value) {
+                                                Vibrate(context = context)
+                                                vibrateState.value = false
+                                            }
                                             ListObat(
-                                                name = item,
+                                                name = viewModel.obatName[index],
                                                 type = viewModel.obatType[index],
                                                 amount = viewModel.currentAmount[index],
-                                                boolean = viewModel.enable.value,
-                                                addClick = {
-                                                    viewModel.currentAmount[index] =
-                                                        viewModel.currentAmount[index] + 1
+                                                boolean = listObat[index].isSelected,
+                                                multipleSelect = multipleSelect.value,
+                                                onClick = {
+                                                    if (multipleSelect.value) {
+                                                        viewModel.selectedObatList.value =
+                                                            listObat.mapIndexed { itemIndex, item ->
+                                                                if (index == itemIndex) {
+                                                                    item.copy(isSelected = !item.isSelected)
+                                                                } else item
+                                                            }
+                                                    }
 
                                                 },
-                                                removeClick = {
-                                                    viewModel.currentAmount[index] =
-                                                        viewModel.currentAmount[index] - 1
+                                                onLongClick = {
+                                                    vibrateState.value = true
+                                                    multipleSelect.value = true
                                                 }
                                             )
                                             Spacer(modifier = Modifier.height(14.dp))
@@ -182,223 +223,7 @@ fun DaftarObatScreen(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-fun ListObat(
-    name: String,
-    type: String,
-    amount: Int,
-    boolean: Boolean,
-    addClick: () -> Unit,
-    removeClick: () -> Unit
-) {
 
-    Surface(
-        color = Color.Transparent,
-        border = BorderStroke(2.dp, MaterialTheme.colors.onPrimary),
-        shape = RoundedCornerShape(12.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 14.dp, bottom = 14.dp, start = 18.dp, end = 18.dp),
-            verticalAlignment = CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column {
-                Text(
-                    text = name,
-                    style = MaterialTheme.typography.body1,
-                    color = MaterialTheme.colors.onPrimary
-                )
-                Spacer(modifier = Modifier.height(6.dp))
-                Text(
-                    text = type,
-                    style = MaterialTheme.typography.caption,
-                    color = MaterialTheme.colors.onPrimary
-                )
-            }
 
-            AnimatedContent(targetState = boolean,
-                transitionSpec = {
-                    fadeIn(tween(700)) with
-                            fadeOut(tween(700))
-                }) { target ->
-                if (target) {
-                    Column(
-                        horizontalAlignment = CenterHorizontally
-                    ) {
-                        Row(
-                            verticalAlignment = CenterVertically
-                        ) {
-                            Text(
-                                text = stringResource(R.string.jumlah_text),
-                                style = MaterialTheme.typography.body2,
-                                color = MaterialTheme.colors.onPrimary,
-                                fontSize = 14.sp
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Surface(
-                                shape = RoundedCornerShape(10.dp),
-                                color = MaterialTheme.colors.onPrimary,
-                                contentColor = MaterialTheme.colors.onSurface
-                            ) {
-                                Text(
-                                    text = amount.toString(),
-                                    style = MaterialTheme.typography.h1,
-                                    fontSize = 16.sp,
-                                    modifier = Modifier
-                                        .padding(
-                                            start = 14.dp,
-                                            end = 14.dp,
-                                            top = 4.dp,
-                                            bottom = 4.dp
-                                        )
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(6.dp))
-                        Row(
-                            verticalAlignment = CenterVertically,
-                        ) {
-                            OptionButton(
-                                removeClick,
-                                R.drawable.icon_minus,
-                                MaterialTheme.colors.error
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            OptionButton(
-                                addClick,
-                                R.drawable.icon_add,
-                                MaterialTheme.colors.onPrimary
-                            )
-                        }
-                    }
-                } else {
-                    Column(
-                        horizontalAlignment = CenterHorizontally
-                    ) {
-                        Text(
-                            text = stringResource(R.string.jumlah_text),
-                            style = MaterialTheme.typography.body2,
-                            color = MaterialTheme.colors.onPrimary,
-                            fontSize = 14.sp
-                        )
-                        Spacer(modifier = Modifier.height(6.dp))
-                        Surface(
-                            shape = RoundedCornerShape(10.dp),
-                            color = MaterialTheme.colors.onPrimary,
-                            contentColor = MaterialTheme.colors.onSurface
-                        ) {
-                            Text(
-                                text = amount.toString(),
-                                style = MaterialTheme.typography.h1,
-                                fontSize = 12.sp,
-                                modifier = Modifier
-                                    .padding(start = 14.dp, end = 14.dp, top = 4.dp, bottom = 4.dp)
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 
-@Composable
-fun OptionButton(
-    onClick: () -> Unit,
-    icon: Int,
-    color: Color
-) {
-    Button(
-        onClick = {
-            onClick.invoke()
-        },
-        shape = RoundedCornerShape(10.dp),
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = color,
-            contentColor = MaterialTheme.colors.onSurface
-        )
-    ) {
-        Icon(
-            painter = painterResource(id = icon),
-            contentDescription = null,
-            modifier = Modifier
-                .size(8.dp)
-        )
-    }
-}
-
-@Composable
-fun SmallButton(
-    boolean: Boolean,
-    text: String,
-    icon: Int,
-    click: () -> Unit
-) {
-
-    val backgroundColor by animateColorAsState(targetValue = if (boolean) MaterialTheme.colors.secondary else MaterialTheme.colors.primary)
-
-    Button(
-        onClick = { click.invoke() },
-        shape = RoundedCornerShape(10.dp),
-        colors = ButtonDefaults
-            .buttonColors(
-                backgroundColor = backgroundColor,
-                disabledBackgroundColor = MaterialTheme.colors.primary.copy(0.5F),
-                contentColor = MaterialTheme.colors.onSurface,
-                disabledContentColor = MaterialTheme.colors.onSurface
-            ),
-        enabled = true,
-        elevation = ButtonDefaults.elevation(0.dp)
-    ) {
-        Icon(
-            painter = painterResource(id = icon),
-            contentDescription = null,
-            modifier = Modifier
-                .size(14.dp)
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Text(
-            text = text,
-            style = MaterialTheme.typography.body2
-        )
-
-    }
-}
-
-@Composable
-fun ObatCategory(
-    category: String,
-    boolean: Boolean,
-    currentIndex: Int,
-    index: (Int) -> Unit
-) {
-
-    val backgroundColor by animateColorAsState(targetValue = if (boolean) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onBackground)
-    val fontColor by animateColorAsState(
-        targetValue = if (boolean) MaterialTheme.colors.onSurface else MaterialTheme.colors.surface.copy(
-            0.8F
-        )
-    )
-
-    IconButton(onClick = { index.invoke(currentIndex) }) {
-        Surface(
-            shape = RoundedCornerShape(14.dp),
-            color = backgroundColor,
-            modifier = Modifier
-                .padding(end = 16.dp)
-        ) {
-            Text(
-                text = category,
-                modifier = Modifier
-                    .padding(8.dp),
-                style = MaterialTheme.typography.body2,
-                color = fontColor
-            )
-        }
-    }
-
-}
 

@@ -52,7 +52,8 @@ fun ListObat(
                                 TambahObatModel(
                                     jenisObat = model.obatType.value,
                                     namaObat = model.obatName.value,
-                                    jumlahObat = model.obatQuantity.value
+                                    jumlahObat = model.obatQuantity.value,
+                                    satuanObat = model.unitType.value
                                 )
                             )
                             addForm.value = false

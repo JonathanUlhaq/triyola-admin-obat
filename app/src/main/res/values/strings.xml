@@ -17,8 +17,11 @@
     <string name="ubah">Ubah</string>
     <string name="title_daftar_obat">Daftar Obat</string>
     <string name="jumlah_text">Jumlah:</string>
+    <string name="batalkan">Batalkan</string>
+    <string name="bersihkan">Bersihkan</string>
 
-<!--    Custom Dialog-->
+
+    <!--    Custom Dialog-->
     <string name="confirm_delete">Apakah anda yakin ingin menghapus data ini ?</string>
     <string name="tidak">Tidak</string>
     <string name="iya">Iya</string>
@@ -42,5 +45,18 @@
     <string name="tambah_obat">Tambah Obat</string>
     <string name="tambah">Tambah</string>
     <string name="urungkan">Urungkan</string>
+
+<!--    Jenis Obat-->
+    <string name="sirup">Sirup</string>
+    <string name="tablet">Tablet</string>
+    <string name="injeksi">Injeksi</string>
+    <string name="box">Box</string>
+    <string name="flash">Flash</string>
+    <string name="ampul">Ampul</string>
+    <string name="pcs">Pcs</string>
+
+<!--    Dropdown-->
+    <string name="if_poli_empty">Jenis Obat</string>
+
 
 </resources>

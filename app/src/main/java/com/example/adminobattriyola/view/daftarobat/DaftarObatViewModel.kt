@@ -8,8 +8,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DaftarObatViewModel @Inject constructor():ViewModel() {
+
     val obatName =
-        mutableListOf(
+        mutableStateListOf(
             "Hufagrip",
             "Kombratin",
             "Mixagrip",
@@ -23,16 +24,16 @@ class DaftarObatViewModel @Inject constructor():ViewModel() {
 
 
     val obatType =
-        mutableListOf(
-            "Obat Bebas",
-            "Obat Keras",
-            "Obat Keras",
-            "Obat Bebas",
-            "Obat Keras",
-            "Obat Keras",
-            "Obat Bebas",
-            "Obat Keras",
-            "Obat Keras",
+        mutableStateListOf(
+            "Sirup",
+            "Tablet",
+            "Injeksi",
+            "Sirup",
+            "Tablet",
+            "Injeksi",
+            "Sirup",
+            "Tablet",
+            "Injeksi",
 
             )
 
@@ -50,9 +51,17 @@ class DaftarObatViewModel @Inject constructor():ViewModel() {
         )
     val categoryList =
         mutableListOf(
-            "Obat Bebas",
-            "Obat Keras"
+            "Sirup",
+            "Tablet",
+            "Injeksi"
         )
+
+    val selectedObatList = mutableStateOf(
+        (0..obatName.size).map {
+            ListItem(isSelected = false)
+        }
+    )
+
 
     fun getPercentList(
         firstVisibleItem: Int,
@@ -70,14 +79,9 @@ class DaftarObatViewModel @Inject constructor():ViewModel() {
         mutableStateOf(0)
 
 
-
-    val enable =
-        mutableStateOf(false)
-
     val searchValue =
         mutableStateOf("")
 
-
-
-
 }
+
+ data class ListItem(var isSelected:Boolean)

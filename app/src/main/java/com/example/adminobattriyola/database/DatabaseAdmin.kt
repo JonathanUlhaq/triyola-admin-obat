@@ -7,7 +7,7 @@ import androidx.room.TypeConverters
 import com.example.adminobattriyola.models.TambahObatModel
 import com.example.adminobattriyola.util.UUIDConverter
 
-@Database(entities = [TambahObatModel::class], version = 9)
+@Database(entities = [TambahObatModel::class], version = 10)
 abstract class DatabaseAdmin:RoomDatabase() {
     abstract fun getDAO():Dao
 }

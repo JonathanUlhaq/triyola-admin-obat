@@ -132,7 +132,8 @@ fun UpdateDialog(
                       id = id,
                       namaObat = model.obatCurrentName.value,
                       jenisObat =  model.obatCurrentType.value,
-                      jumlahObat =  model.obatCurrentQuantity.value
+                      jumlahObat =  model.obatCurrentQuantity.value,
+                      satuanObat = model.unitCurrentType.value
                   ))
                   boolean.value = false
                   model.obatCurrentName.value = ""
@@ -156,6 +157,17 @@ fun UpdateDialogUI(
     model.obatCurrentName.value = name
     model.obatCurrentQuantity.value = quantity
     model.obatCurrentType.value = type
+    val listObat = listOf(
+        stringResource(R.string.sirup),
+        stringResource(R.string.tablet),
+        stringResource(R.string.injeksi)
+    )
+    val listUnit = listOf(
+        stringResource(R.string.box),
+        stringResource(R.string.flash),
+        stringResource(R.string.ampul),
+        stringResource(R.string.pcs)
+    )
     Surface(
         color = MaterialTheme.colors.onBackground,
         contentColor = MaterialTheme.colors.onPrimary,
@@ -171,7 +183,7 @@ fun UpdateDialogUI(
                     style = MaterialTheme.typography.h2,
                     color = MaterialTheme.colors.onPrimary)
                Spacer(modifier = Modifier.height(24.dp))
-               ButtonDropDown(dropDown = model.booleanUpdate, poli = model.obatCurrentType) {
+               ButtonDropDown(dropDown = model.booleanUpdate, poli = model.obatCurrentType,listObat = listObat,icon = R.drawable.obat_type) {
                    model.booleanUpdate.value = !model.booleanUpdate.value
                }
                Spacer(modifier = Modifier.height(16.dp))
@@ -192,6 +204,10 @@ fun UpdateDialogUI(
                    keyboardType = KeyboardType.Number,
                    isError = false
                )
+               Spacer(modifier = Modifier.height(16.dp))
+               ButtonDropDown(dropDown = model.booleanUpdateUnit, poli = model.unitCurrentType,listObat = listUnit,icon = R.drawable.unit_icon) {
+                   model.booleanUpdateUnit.value = !model.booleanUpdateUnit.value
+               }
            }
 
             Spacer(modifier = Modifier.height(24.dp))

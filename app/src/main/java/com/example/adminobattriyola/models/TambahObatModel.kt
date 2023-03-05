@@ -3,7 +3,6 @@ package com.example.adminobattriyola.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity(tableName = "tb_tambahobat")
 data class TambahObatModel(
@@ -15,5 +14,8 @@ data class TambahObatModel(
     @ColumnInfo(name = "nama_obat")
     var namaObat:String,
     @ColumnInfo(name = "jumlah_obat")
-    var jumlahObat:String
+    var jumlahObat:String,
+    @ColumnInfo(name = "satuan_obat")
+    var satuanObat:String
+
 )

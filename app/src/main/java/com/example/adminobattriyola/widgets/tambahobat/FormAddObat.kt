@@ -23,6 +23,17 @@ fun FormAddObat(
     boolean: Boolean,
     remove: () -> Unit
 ) {
+    val listObat = listOf(
+        stringResource(R.string.sirup),
+        stringResource(R.string.tablet),
+        stringResource(R.string.injeksi)
+    )
+    val listUnit = listOf(
+        stringResource(R.string.box),
+        stringResource(R.string.flash),
+        stringResource(R.string.ampul),
+        stringResource(R.string.pcs)
+    )
     Surface(
         color = MaterialTheme.colors.onBackground,
         contentColor = MaterialTheme.colors.onPrimary,
@@ -32,7 +43,7 @@ fun FormAddObat(
             modifier = Modifier
                 .padding(14.dp)
         ) {
-            ButtonDropDown(dropDown = model.booleanAddForm, poli = model.obatType) {
+            ButtonDropDown(dropDown = model.booleanAddForm, poli = model.obatType, listObat = listObat, icon = R.drawable.obat_type) {
                 model.booleanAddForm.value = !model.booleanAddForm.value
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -53,6 +64,10 @@ fun FormAddObat(
                 keyboardType = KeyboardType.Number,
                 isError = boolean
             )
+            Spacer(modifier = Modifier.height(16.dp))
+            ButtonDropDown(dropDown = model.booleanUpdateUnit, poli = model.unitType,listObat = listUnit,icon = R.drawable.unit_icon) {
+                model.booleanUpdateUnit.value = !model.booleanUpdateUnit.value
+            }
             Spacer(modifier = Modifier.height(16.dp))
             Box(
                 modifier = Modifier
