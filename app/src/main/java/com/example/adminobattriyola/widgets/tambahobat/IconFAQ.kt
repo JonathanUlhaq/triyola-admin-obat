@@ -24,3 +24,17 @@ fun IconFAQ(showAdviceDialog: MutableState<Boolean>) {
         )
     }
 }
+
+@Composable
+fun TambahObatIconFAQ(showAdviceDialog: MutableState<Boolean>) {
+    AdviceDialogTambahObat(boolean = showAdviceDialog)
+    IconButton(onClick = { showAdviceDialog.value = true }) {
+        Icon(
+            painter = painterResource(id = R.drawable.question_icon),
+            contentDescription = null,
+            tint = MaterialTheme.colors.onSurface,
+            modifier = Modifier
+                .size(16.dp)
+        )
+    }
+}

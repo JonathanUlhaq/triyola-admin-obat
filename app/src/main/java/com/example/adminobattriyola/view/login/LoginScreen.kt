@@ -8,12 +8,17 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.adminobattriyola.R
@@ -31,7 +36,14 @@ fun LoginScree(
         color = MaterialTheme.colors.background
     )
 
+    val usernameFocus = remember {
+        FocusRequester()
+    }
+    val passwordFocus = remember {
+        FocusRequester()
+    }
     val scrollable = rememberScrollState()
+    val focusManager = LocalFocusManager.current
 
     Scaffold(
         backgroundColor = MaterialTheme.colors.background
@@ -101,16 +113,25 @@ fun LoginScree(
                                 viewModel.id,
                                 label = stringResource(id = R.string.username),
                                 R.drawable.username ,
-                                keyboardType = KeyboardType.Text
-                            )
+                                keyboardType = KeyboardType.Text,
+                                modifier = Modifier
+                                    .focusRequester(usernameFocus)
+                            ) {
+                                passwordFocus.requestFocus()
+                            }
                             Spacer(modifier = Modifier.height(16.dp))
 //                             Password
                             OutlinedTextFields(
                                 viewModel.password,
                                 label = stringResource(id = R.string.password),
                                 R.drawable.password ,
-                                keyboardType = KeyboardType.Password
-                            )
+                                keyboardType = KeyboardType.Password,
+                                visualTransformation = PasswordVisualTransformation(),
+                                modifier = Modifier
+                                    .focusRequester(passwordFocus)
+                            ) {
+                                focusManager.clearFocus()
+                            }
                             Spacer(modifier = Modifier.height(20.dp))
                             ButtonClick(backgroundColor = MaterialTheme.colors.onSurface,
                                 contentColor = MaterialTheme.colors.primary ,

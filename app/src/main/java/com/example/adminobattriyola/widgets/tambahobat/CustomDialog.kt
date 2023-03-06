@@ -443,3 +443,189 @@ fun AdviceDialogUI(
         }
     }
 }
+
+@Composable
+fun AdviceDialogTambahObat(
+    boolean: MutableState<Boolean>
+) {
+    if (boolean.value)
+        Dialog(onDismissRequest = { boolean.value = false }) {
+            AdviceDialogUITambahObat {
+                boolean.value = false
+            }
+        }
+}
+
+@Composable
+fun AdviceDialogUITambahObat(
+    close:() -> Unit
+) {
+    Card(
+        shape = RoundedCornerShape(20.dp),
+        backgroundColor = MaterialTheme.colors.onSurface,
+        contentColor = MaterialTheme.colors.surface,
+
+        ) {
+        Column {
+            Column(
+                modifier = Modifier
+                    .padding(top = 16.dp, end = 24.dp, start = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = stringResource(R.string.panduan),
+                        style = MaterialTheme.typography.h2,
+                        color = MaterialTheme.colors.onPrimary)
+                    Spacer(modifier = Modifier.width(14.dp))
+                    Icon(painter = painterResource(id = R.drawable.question_icon),
+                        contentDescription = null,
+                        tint = MaterialTheme.colors.onPrimary.copy(0.6F),
+                        modifier = Modifier
+                            .size(14.dp))
+                }
+
+                Spacer(modifier = Modifier.height(28.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colors.onPrimary.copy(0.8F))
+                        .size(12.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        style = MaterialTheme.typography.body1 ,
+                        text = buildAnnotatedString {
+                            append(stringResource(R.string.tambah_obat_guide_a_a))
+                            withStyle(style = SpanStyle(
+                                color = MaterialTheme.colors.onPrimary,
+                                fontWeight = FontWeight.Bold)) {
+                                append(stringResource(R.string.tambah_obat_guide_a_b))
+                            }
+                            append(stringResource(R.string.tambah_obat_guide_a_c))
+                            withStyle(style = SpanStyle(
+                                color = MaterialTheme.colors.onPrimary,
+                                fontWeight = FontWeight.Bold)) {
+                                append(stringResource(R.string.tambah_obat_guide_a_d))
+                            }
+                        })
+                }
+                Spacer(modifier = Modifier.height(28.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colors.onPrimary.copy(0.8F))
+                        .size(12.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        style = MaterialTheme.typography.body1 ,
+                        text = buildAnnotatedString {
+                            append(stringResource(R.string.tambah_obat_guide_b_a))
+                            withStyle(style = SpanStyle(
+                                color = MaterialTheme.colors.onPrimary,
+                                fontWeight = FontWeight.Bold)) {
+                                append(stringResource(R.string.tambah_obat_guide_b_b))
+                            }
+                            append(stringResource(R.string.tambah_obat_guide_b_c))
+                            withStyle(style = SpanStyle(
+                                color = MaterialTheme.colors.onPrimary,
+                                fontWeight = FontWeight.Bold)) {
+                                append(stringResource(R.string.tambah_obat_guide_b_d))
+                            }
+                        })
+                }
+
+                Spacer(modifier = Modifier.height(28.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colors.onPrimary.copy(0.8F))
+                        .size(12.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        style = MaterialTheme.typography.body1 ,
+                        text = buildAnnotatedString {
+                            append(stringResource(R.string.tambah_obat_guide_c_a))
+                            withStyle(style = SpanStyle(
+                                color = MaterialTheme.colors.onPrimary,
+                                fontWeight = FontWeight.Bold)) {
+                                append(stringResource(R.string.tambah_obat_guide_c_b))
+                            }
+                            append(stringResource(R.string.tambah_obat_guide_c_c))
+                            withStyle(style = SpanStyle(
+                                color = MaterialTheme.colors.onPrimary,
+                                fontWeight = FontWeight.Bold)) {
+                                append(stringResource(R.string.tambah_obat_guide_c_d))
+                            }
+                        })
+                }
+                Spacer(modifier = Modifier.height(28.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colors.onPrimary.copy(0.8F))
+                        .size(12.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        style = MaterialTheme.typography.body1 ,
+                        text = buildAnnotatedString {
+                            append(stringResource(R.string.guide_1))
+                            withStyle(style = SpanStyle(
+                                color = MaterialTheme.colors.onPrimary,
+                                fontWeight = FontWeight.Bold)) {
+                                append(stringResource(R.string.guide_1_desc))
+                            }
+                        })
+                }
+                Spacer(modifier = Modifier.height(28.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colors.onPrimary.copy(0.8F))
+                        .size(12.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        style = MaterialTheme.typography.body1 ,
+                        text = buildAnnotatedString {
+                            append(stringResource(R.string.guide_2))
+                            withStyle(style = SpanStyle(
+                                color = MaterialTheme.colors.onPrimary,
+                                fontWeight = FontWeight.Bold)) {
+                                append(stringResource(R.string.guide_2_desc))
+                            }
+                        })
+                }
+
+            }
+            Spacer(modifier = Modifier.height(30.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.onPrimary.copy(0.2F)),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                TextButton(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onClick = { close.invoke() }) {
+                    Text(
+                        text = stringResource(R.string.tutup),
+                        style = MaterialTheme.typography.h2,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                }
+            }
+        }
+    }
+}

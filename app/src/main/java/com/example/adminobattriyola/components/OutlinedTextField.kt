@@ -21,6 +21,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -32,8 +34,10 @@ fun OutlinedTextFields(
     isError:Boolean = false,
     keyboardType: KeyboardType,
     color: Color = Color.White,
+    visualTransformation:VisualTransformation = VisualTransformation.None,
+    modifier:Modifier = Modifier,
+    onDone:() -> Unit = {}
 ) {
-    val focusManager = LocalFocusManager.current
 
     OutlinedTextField(value = value.value,
         onValueChange = { value.value = it },
@@ -67,19 +71,20 @@ fun OutlinedTextFields(
                     .size(16.dp)
             )   
         },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .imePadding()
         ,
         shape = RoundedCornerShape(12.dp),
         keyboardActions = KeyboardActions(onDone = {
-            focusManager.clearFocus()
+            onDone.invoke()
         }),
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
             keyboardType = keyboardType),
         singleLine = true,
-        isError = false
+        isError = false,
+        visualTransformation = visualTransformation
     )
 }
 

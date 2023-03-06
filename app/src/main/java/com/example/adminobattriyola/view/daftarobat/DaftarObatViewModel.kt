@@ -51,6 +51,7 @@ class DaftarObatViewModel @Inject constructor():ViewModel() {
         )
     val categoryList =
         mutableListOf(
+            "Semua",
             "Sirup",
             "Tablet",
             "Injeksi"

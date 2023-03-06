@@ -58,5 +58,20 @@
 <!--    Dropdown-->
     <string name="if_poli_empty">Jenis Obat</string>
 
+<!--    Dialog Panduan Tambah Obat-->
+    <string name="tambah_obat_guide_a_a">Tap tahan pada \</string>
+    <string name="tambah_obat_guide_a_b">\ Form Obat</string>
+    <string name="tambah_obat_guide_a_c">\ untuk mengaktifkan mode</string>
+    <string name="tambah_obat_guide_a_d">\ Penghapusan Ganda</string>
+    <string name="tambah_obat_guide_b_a">Tap pada tulisan</string>
+    <string name="tambah_obat_guide_b_b">\ Batalkan</string>
+    <string name="tambah_obat_guide_b_c">\ untuk</string>
+    <string name="tambah_obat_guide_b_d">\ Membatalkan Mode Penghapusan Ganda</string>
+    <string name="tambah_obat_guide_c_a">Tap pada tulisan</string>
+    <string name="tambah_obat_guide_c_b">\ Bersihkan</string>
+    <string name="tambah_obat_guide_c_c">\ untuk</string>
+    <string name="tambah_obat_guide_c_d">\ Membersihkan Penanda Penghapusan</string>
+    <string name="title_riwayat_obat">Riwayat Transaksi Obat</string>
+
 
 </resources>

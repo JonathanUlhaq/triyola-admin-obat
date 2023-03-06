@@ -22,6 +22,8 @@ import com.example.adminobattriyola.components.SearchField
 import com.example.adminobattriyola.util.Vibrate
 import com.example.adminobattriyola.widgets.daftarobat.ListObat
 import com.example.adminobattriyola.widgets.daftarobat.ObatCategory
+import com.example.adminobattriyola.widgets.tambahobat.IconFAQ
+import com.example.adminobattriyola.widgets.tambahobat.TambahObatIconFAQ
 
 @Suppress("FrequentlyChangedStateReadInComposition")
 @Composable
@@ -44,6 +46,11 @@ fun DaftarObatScreen(
     val multipleSelect = remember {
         mutableStateOf(false)
     }
+
+    val showAdviceDialog = remember {
+        mutableStateOf(false)
+    }
+
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
 
@@ -69,7 +76,7 @@ fun DaftarObatScreen(
                     Column(
                         horizontalAlignment = CenterHorizontally,
                         modifier = Modifier
-                            .offset(y = 20.dp)
+                            .offset(y = 16.dp)
                             .fillMaxWidth()
                             .wrapContentWidth(CenterHorizontally)
                     ) {
@@ -80,19 +87,17 @@ fun DaftarObatScreen(
                             color = MaterialTheme.colors.onSurface
                         )
 
-                        Spacer(modifier = Modifier.height(14.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
 
                         Surface(
                             color = MaterialTheme.colors.onPrimary,
                             border = BorderStroke(7.dp, MaterialTheme.colors.background),
                             shape = CircleShape,
+                            modifier = Modifier
+                                .padding(8.dp),
                             elevation = 0.dp
                         ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(40.dp)
-                                    .background(MaterialTheme.colors.onPrimary)
-                            )
+                            TambahObatIconFAQ(showAdviceDialog)
                         }
                     }
                 }
