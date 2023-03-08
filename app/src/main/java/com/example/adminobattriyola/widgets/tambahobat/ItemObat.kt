@@ -108,6 +108,11 @@ fun ItemObat(
                     label = value.jumlahObat
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                PreviewForm(
+                    icon = R.drawable.unit_icon,
+                    label = value.satuanObat
+                )
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }

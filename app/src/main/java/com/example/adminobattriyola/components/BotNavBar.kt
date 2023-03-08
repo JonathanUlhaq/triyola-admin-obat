@@ -25,7 +25,8 @@ import com.example.adminobattriyola.view.navigation.AppRoute
 
 @Composable
 fun BotNavBar(
-    navController: NavController
+    navController: NavController,
+    boolean:Boolean
 ) {
 
     val menu = listOf(
@@ -42,17 +43,17 @@ fun BotNavBar(
 
     Surface(
         color = MaterialTheme.colors.onBackground,
-        elevation = 10.dp,
         contentColor = MaterialTheme.colors.surface,
-        shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
         modifier = Modifier
+            .fillMaxWidth()
             .height(140.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 14.dp, end = 28.dp, top = 10.dp, bottom = 10.dp)
+                .padding(start = 14.dp, end = 14.dp, top = 10.dp, bottom = 10.dp)
                 .selectableGroup(),
+            horizontalArrangement = Arrangement.SpaceBetween
 
         ) {
             val currentMenu = remember {
@@ -118,7 +119,9 @@ fun BotNavBar(
                         }
                     }
                 }
-                Spacer(modifier = Modifier.width(20.dp))
+                AnimatedVisibility (!boolean) {
+                    Spacer(modifier = Modifier.width(20.dp))
+                }
             }
         }
     }

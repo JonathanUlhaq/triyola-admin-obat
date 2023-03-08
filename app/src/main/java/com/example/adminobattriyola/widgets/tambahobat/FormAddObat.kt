@@ -14,6 +14,8 @@ import com.example.adminobattriyola.R
 import com.example.adminobattriyola.components.ButtonClickSecond
 import com.example.adminobattriyola.components.ButtonDropDown
 import com.example.adminobattriyola.components.OutlinedTextFields
+import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.DistributorViewModel
+import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanObatViewModel
 import com.example.adminobattriyola.view.tambahobat.TambahObatViewModel
 
 @Composable
@@ -43,7 +45,12 @@ fun FormAddObat(
             modifier = Modifier
                 .padding(14.dp)
         ) {
-            ButtonDropDown(dropDown = model.booleanAddForm, poli = model.obatType, listObat = listObat, icon = R.drawable.obat_type) {
+            ButtonDropDown(
+                dropDown = model.booleanAddForm,
+                poli = model.obatType,
+                listObat = listObat,
+                icon = R.drawable.obat_type
+            ) {
                 model.booleanAddForm.value = !model.booleanAddForm.value
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -65,7 +72,12 @@ fun FormAddObat(
                 isError = boolean
             )
             Spacer(modifier = Modifier.height(16.dp))
-            ButtonDropDown(dropDown = model.booleanUpdateUnit, poli = model.unitType,listObat = listUnit,icon = R.drawable.unit_icon) {
+            ButtonDropDown(
+                dropDown = model.booleanUpdateUnit,
+                poli = model.unitType,
+                listObat = listUnit,
+                icon = R.drawable.unit_icon
+            ) {
                 model.booleanUpdateUnit.value = !model.booleanUpdateUnit.value
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -100,3 +112,72 @@ fun FormAddObat(
         }
     }
 }
+
+@Composable
+fun FormPengajuanDistributor(
+    model: DistributorViewModel,
+    add: () -> Unit
+) {
+    val listPengajuan = listOf(
+        "Psikotropika",
+        "Reguler"
+    )
+    Surface(
+        color = MaterialTheme.colors.onBackground,
+        contentColor = MaterialTheme.colors.onPrimary,
+        shape = RoundedCornerShape(20.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(14.dp)
+        ) {
+            ButtonDropDown(
+                dropDown = model.booleanAddForm,
+                poli = model.pengajuanType,
+                listObat = listPengajuan,
+                icon = R.drawable.obat_type,
+                emptyText = "Jenis Pengajuan"
+            ) {
+                model.booleanAddForm.value = !model.booleanAddForm.value
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextFields(
+                value = model.distributorName,
+                label = "Distributor",
+                icon = R.drawable.distributor_icon,
+                color = MaterialTheme.colors.onPrimary,
+                keyboardType = KeyboardType.Text,
+                isError = false
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextFields(
+                value = model.distributorAddress,
+                label = "Alamat",
+                icon = R.drawable.address_icon,
+                color = MaterialTheme.colors.onPrimary,
+                keyboardType = KeyboardType.Number,
+                isError = false
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.End)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    ButtonClickSecond(
+                        backgroundColor = MaterialTheme.colors.primary,
+                        contentColor = MaterialTheme.colors.onSurface,
+                        text = stringResource(R.string.tambah)
+                    ) {
+                        add.invoke()
+                    }
+                }
+            }
+        }
+    }
+}
+

@@ -10,6 +10,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.adminobattriyola.view.daftarobat.DaftarObatScreen
 import com.example.adminobattriyola.view.daftarobat.DaftarObatViewModel
+import com.example.adminobattriyola.view.pengajuan.main.PengajuanMainScreen
+import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.DistributorViewModel
 import com.example.adminobattriyola.view.riwayatobat.RiwayatObatScreen
 import com.example.adminobattriyola.view.riwayatobat.RiwayatObatViewModel
 import com.example.adminobattriyola.view.tambahobat.DetailTambahObatViewModel
@@ -23,18 +25,19 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun HomeNavigation(
     navController: NavHostController,
-    hideBotNavBar:MutableState<Boolean>
+    hideBotNavBar:MutableState<Boolean>,
+    hideFAB:MutableState<Boolean>
 ) {
     val systemUiController = rememberSystemUiController()
     val daftarObat = hiltViewModel<DaftarObatViewModel>()
     val tambahObat = hiltViewModel<TambahObatViewModel>()
     val riwayatObat = hiltViewModel<RiwayatObatViewModel>()
-    val detailObat = hiltViewModel<DetailTambahObatViewModel>()
-
+    val distributor = hiltViewModel<DistributorViewModel>()
     AnimatedNavHost(navController = navController, startDestination = AppRoute.DaftarObat.route) {
         composable(AppRoute.DaftarObat.route,
             enterTransition = {fadeIn(tween(700))}
         ) {
+            hideFAB.value = false
             systemUiController.setStatusBarColor(
                 color = MaterialTheme.colors.primaryVariant
             )
@@ -62,6 +65,7 @@ fun HomeNavigation(
         composable(AppRoute.History.route,
             enterTransition = {fadeIn(tween(700))}
         ) {
+            hideFAB.value = true
             systemUiController.setStatusBarColor(
                 color = MaterialTheme.colors.primaryVariant
             )
@@ -72,6 +76,21 @@ fun HomeNavigation(
             hideBotNavBar.value = false
             RiwayatObatScreen(riwayatObat)
         }
+        composable(AppRoute.Pengajuan.route,
+            enterTransition = {fadeIn(tween(700))}
+        ) {
+            hideFAB.value = true
+            systemUiController.setStatusBarColor(
+                color = MaterialTheme.colors.primaryVariant
+            )
+
+            systemUiController.setNavigationBarColor(
+                color = MaterialTheme.colors.background
+            )
+            hideBotNavBar.value = false
+            PengajuanMainScreen(distributor)
+        }
+
 
     }
 }

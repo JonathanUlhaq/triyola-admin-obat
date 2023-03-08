@@ -26,6 +26,7 @@ fun ButtonDropDown(
     poli: MutableState<String>,
     listObat:List<String>,
     icon:Int,
+    emptyText:String = "Jenis Obat",
     onCLick:() -> Unit ={}
 ) {
 
@@ -60,7 +61,7 @@ fun ButtonDropDown(
                     )
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
-                        text = poli.value.ifEmpty { stringResource(R.string.if_poli_empty) },
+                        text = poli.value.ifEmpty { emptyText },
                         style = MaterialTheme.typography.h1,
                         fontSize = 12.sp,
                     )
