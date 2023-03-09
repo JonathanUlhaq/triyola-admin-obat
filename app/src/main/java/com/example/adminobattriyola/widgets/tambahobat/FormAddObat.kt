@@ -155,7 +155,7 @@ fun FormPengajuanDistributor(
                 label = "Alamat",
                 icon = R.drawable.address_icon,
                 color = MaterialTheme.colors.onPrimary,
-                keyboardType = KeyboardType.Number,
+                keyboardType = KeyboardType.Text,
                 isError = false
             )
             Spacer(modifier = Modifier.height(16.dp))

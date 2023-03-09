@@ -9,8 +9,8 @@ import com.example.adminobattriyola.models.PengajuanObat
 data class DistributorWithObat(
     @Embedded val distributor: Distributor,
     @Relation(
-        parentColumn = "distributor",
-        entityColumn = "distributor"
+        parentColumn = "id",
+        entityColumn = "distributorId"
     )
-    val listObat:List<PengajuanObat>
+    val list:List<PengajuanObat>
 )

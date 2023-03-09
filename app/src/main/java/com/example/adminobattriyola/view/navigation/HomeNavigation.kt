@@ -12,6 +12,7 @@ import com.example.adminobattriyola.view.daftarobat.DaftarObatScreen
 import com.example.adminobattriyola.view.daftarobat.DaftarObatViewModel
 import com.example.adminobattriyola.view.pengajuan.main.PengajuanMainScreen
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.DistributorViewModel
+import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanObatViewModel
 import com.example.adminobattriyola.view.riwayatobat.RiwayatObatScreen
 import com.example.adminobattriyola.view.riwayatobat.RiwayatObatViewModel
 import com.example.adminobattriyola.view.tambahobat.DetailTambahObatViewModel
@@ -33,6 +34,7 @@ fun HomeNavigation(
     val tambahObat = hiltViewModel<TambahObatViewModel>()
     val riwayatObat = hiltViewModel<RiwayatObatViewModel>()
     val distributor = hiltViewModel<DistributorViewModel>()
+    val pengajuanObat = hiltViewModel< PengajuanObatViewModel>()
     AnimatedNavHost(navController = navController, startDestination = AppRoute.DaftarObat.route) {
         composable(AppRoute.DaftarObat.route,
             enterTransition = {fadeIn(tween(700))}
@@ -88,7 +90,7 @@ fun HomeNavigation(
                 color = MaterialTheme.colors.background
             )
             hideBotNavBar.value = false
-            PengajuanMainScreen(distributor)
+            PengajuanMainScreen(distributor,pengajuanObat)
         }
 
 

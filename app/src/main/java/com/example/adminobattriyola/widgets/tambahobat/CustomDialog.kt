@@ -23,7 +23,9 @@ import androidx.compose.ui.window.Dialog
 import com.example.adminobattriyola.R
 import com.example.adminobattriyola.components.ButtonDropDown
 import com.example.adminobattriyola.components.OutlinedTextFields
+import com.example.adminobattriyola.models.Distributor
 import com.example.adminobattriyola.models.TambahObatModel
+import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.DistributorViewModel
 import com.example.adminobattriyola.view.tambahobat.TambahObatViewModel
 
 @Composable
@@ -620,6 +622,127 @@ fun AdviceDialogUITambahObat(
                     onClick = { close.invoke() }) {
                     Text(
                         text = stringResource(R.string.tutup),
+                        style = MaterialTheme.typography.h2,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun UpdateDialogDistributor(
+    model: DistributorViewModel,
+    id:Int,
+    type: String,
+    name:String,
+    address:String,
+    boolean: MutableState<Boolean>,
+    updateDummy:() -> Unit
+) {
+    if (boolean.value) {
+        Dialog(onDismissRequest = {
+        }
+        ) {
+            UpdateDialogDistributorUI(model = model , type = type , name = name , address = address, batal = {
+                boolean.value = false
+                model.distributorCurrentName.value = ""
+                model.distributorCurrentAddress.value = ""
+                model.currentPengajuanType.value = ""
+            } ) {
+                if (model.distributorCurrentName.value.isNotEmpty() &&   model.distributorCurrentAddress.value.isNotEmpty() && model.currentPengajuanType.value.isNotEmpty()) {
+                    model.updateData(Distributor(
+                        id = model.uiState.value.first().id,
+                        distributor = model.distributorCurrentName.value,
+                        alamat = model.distributorCurrentAddress.value,
+                        jenis_pengajuan = model.currentPengajuanType.value
+                    ))
+                    boolean.value = false
+                    model.distributorCurrentName.value = ""
+                    model.distributorCurrentAddress.value = ""
+                    model.currentPengajuanType.value = ""
+                    updateDummy.invoke()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun UpdateDialogDistributorUI(
+    model: DistributorViewModel,
+    type: String,
+    name:String,
+    address:String,
+    batal:() -> Unit,
+    ubah: () -> Unit
+) {
+    model.distributorCurrentName.value = name
+    model.distributorCurrentAddress.value = address
+    model.currentPengajuanType.value = type
+    val listPengajuan = listOf(
+        "Psikotropika",
+        "Reguler"
+    )
+
+    Surface(
+        color = MaterialTheme.colors.onBackground,
+        contentColor = MaterialTheme.colors.onPrimary,
+        shape = RoundedCornerShape(20.dp)
+    ) {
+        Column {
+            Column(
+                modifier = Modifier
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "Ubah Informasi Distributor",
+                    style = MaterialTheme.typography.h2,
+                    color = MaterialTheme.colors.onPrimary)
+                Spacer(modifier = Modifier.height(24.dp))
+                ButtonDropDown(dropDown = model.booleanUpdate, poli = model.currentPengajuanType,listObat = listPengajuan,icon = R.drawable.obat_type) {
+                    model.booleanUpdate.value = !model.booleanUpdate.value
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                OutlinedTextFields(
+                    value = model.distributorCurrentName,
+                    label = "Distributor",
+                    icon = R.drawable.distributor_icon,
+                    color = MaterialTheme.colors.onPrimary,
+                    keyboardType = KeyboardType.Text,
+                    isError = false
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                OutlinedTextFields(
+                    value = model.distributorCurrentAddress,
+                    label = "Alamat",
+                    icon = R.drawable.address_icon,
+                    color = MaterialTheme.colors.onPrimary,
+                    keyboardType = KeyboardType.Number,
+                    isError = false
+                )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.onPrimary.copy(0.05F)),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                TextButton(onClick = { batal.invoke()  }) {
+                    Text(
+                        text = stringResource(R.string.tidak),
+                        style = MaterialTheme.typography.h2,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.surface.copy(0.4F)
+                    )
+                }
+                TextButton(onClick = { ubah.invoke() }) {
+                    Text(
+                        text = "Ubah",
                         style = MaterialTheme.typography.h2,
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colors.onPrimary

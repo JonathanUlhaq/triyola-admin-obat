@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Distributor(
-    @PrimaryKey()
+    @PrimaryKey(autoGenerate = true)
+    val id:Int = 0,
     val distributor:String = "",
     val jenis_pengajuan:String ="",
     val alamat:String=""

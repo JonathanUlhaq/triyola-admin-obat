@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.adminobattriyola.models.PengajuanObat
+import com.example.adminobattriyola.relations.DistributorWithObat
 import com.example.adminobattriyola.repositories.PengajuanObatRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,12 +16,12 @@ import javax.inject.Inject
 @HiltViewModel
 class PengajuanObatViewModel @Inject constructor(private val repo: PengajuanObatRepo) :
     ViewModel() {
-    private val _uiState = MutableStateFlow<List<PengajuanObat>>(emptyList())
+    private val _uiState = MutableStateFlow<List<DistributorWithObat>>(emptyList())
     val uiState = _uiState.asStateFlow()
 
-    fun getAllData(obat: String) = viewModelScope.launch {
-        repo.getAllData(obat).collect { list ->
-            if (list.isNotEmpty()) _uiState.value = list
+    fun getAllData() = viewModelScope.launch {
+        repo.getAllData().collect { list ->
+            _uiState.value = list
         }
     }
 

@@ -18,12 +18,13 @@ class DistributorViewModel @Inject constructor(private val repo:DistributorRepo)
 
     val boolean = mutableStateOf(false)
     val booleanAddForm = mutableStateOf(false)
-    val booleanUpdateUnit = mutableStateOf(false)
+    val booleanUpdate = mutableStateOf(false)
     val pengajuanType = mutableStateOf("")
     val distributorName = mutableStateOf("")
     val distributorAddress = mutableStateOf("")
-    val distributorCurrentQuantity = mutableStateOf("")
+    val distributorCurrentAddress = mutableStateOf("")
     val distributorCurrentName = mutableStateOf("")
+    val currentPengajuanType = mutableStateOf("")
 
     fun getAllData() = viewModelScope.launch {
         repo.getAllData().collect {
@@ -47,8 +48,8 @@ class DistributorViewModel @Inject constructor(private val repo:DistributorRepo)
     fun updateData(distributor: Distributor) = viewModelScope.launch {
         repo.updateData(distributor)
     }
-    fun deleteAll() = viewModelScope.launch {
-        repo.deleteAllData()
+    fun deleteAll(distributor:Distributor) = viewModelScope.launch {
+        repo.deleteAllData(distributor)
     }
 
 }

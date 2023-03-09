@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.DistributorViewModel
+import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanObatViewModel
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -22,7 +23,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun PengajuanMainScreen(
-    distributorViewModel: DistributorViewModel
+    distributorViewModel: DistributorViewModel,
+    obat: PengajuanObatViewModel
 ) {
    Scaffold(
        backgroundColor = MaterialTheme.colors.background
@@ -70,7 +72,7 @@ fun PengajuanMainScreen(
                                 state = pagerState) { index ->
                    when(index) {
                        0 -> {
-                           PengajuanScreen(distributorViewModel)
+                           PengajuanScreen(distributorViewModel,obat)
                        }
                        1 -> {
                            Box(modifier = Modifier
