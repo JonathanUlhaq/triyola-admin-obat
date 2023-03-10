@@ -114,6 +114,101 @@ fun FormAddObat(
 }
 
 @Composable
+fun FormAddObatPengajuan(
+    model: PengajuanObatViewModel,
+    add: () -> Unit,
+    boolean: Boolean,
+    remove: () -> Unit
+) {
+    val listObat = listOf(
+        stringResource(R.string.sirup),
+        stringResource(R.string.tablet),
+        stringResource(R.string.injeksi)
+    )
+    val listUnit = listOf(
+        stringResource(R.string.box),
+        stringResource(R.string.flash),
+        stringResource(R.string.ampul),
+        stringResource(R.string.pcs)
+    )
+    Surface(
+        color = MaterialTheme.colors.onBackground,
+        contentColor = MaterialTheme.colors.onPrimary,
+        shape = RoundedCornerShape(20.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(14.dp)
+        ) {
+            ButtonDropDown(
+                dropDown = model.booleanAddForm,
+                poli = model.obatType,
+                listObat = listObat,
+                icon = R.drawable.obat_type
+            ) {
+                model.booleanAddForm.value = !model.booleanAddForm.value
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextFields(
+                value = model.obatName,
+                label = stringResource(R.string.nama_obat),
+                icon = R.drawable.obat,
+                color = MaterialTheme.colors.onPrimary,
+                keyboardType = KeyboardType.Text,
+                isError = boolean
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextFields(
+                value = model.obatQuantity,
+                label = stringResource(R.string.jumlah_obat),
+                icon = R.drawable.obat_quantity,
+                color = MaterialTheme.colors.onPrimary,
+                keyboardType = KeyboardType.Number,
+                isError = boolean
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            ButtonDropDown(
+                dropDown = model.booleanUpdateUnit,
+                poli = model.unitType,
+                listObat = listUnit,
+                icon = R.drawable.unit_icon,
+                emptyText = "Satuan"
+            ) {
+                model.booleanUpdateUnit.value = !model.booleanUpdateUnit.value
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.End)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+
+                    ButtonClickSecond(
+                        backgroundColor = MaterialTheme.colors.error,
+                        contentColor = MaterialTheme.colors.onSurface,
+                        text = stringResource(R.string.urungkan)
+                    ) {
+                        remove.invoke()
+                    }
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    ButtonClickSecond(
+                        backgroundColor = MaterialTheme.colors.primary,
+                        contentColor = MaterialTheme.colors.onSurface,
+                        text = stringResource(R.string.tambah)
+                    ) {
+                        add.invoke()
+                    }
+                }
+            }
+        }
+    }
+}
+@Composable
 fun FormPengajuanDistributor(
     model: DistributorViewModel,
     add: () -> Unit

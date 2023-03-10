@@ -16,6 +16,20 @@ import javax.inject.Inject
 @HiltViewModel
 class PengajuanObatViewModel @Inject constructor(private val repo: PengajuanObatRepo) :
     ViewModel() {
+
+    val boolean = mutableStateOf(false)
+    val booleanAddForm = mutableStateOf(false)
+    val booleanUpdate = mutableStateOf(false)
+    val booleanUpdateUnit = mutableStateOf(false)
+    val obatType = mutableStateOf("")
+    val obatName = mutableStateOf("")
+    val obatQuantity = mutableStateOf("")
+    val obatCurrentType = mutableStateOf("")
+    val unitCurrentType = mutableStateOf("")
+    val unitType = mutableStateOf("")
+    val obatCurrentQuantity = mutableStateOf("")
+    val obatCurrentName = mutableStateOf("")
+
     private val _uiState = MutableStateFlow<List<DistributorWithObat>>(emptyList())
     val uiState = _uiState.asStateFlow()
 

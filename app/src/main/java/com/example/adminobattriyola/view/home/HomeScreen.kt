@@ -28,6 +28,9 @@ fun HomeScreen() {
     val hideBotNavBar = remember {
         mutableStateOf(false)
     }
+    val mainObat = remember {
+        mutableStateOf(false)
+    }
     val hideFAB = remember {
         mutableStateOf(false)
     }
@@ -73,9 +76,10 @@ fun HomeScreen() {
         Surface(
             color = MaterialTheme.colors.background,
             modifier = Modifier
+                .padding(if (!mainObat.value) paddingValue else PaddingValues(0.dp))
 
         ) {
-            HomeNavigation(navController,hideBotNavBar,hideFAB)
+            HomeNavigation(navController,hideBotNavBar,hideFAB,mainObat)
         }
     }
 }

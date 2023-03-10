@@ -37,19 +37,25 @@ fun ButtonDropDown(
 
     Surface(
         elevation = 0.dp,
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(15.dp),
         color = MaterialTheme.colors.onBackground,
         contentColor = MaterialTheme.colors.primaryVariant,
-        border = BorderStroke(2.dp, MaterialTheme.colors.primaryVariant),
+        border = BorderStroke(1.dp, MaterialTheme.colors.primaryVariant),
         modifier = Modifier
             .clickable {
                 onCLick.invoke() }
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(start = 16.dp, end = 16.dp, top = 20.dp, bottom = 20.dp)
         ) {
-            Row {
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -66,24 +72,25 @@ fun ButtonDropDown(
                         fontSize = 12.sp,
                     )
                 }
-                Spacer(modifier = Modifier.weight(1F))
+
                 Icon(
                     painter = painterResource(id = icons),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(14.dp)
+                        .size(10.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(14.dp))
+
 
             AnimatedVisibility(visible = dropDown.value) {
                 Column {
+                    Spacer(modifier = Modifier.height(16.dp))
                     Divider(
                         color = MaterialTheme.colors.surface.copy(0.18F),
                         modifier = Modifier
                             .clip(RoundedCornerShape(100))
                     )
-                    listObat.forEach {
+                    listObat.forEachIndexed { index, item->
                         Spacer(modifier = Modifier.height(14.dp))
                         Surface(
                             color = Color.Transparent,
@@ -92,22 +99,25 @@ fun ButtonDropDown(
                                 .fillMaxWidth()
                                 .padding(10.dp)
                                 .clickable {
-                                    poli.value = it
+                                    poli.value = item
                                     dropDown.value = false
                                 }
                         ) {
                             Text(
-                                text = it,
+                                text = item,
                                 style = MaterialTheme.typography.h1,
                                 fontSize = 12.sp
                             )
                         }
+
                         Spacer(modifier = Modifier.height(14.dp))
-                        Divider(
-                            color = MaterialTheme.colors.surface.copy(0.18F),
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(100))
-                        )
+                        if (index < listObat.size - 1) {
+                            Divider(
+                                color = MaterialTheme.colors.surface.copy(0.18F),
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(100))
+                            )
+                        }
                     }
                 }
             }

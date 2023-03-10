@@ -640,7 +640,6 @@ fun UpdateDialogDistributor(
     name:String,
     address:String,
     boolean: MutableState<Boolean>,
-    updateDummy:() -> Unit
 ) {
     if (boolean.value) {
         Dialog(onDismissRequest = {
@@ -663,7 +662,6 @@ fun UpdateDialogDistributor(
                     model.distributorCurrentName.value = ""
                     model.distributorCurrentAddress.value = ""
                     model.currentPengajuanType.value = ""
-                    updateDummy.invoke()
                 }
             }
         }

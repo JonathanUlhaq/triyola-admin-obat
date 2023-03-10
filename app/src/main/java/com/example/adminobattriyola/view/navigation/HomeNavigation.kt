@@ -27,7 +27,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 fun HomeNavigation(
     navController: NavHostController,
     hideBotNavBar:MutableState<Boolean>,
-    hideFAB:MutableState<Boolean>
+    hideFAB:MutableState<Boolean>,
+    mainObat:MutableState<Boolean>
 ) {
     val systemUiController = rememberSystemUiController()
     val daftarObat = hiltViewModel<DaftarObatViewModel>()
@@ -39,6 +40,7 @@ fun HomeNavigation(
         composable(AppRoute.DaftarObat.route,
             enterTransition = {fadeIn(tween(700))}
         ) {
+            mainObat.value = true
             hideFAB.value = false
             systemUiController.setStatusBarColor(
                 color = MaterialTheme.colors.primaryVariant
@@ -67,6 +69,7 @@ fun HomeNavigation(
         composable(AppRoute.History.route,
             enterTransition = {fadeIn(tween(700))}
         ) {
+            mainObat.value = false
             hideFAB.value = true
             systemUiController.setStatusBarColor(
                 color = MaterialTheme.colors.primaryVariant
@@ -81,6 +84,7 @@ fun HomeNavigation(
         composable(AppRoute.Pengajuan.route,
             enterTransition = {fadeIn(tween(700))}
         ) {
+            mainObat.value = false
             hideFAB.value = true
             systemUiController.setStatusBarColor(
                 color = MaterialTheme.colors.primaryVariant
