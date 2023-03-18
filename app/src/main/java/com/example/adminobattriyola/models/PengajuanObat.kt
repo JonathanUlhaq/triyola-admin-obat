@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
 )
 data class PengajuanObat(
     @PrimaryKey(autoGenerate = true)
-    var id:Int? = 0,
+    var id:Int = 0,
     var jenisObat:String = "",
     var namaObat:String = "",
     var jumlahObat:String = "",

@@ -27,7 +27,9 @@ fun ButtonDropDown(
     listObat:List<String>,
     icon:Int,
     emptyText:String = "Jenis Obat",
+    focusNext:() -> Unit = {},
     onCLick:() -> Unit ={}
+
 ) {
 
 
@@ -101,6 +103,7 @@ fun ButtonDropDown(
                                 .clickable {
                                     poli.value = item
                                     dropDown.value = false
+                                    focusNext.invoke()
                                 }
                         ) {
                             Text(

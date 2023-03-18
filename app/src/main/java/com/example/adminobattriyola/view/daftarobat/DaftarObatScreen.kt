@@ -21,8 +21,7 @@ import com.example.adminobattriyola.R
 import com.example.adminobattriyola.components.SearchField
 import com.example.adminobattriyola.util.Vibrate
 import com.example.adminobattriyola.widgets.daftarobat.ListObat
-import com.example.adminobattriyola.widgets.daftarobat.ObatCategory
-import com.example.adminobattriyola.widgets.tambahobat.IconFAQ
+import com.example.adminobattriyola.widgets.daftarobat.Category
 import com.example.adminobattriyola.widgets.tambahobat.TambahObatIconFAQ
 
 @Suppress("FrequentlyChangedStateReadInComposition")
@@ -130,7 +129,7 @@ fun DaftarObatScreen(
                         LazyRow(content = {
                             itemsIndexed(viewModel.categoryList) { index, item ->
                                 viewModel.selected.value = index == viewModel.currentIndex.value
-                                ObatCategory(category = item,
+                                Category(category = item,
                                     boolean = viewModel.selected.value,
                                     currentIndex = index,
                                     index = {

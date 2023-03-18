@@ -1,9 +1,7 @@
 package com.example.adminobattriyola.view.riwayatobat
 
-import android.widget.Space
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -11,7 +9,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,8 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.adminobattriyola.R
-import com.example.adminobattriyola.widgets.daftarobat.ObatCategory
-import com.example.adminobattriyola.widgets.tambahobat.TambahObatIconFAQ
+import com.example.adminobattriyola.widgets.daftarobat.Category
 
 @Composable
 fun RiwayatObatScreen(
@@ -108,7 +104,7 @@ fun RiwayatObatScreen(
                             itemsIndexed(viewModel.riwayatCategory) { index, item ->
                                 viewModel.selectedCategory.value =
                                     index == viewModel.currentIndex.value
-                                ObatCategory(
+                                Category(
                                     category = item,
                                     boolean = viewModel.selectedCategory.value,
                                     currentIndex = index,

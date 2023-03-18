@@ -21,11 +21,13 @@ fun ButtonClick(
     text:String,
     modifier: Modifier = Modifier,
     boolean:Boolean = true,
+    roundedeCorners:Int = 20,
+    fontSizes:Int = 16,
     click:()->Unit
 ) {
     Button(
         elevation = ButtonDefaults.elevation(0.dp),
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(roundedeCorners.dp),
         modifier = modifier
             .imePadding(),
         colors = ButtonDefaults.buttonColors(
@@ -37,6 +39,7 @@ fun ButtonClick(
         Text(
             text = text,
             style = MaterialTheme.typography.h2,
+            fontSize = fontSizes.sp,
             modifier = Modifier
                 .padding(4.dp)
         )

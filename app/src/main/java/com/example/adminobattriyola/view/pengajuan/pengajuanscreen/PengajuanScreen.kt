@@ -1,5 +1,6 @@
 package com.example.adminobattriyola.view.pengajuan.pengajuanscreen
 
+import android.icu.text.ListFormatter.Width
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -64,19 +65,20 @@ fun PengajuanScreen(
             modifier = Modifier
                 .padding(14.dp)
         ) {
-            Text(
-                text = "Form Alamat",
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier
-                    .padding(start = 14.dp)
-            )
 
-            Spacer(modifier = Modifier.height(12.dp))
             AnimatedVisibility(visible = uiState.isNotEmpty()) {
                 Column {
                     LazyColumn(content = {
                         item {
+                            Text(
+                                text = "Form Alamat",
+                                style = MaterialTheme.typography.h2,
+                                color = MaterialTheme.colors.onPrimary,
+                                modifier = Modifier
+                                    .padding(start = 14.dp)
+                            )
+
+                            Spacer(modifier = Modifier.height(12.dp))
                             Surface(
                                 color = MaterialTheme.colors.onBackground,
                                 contentColor = MaterialTheme.colors.onPrimary,
@@ -111,43 +113,52 @@ fun PengajuanScreen(
                                                 .fillMaxWidth()
                                                 .wrapContentWidth(Alignment.End)
                                         ) {
-                                            ButtonClickSecond(
-                                                backgroundColor = MaterialTheme.colors.error,
-                                                contentColor = MaterialTheme.colors.onSurface,
-                                                text = "Hapus"
-                                            ) {
-                                                distributor.deleteAll(
-                                                    Distributor(
-                                                        id = uiState.first().id,
-                                                        distributor = uiState.first().distributor,
-                                                        jenis_pengajuan = uiState.first().jenis_pengajuan,
-                                                        alamat = uiState.first().alamat
-                                                    )
-                                                )
-                                            }
+                                               Spacer(modifier = Modifier.width(14.dp))
+                                               ButtonClickSecond(
+                                                   backgroundColor = MaterialTheme.colors.error,
+                                                   contentColor = MaterialTheme.colors.onSurface,
+                                                   text = "Hapus"
+                                               ) {
+                                                   distributor.deleteAll(
+                                                       Distributor(
+                                                           id = uiState.first().id,
+                                                           distributor = uiState.first().distributor,
+                                                           jenis_pengajuan = uiState.first().jenis_pengajuan,
+                                                           alamat = uiState.first().alamat
+                                                       )
+                                                   )
+                                               }
+
                                         }
                                     }
                                 }
                             }
                             Spacer(modifier = Modifier.height(12.dp))
                         }
+                        item {
+                            Text(
+                                text = "Form Obat",
+                                style = MaterialTheme.typography.h2,
+                                color = MaterialTheme.colors.onPrimary,
+                                modifier = Modifier
+                                    .padding(start = 14.dp)
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+                        }
                         if (joinState.isNotEmpty()) {
                             itemsIndexed(joinState.first().list) {
                                 index, item ->
-                                Text(
-                                    text = "Nama: " + item.namaObat,
-                                    color = Color.Black
-                                )
-                                Text(
-                                    text = "Jumlah: " + item.jumlahObat,
-                                    color = Color.Black
-                                )
-                                Text(
-                                    text = "Distributor: " + joinState.first().distributor.distributor,
-                                    color = Color.Black
-                                )
-                                Log.d("PENCETA: ",item.jumlahObat)
-                                Log.d("PENCETB: ",joinState.first().distributor.distributor)
+                                ItemObatPengajuan(value = item,
+                                    model = obat ) {
+                                    obat.deleteById(PengajuanObat(
+                                        id = item.id,
+                                        jenisObat = item.jenisObat,
+                                        namaObat = item.namaObat,
+                                        jumlahObat = item.jumlahObat,
+                                        satuanObat = item.satuanObat,
+                                        distributorId = item.distributorId
+                                    ))
+                                }
                             }
                         }
                         item {

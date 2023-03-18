@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.adminobattriyola.MainActivity
 import com.example.adminobattriyola.view.home.HomeScreen
 import com.example.adminobattriyola.view.login.LoginScree
 import com.example.adminobattriyola.view.login.LoginViewModel
@@ -18,7 +19,9 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun MainNavigation() {
+fun MainNavigation(
+    activity: MainActivity
+) {
     val navController = rememberAnimatedNavController()
 
     val login = remember {
@@ -62,7 +65,7 @@ fun MainNavigation() {
             exitTransition = {
                 slideOutOfContainer(towards = if (login.value) AnimatedContentScope.SlideDirection.Up else AnimatedContentScope.SlideDirection.Left,tween(300))
             }) {
-            HomeScreen()
+            HomeScreen(activity)
         }
     }
 }

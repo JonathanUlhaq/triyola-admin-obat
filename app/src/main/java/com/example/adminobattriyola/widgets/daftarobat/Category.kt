@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ObatCategory(
+fun Category(
     category: String,
     boolean: Boolean,
     currentIndex: Int,
@@ -37,7 +37,7 @@ fun ObatCategory(
             Text(
                 text = category,
                 modifier = Modifier
-                    .padding(12.dp),
+                    .padding(top = 12.dp, bottom = 12.dp, start = 20.dp, end = 20.dp),
                 style = MaterialTheme.typography.body2,
                 color = fontColor
             )

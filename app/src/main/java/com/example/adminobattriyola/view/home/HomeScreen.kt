@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.adminobattriyola.MainActivity
 import com.example.adminobattriyola.R
 import com.example.adminobattriyola.components.BotNavBar
 import com.example.adminobattriyola.view.navigation.AppRoute
@@ -23,7 +24,9 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    activity: MainActivity
+) {
     val navController = rememberAnimatedNavController()
     val hideBotNavBar = remember {
         mutableStateOf(false)
@@ -76,10 +79,10 @@ fun HomeScreen() {
         Surface(
             color = MaterialTheme.colors.background,
             modifier = Modifier
-                .padding(if (!mainObat.value) paddingValue else PaddingValues(0.dp))
+                .padding(paddingValue)
 
         ) {
-            HomeNavigation(navController,hideBotNavBar,hideFAB,mainObat)
+            HomeNavigation(navController,hideBotNavBar,hideFAB,mainObat, activity = activity)
         }
     }
 }

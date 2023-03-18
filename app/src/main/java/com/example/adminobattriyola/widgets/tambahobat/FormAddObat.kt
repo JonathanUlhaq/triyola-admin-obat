@@ -5,8 +5,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -36,6 +40,14 @@ fun FormAddObat(
         stringResource(R.string.ampul),
         stringResource(R.string.pcs)
     )
+    val namaObat = remember {
+        FocusRequester()
+    }
+
+    val jumlahObat = remember {
+        FocusRequester()
+    }
+    val focusManager = LocalFocusManager.current
     Surface(
         color = MaterialTheme.colors.onBackground,
         contentColor = MaterialTheme.colors.onPrimary,
@@ -49,7 +61,10 @@ fun FormAddObat(
                 dropDown = model.booleanAddForm,
                 poli = model.obatType,
                 listObat = listObat,
-                icon = R.drawable.obat_type
+                icon = R.drawable.obat_type,
+                focusNext = {
+                    namaObat.requestFocus()
+                }
             ) {
                 model.booleanAddForm.value = !model.booleanAddForm.value
             }
@@ -60,7 +75,11 @@ fun FormAddObat(
                 icon = R.drawable.obat,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Text,
-                isError = boolean
+                isError = boolean,
+                modifier = Modifier.focusRequester(namaObat),
+                onDone = {
+                    jumlahObat.requestFocus()
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextFields(
@@ -69,7 +88,12 @@ fun FormAddObat(
                 icon = R.drawable.obat_quantity,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Number,
-                isError = boolean
+                isError = boolean,
+                modifier = Modifier.focusRequester(jumlahObat),
+                onDone = {
+                    focusManager.clearFocus()
+                    model.booleanUpdateUnit.value = true
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
             ButtonDropDown(
@@ -131,6 +155,14 @@ fun FormAddObatPengajuan(
         stringResource(R.string.ampul),
         stringResource(R.string.pcs)
     )
+    val namaObat = remember {
+        FocusRequester()
+    }
+
+    val jumlahObat = remember {
+        FocusRequester()
+    }
+    val focusManager = LocalFocusManager.current
     Surface(
         color = MaterialTheme.colors.onBackground,
         contentColor = MaterialTheme.colors.onPrimary,
@@ -144,7 +176,10 @@ fun FormAddObatPengajuan(
                 dropDown = model.booleanAddForm,
                 poli = model.obatType,
                 listObat = listObat,
-                icon = R.drawable.obat_type
+                icon = R.drawable.obat_type,
+                focusNext = {
+                    namaObat.requestFocus()
+                }
             ) {
                 model.booleanAddForm.value = !model.booleanAddForm.value
             }
@@ -155,7 +190,11 @@ fun FormAddObatPengajuan(
                 icon = R.drawable.obat,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Text,
-                isError = boolean
+                isError = boolean,
+                modifier = Modifier.focusRequester(namaObat),
+                onDone = {
+                    jumlahObat.requestFocus()
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextFields(
@@ -164,15 +203,19 @@ fun FormAddObatPengajuan(
                 icon = R.drawable.obat_quantity,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Number,
-                isError = boolean
+                isError = boolean,
+                modifier = Modifier.focusRequester(jumlahObat),
+                onDone = {
+                    focusManager.clearFocus()
+                    model.booleanUpdateUnit.value = true
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
             ButtonDropDown(
                 dropDown = model.booleanUpdateUnit,
                 poli = model.unitType,
                 listObat = listUnit,
-                icon = R.drawable.unit_icon,
-                emptyText = "Satuan"
+                icon = R.drawable.unit_icon
             ) {
                 model.booleanUpdateUnit.value = !model.booleanUpdateUnit.value
             }
@@ -217,6 +260,14 @@ fun FormPengajuanDistributor(
         "Psikotropika",
         "Reguler"
     )
+    val distributor = remember {
+        FocusRequester()
+    }
+
+    val alamat = remember {
+        FocusRequester()
+    }
+    val focusManager = LocalFocusManager.current
     Surface(
         color = MaterialTheme.colors.onBackground,
         contentColor = MaterialTheme.colors.onPrimary,
@@ -231,7 +282,10 @@ fun FormPengajuanDistributor(
                 poli = model.pengajuanType,
                 listObat = listPengajuan,
                 icon = R.drawable.obat_type,
-                emptyText = "Jenis Pengajuan"
+                emptyText = "Jenis Pengajuan",
+                focusNext = {
+                    distributor.requestFocus()
+                }
             ) {
                 model.booleanAddForm.value = !model.booleanAddForm.value
             }
@@ -242,7 +296,12 @@ fun FormPengajuanDistributor(
                 icon = R.drawable.distributor_icon,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Text,
-                isError = false
+                isError = false,
+                modifier = Modifier
+                    .focusRequester(distributor),
+                onDone = {
+                    alamat.requestFocus()
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextFields(
@@ -251,7 +310,12 @@ fun FormPengajuanDistributor(
                 icon = R.drawable.address_icon,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Text,
-                isError = false
+                isError = false,
+                modifier = Modifier
+                    .focusRequester(alamat),
+                onDone = {
+                    focusManager.clearFocus()
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
             Box(

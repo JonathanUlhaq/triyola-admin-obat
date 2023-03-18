@@ -8,11 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.adminobattriyola.MainActivity
 import com.example.adminobattriyola.view.daftarobat.DaftarObatScreen
 import com.example.adminobattriyola.view.daftarobat.DaftarObatViewModel
 import com.example.adminobattriyola.view.pengajuan.main.PengajuanMainScreen
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.DistributorViewModel
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanObatViewModel
+import com.example.adminobattriyola.view.pengajuan.riwayat.detail.DetailPengajuan
 import com.example.adminobattriyola.view.riwayatobat.RiwayatObatScreen
 import com.example.adminobattriyola.view.riwayatobat.RiwayatObatViewModel
 import com.example.adminobattriyola.view.tambahobat.DetailTambahObatViewModel
@@ -28,7 +30,8 @@ fun HomeNavigation(
     navController: NavHostController,
     hideBotNavBar:MutableState<Boolean>,
     hideFAB:MutableState<Boolean>,
-    mainObat:MutableState<Boolean>
+    mainObat:MutableState<Boolean>,
+    activity: MainActivity
 ) {
     val systemUiController = rememberSystemUiController()
     val daftarObat = hiltViewModel<DaftarObatViewModel>()
@@ -94,7 +97,22 @@ fun HomeNavigation(
                 color = MaterialTheme.colors.background
             )
             hideBotNavBar.value = false
-            PengajuanMainScreen(distributor,pengajuanObat)
+            PengajuanMainScreen(distributor,pengajuanObat, navController)
+        }
+        composable(AppRoute.DetailPengajuan.route,
+            enterTransition = {fadeIn(tween(700))}
+        ) {
+            mainObat.value = false
+            hideFAB.value = true
+            systemUiController.setStatusBarColor(
+                color = MaterialTheme.colors.primaryVariant
+            )
+
+            systemUiController.setNavigationBarColor(
+                color = MaterialTheme.colors.background
+            )
+            hideBotNavBar.value = true
+            DetailPengajuan(navController = navController,activity)
         }
 
 

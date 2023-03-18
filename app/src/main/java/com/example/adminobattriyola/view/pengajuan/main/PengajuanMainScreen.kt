@@ -1,7 +1,6 @@
 package com.example.adminobattriyola.view.pengajuan.main
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -11,9 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.DistributorViewModel
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanObatViewModel
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanScreen
+import com.example.adminobattriyola.view.pengajuan.riwayat.RiwayatPengajuanScreen
+import com.example.adminobattriyola.view.pengajuan.statuspengajuan.StatusPengajuan
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
@@ -24,7 +26,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun PengajuanMainScreen(
     distributorViewModel: DistributorViewModel,
-    obat: PengajuanObatViewModel
+    obat: PengajuanObatViewModel,
+    navController:NavController
 ) {
    Scaffold(
        backgroundColor = MaterialTheme.colors.background
@@ -75,14 +78,10 @@ fun PengajuanMainScreen(
                            PengajuanScreen(distributorViewModel,obat)
                        }
                        1 -> {
-                           Box(modifier = Modifier
-                               .fillMaxSize()
-                               .background(Color.Black))
+                           StatusPengajuan()
                        }
                        2 -> {
-                           Box(modifier = Modifier
-                               .fillMaxSize()
-                               .background(Color.Blue))
+                           RiwayatPengajuanScreen(navController = navController)
                        }
                    }
 
