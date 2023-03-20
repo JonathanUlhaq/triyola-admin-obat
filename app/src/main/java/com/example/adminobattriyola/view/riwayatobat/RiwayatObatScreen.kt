@@ -1,11 +1,7 @@
 package com.example.adminobattriyola.view.riwayatobat
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,19 +10,19 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.adminobattriyola.R
 import com.example.adminobattriyola.widgets.daftarobat.Category
+import com.example.adminobattriyola.widgets.riwayatobat.ContentDetail
+import com.example.adminobattriyola.widgets.riwayatobat.RiwayatObatContent
 
 @Composable
 fun RiwayatObatScreen(
@@ -154,101 +150,5 @@ fun RiwayatObatScreen(
     }
 }
 
-@Composable
-fun RiwayatObatContent(boolean: Boolean,contentDetailTransaksi:@Composable () -> Unit, onClick:() -> Unit) {
 
-    val animateIcon by animateIntAsState(targetValue = if (boolean) R.drawable.arrow_down else R.drawable.arrow_right)
 
-    Surface(
-        color = Color.Transparent,
-        border = BorderStroke(2.dp, MaterialTheme.colors.onPrimary),
-        shape = RoundedCornerShape(12.dp),
-        modifier = Modifier
-            .clickable { 
-                onClick.invoke()
-            }
-    ) {
-        Column (
-            modifier = Modifier
-                .padding(22.dp)
-                ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Januari 2023",
-                    style = MaterialTheme.typography.h1,
-                    fontSize = 14.sp ,
-                    color = MaterialTheme.colors.onPrimary
-                )
-
-                Icon(painter = painterResource(id = animateIcon),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(12.dp),
-                    tint = MaterialTheme.colors.onPrimary)
-
-            }
-            AnimatedVisibility(visible = boolean) {
-                Column {
-                    Spacer(modifier = Modifier.height(14.dp))
-                    Divider(
-                        color = MaterialTheme.colors.surface.copy(0.2F),
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(50))
-                    )
-                    Spacer(modifier = Modifier.height(18.dp))
-                    contentDetailTransaksi.invoke()
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun ContentDetail(status:String) {
-    val animateColor by animateColorAsState(targetValue = if (status == "Keluar") MaterialTheme.colors.error else MaterialTheme.colors.onPrimary)
-    Surface(
-        shape = RoundedCornerShape(12.dp),
-        color = animateColor,
-        elevation = 0.dp
-    ) {
-        Row(modifier = Modifier
-            .padding(20.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween) {
-            Column(
-                horizontalAlignment = Alignment.Start,
-            ) {
-                Text(text = "Hufagrip",
-                    style = MaterialTheme.typography.h1,
-                    color = MaterialTheme.colors.onSurface,
-                    fontSize = 14.sp)
-                Spacer(modifier = Modifier.height(14.dp))
-                Text(text = "Hufagrip",
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.onSurface)
-            }
-            Column(
-                horizontalAlignment = Alignment.Start,
-            ) {
-                Text(text = "$status: 4",
-                    style = MaterialTheme.typography.h1,
-                    color = MaterialTheme.colors.onSurface,
-                    fontSize = 14.sp)
-                Spacer(modifier = Modifier.height(14.dp))
-                Text(text = "Box",
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.onSurface)
-            }
-            Text(text = "03/03/2023",
-                style = MaterialTheme.typography.h1,
-                color = MaterialTheme.colors.onSurface,
-                fontSize = 14.sp)
-        }
-    }
-}

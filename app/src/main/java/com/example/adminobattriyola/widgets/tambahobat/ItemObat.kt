@@ -11,16 +11,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.adminobattriyola.R
 import com.example.adminobattriyola.components.ButtonClickSecond
 import com.example.adminobattriyola.components.SwipeDismissEffect
-import com.example.adminobattriyola.models.Distributor
 import com.example.adminobattriyola.models.PengajuanObat
 import com.example.adminobattriyola.models.TambahObatModel
 import com.example.adminobattriyola.util.Vibrate
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanObatViewModel
 import com.example.adminobattriyola.view.tambahobat.TambahObatViewModel
+import com.example.adminobattriyola.widgets.pengajuan.UpdateDialogPengajuan
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
@@ -119,26 +120,23 @@ fun ItemObat(
 }
 
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun ItemObatPengajuan(
     value: PengajuanObat,
     model: PengajuanObatViewModel,
     delete: () -> Unit
 ) {
-    val showDialog = remember {
-        mutableStateOf(false)
-    }
+
     val showUpdateDialog = remember {
         mutableStateOf(false)
     }
 
-    val distributor_id = model.uiState.collectAsState().value.first().distributor.id
+    val distributorId = model.uiState.collectAsState().value.first().distributor.id
 
     UpdateDialogPengajuan(
         model = model,
         id = value.id,
-        distributor_id = distributor_id ,
+        distributor_id = distributorId ,
         type = value.jenisObat,
         name = value.namaObat,
         quantity = value.jumlahObat,
@@ -186,7 +184,7 @@ fun ItemObatPengajuan(
                         ButtonClickSecond(
                             backgroundColor = MaterialTheme.colors.error,
                             contentColor = MaterialTheme.colors.onSurface,
-                            text = "Hapus"
+                            text = stringResource(id = R.string.hapus)
                         ) {
                             delete.invoke()
                         }

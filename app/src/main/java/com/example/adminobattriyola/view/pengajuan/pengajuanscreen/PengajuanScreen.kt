@@ -1,13 +1,10 @@
 package com.example.adminobattriyola.view.pengajuan.pengajuanscreen
 
-import android.icu.text.ListFormatter.Width
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -21,15 +18,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.adminobattriyola.R
 import com.example.adminobattriyola.components.ButtonClick
 import com.example.adminobattriyola.components.ButtonClickSecond
 import com.example.adminobattriyola.models.Distributor
 import com.example.adminobattriyola.models.PengajuanObat
-import com.example.adminobattriyola.models.TambahObatModel
-import com.example.adminobattriyola.widgets.tambahobat.*
+import com.example.adminobattriyola.widgets.pengajuan.UpdateDialogDistributor
+import com.example.adminobattriyola.widgets.tambahobat.FormAddObatPengajuan
+import com.example.adminobattriyola.widgets.tambahobat.FormPengajuanDistributor
+import com.example.adminobattriyola.widgets.tambahobat.ItemObatPengajuan
+import com.example.adminobattriyola.widgets.tambahobat.PreviewForm
 
 @Composable
 fun PengajuanScreen(
@@ -48,7 +48,6 @@ fun PengajuanScreen(
     if (uiState.isNotEmpty()) {
         UpdateDialogDistributor(
             model = distributor,
-            id = uiState.first().id,
             type = uiState.first().jenis_pengajuan,
             name = uiState.first().distributor,
             address = uiState.first().alamat,
@@ -71,7 +70,7 @@ fun PengajuanScreen(
                     LazyColumn(content = {
                         item {
                             Text(
-                                text = "Form Alamat",
+                                text = stringResource(R.string.form_alamat),
                                 style = MaterialTheme.typography.h2,
                                 color = MaterialTheme.colors.onPrimary,
                                 modifier = Modifier
@@ -117,7 +116,7 @@ fun PengajuanScreen(
                                                ButtonClickSecond(
                                                    backgroundColor = MaterialTheme.colors.error,
                                                    contentColor = MaterialTheme.colors.onSurface,
-                                                   text = "Hapus"
+                                                   text = stringResource(R.string.hapus)
                                                ) {
                                                    distributor.deleteAll(
                                                        Distributor(
@@ -147,7 +146,7 @@ fun PengajuanScreen(
                         }
                         if (joinState.isNotEmpty()) {
                             itemsIndexed(joinState.first().list) {
-                                index, item ->
+                                    _, item ->
                                 ItemObatPengajuan(value = item,
                                     model = obat ) {
                                     obat.deleteById(PengajuanObat(
@@ -182,7 +181,6 @@ fun PengajuanScreen(
                                                     distributorId = uiState.first().id
                                                 )
                                             )
-                                            Log.d("PENCET: ","KEPENCET")
                                             addForm.value = false
                                             obat.obatType.value = ""
                                             obat.obatName.value = ""

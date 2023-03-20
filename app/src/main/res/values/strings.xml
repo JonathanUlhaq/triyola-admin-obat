@@ -72,6 +72,16 @@
     <string name="tambah_obat_guide_c_c">\ untuk</string>
     <string name="tambah_obat_guide_c_d">\ Membersihkan Penanda Penghapusan</string>
     <string name="title_riwayat_obat">Riwayat Transaksi Obat</string>
+    <string name="form_alamat">Form Alamat</string>
+    <string name="hapus">Hapus</string>
+
+    <!--    Jenis Pengajuan Obat-->
+    <string name="psikotropika">Psikotropika</string>
+    <string name="reguler">Reguler</string>
+<!--    Update Dialog-->
+    <string name="distributor_update_desc">Ubah Informasi Distributor</string>
+
+
 
 
 </resources>
