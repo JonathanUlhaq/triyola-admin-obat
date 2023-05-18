@@ -15,6 +15,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -116,6 +117,7 @@ fun LoginScree(
                                 keyboardType = KeyboardType.Text,
                                 modifier = Modifier
                                     .focusRequester(usernameFocus)
+                                    .testTag("username")
                             ) {
                                 passwordFocus.requestFocus()
                             }
@@ -129,6 +131,7 @@ fun LoginScree(
                                 visualTransformation = PasswordVisualTransformation(),
                                 modifier = Modifier
                                     .focusRequester(passwordFocus)
+                                    .testTag("password")
                             ) {
                                 focusManager.clearFocus()
                             }
@@ -137,7 +140,8 @@ fun LoginScree(
                                 contentColor = MaterialTheme.colors.primary ,
                                 text = stringResource(R.string.masuk),
                                 modifier = Modifier
-                                    .fillMaxWidth()) {
+                                    .fillMaxWidth()
+                                    .testTag("masuk")) {
                                 navController.navigate(AppRoute.HomeNavigation.route) {
                                     popUpTo(0)
                                 }

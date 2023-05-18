@@ -78,7 +78,7 @@ fun PengajuanMainScreen(
                            PengajuanScreen(distributorViewModel,obat)
                        }
                        1 -> {
-                           StatusPengajuan()
+                           StatusPengajuan(navController)
                        }
                        2 -> {
                            RiwayatPengajuanScreen(navController = navController)

@@ -69,7 +69,7 @@ fun ButtonClickSecond(
             style = MaterialTheme.typography.h1,
             fontSize = 12.sp,
             modifier = Modifier
-                .padding(8.dp)
+                .padding(2.dp)
         )
     }
 }

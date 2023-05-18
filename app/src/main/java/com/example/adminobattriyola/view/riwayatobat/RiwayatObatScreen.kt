@@ -124,7 +124,7 @@ fun RiwayatObatScreen(
                                 items(10) {
                                     showDetail.value = it == currentIndex.value
                                     RiwayatObatContent(showDetail.value, contentDetailTransaksi = {
-                                        for (i in 0..2) {
+                                        for (i in 0..1) {
                                             ContentDetail(status = "Keluar")
                                             Spacer(modifier = Modifier.height(8.dp))
                                             ContentDetail(status = "Masuk")

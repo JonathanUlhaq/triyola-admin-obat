@@ -1,12 +1,16 @@
 package com.example.adminobattriyola.widgets.statuspengajuan
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -15,6 +19,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.adminobattriyola.components.ButtonClick
+import com.example.adminobattriyola.view.navigation.AppRoute
 
 @Composable
 fun RiwayatStatusPengajuanContent(
@@ -22,9 +29,17 @@ fun RiwayatStatusPengajuanContent(
     tanggal: String,
     distributor: String,
     alamat: String,
-    status: String
+    status: String,
+    navController:NavController
 ) {
+    val expand = remember {
+        mutableStateOf(false)
+    }
+
     val namaObat = listOf(
+        "Hufagrip",
+        "Mixagrip",
+        "Paramex",
         "Hufagrip",
         "Mixagrip",
         "Paramex",
@@ -33,13 +48,22 @@ fun RiwayatStatusPengajuanContent(
         "Sirup",
         "Tablet",
         "Tablet",
+        "Sirup",
+        "Tablet",
+        "Tablet",
     )
     val jumlahObat = listOf(
         3,
         4,
         6,
+        3,
+        4,
+        6,
     )
     val satuanObat = listOf(
+        "Box",
+        "Pcs",
+        "Pcs",
         "Box",
         "Pcs",
         "Pcs",
@@ -101,7 +125,7 @@ fun RiwayatStatusPengajuanContent(
                 color = MaterialTheme.colors.surface
             )
             Spacer(modifier = Modifier.height(12.dp))
-            for (it in 0..2) {
+            for (it in 0..if (expand.value) namaObat.size-1 else 2) {
                 RiwayatStatusPengajuanObatList(
                     namaObat = namaObat[it],
                     jenisObat = jenisObat[it],
@@ -110,23 +134,39 @@ fun RiwayatStatusPengajuanContent(
                 )
                 Spacer(modifier = Modifier.height(15.dp))
             }
-            if (namaObat.size > 3) {
+            if (namaObat.size > 2) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentWidth(Alignment.End)
                 ) {
                     Text(
-                        text = "Selengkapnya",
+                        text = if (expand.value) "Secukupnya" else "Selengkapnya",
                         style = MaterialTheme.typography.caption,
                         fontSize = 10.sp,
                         color = MaterialTheme.colors.onPrimary.copy(0.7F),
-                        textDecoration = TextDecoration.Underline
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable {
+                            expand.value = !expand.value
+                            Log.d("EXPAND VALUE: ",expand.value.toString())
+                        }
                     )
                 }
                 Spacer(modifier = Modifier.height(6.dp))
             }
-
+            if (status == "Disetujui") {
+                ButtonClick(
+                    backgroundColor = MaterialTheme.colors.secondary.copy(0.6F),
+                    contentColor = MaterialTheme.colors.onSurface,
+                    text = "Detail",
+                    modifier = Modifier.fillMaxWidth(),
+                    roundedeCorners = 6,
+                    fontSizes = 14
+                ) {
+                    navController.navigate(AppRoute.DetailPengajuan.route)
+                }
+                Spacer(modifier = Modifier.height(6.dp))
+            }
             Text(
                 text = buildAnnotatedString {
                     withStyle(

@@ -47,24 +47,34 @@ fun ListObat(
                 FormAddObat(
                     model, boolean = isError.value,
                     add = {
-                        if (model.obatType.value.isNotEmpty() && model.obatName.value.isNotEmpty() && model.obatQuantity.value.isNotEmpty()) {
+                        if (model.obatType.value.isNotEmpty() && model.obatName.value.isNotEmpty() && model.obatQuantity.value.isNotEmpty()&& model.dosisObat.value.isNotEmpty()) {
                             model.insertData(
                                 TambahObatModel(
                                     jenisObat = model.obatType.value,
                                     namaObat = model.obatName.value,
                                     jumlahObat = model.obatQuantity.value,
-                                    satuanObat = model.unitType.value
+                                    satuanObat = model.unitType.value,
+                                    dosisObat = model.dosisObat.value
                                 )
                             )
                             addForm.value = false
                             model.obatType.value = ""
                             model.obatName.value = ""
                             model.obatQuantity.value = ""
+                            model.dosisObat.value = ""
+                            model.unitType.value = ""
                             isError.value = false
                         } else {
                             isError.value = true
                         }
                     }) {
+                    addForm.value = false
+                    model.obatType.value = ""
+                    model.obatName.value = ""
+                    model.obatQuantity.value = ""
+                    model.dosisObat.value = ""
+                    model.unitType.value = ""
+                    isError.value = false
                     addForm.value = false
                 }
             }

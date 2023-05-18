@@ -140,7 +140,8 @@ fun UpdateDialog(
                             namaObat = model.obatCurrentName.value,
                             jenisObat = model.obatCurrentType.value,
                             jumlahObat = model.obatCurrentQuantity.value,
-                            satuanObat = model.unitCurrentType.value
+                            satuanObat = model.unitCurrentType.value,
+                            dosisObat = model.dosisObatCurrent.value
                         )
                     )
                     boolean.value = false

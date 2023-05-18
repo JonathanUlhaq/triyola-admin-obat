@@ -14,6 +14,7 @@
     <string name="riwayat">Riwayat</string>
     <string name="pengajuan">Pengajuan</string>
     <string name="simpan">Simpan</string>
+    <string name="ajukan">Ajukan</string>
     <string name="ubah">Ubah</string>
     <string name="title_daftar_obat">Daftar Obat</string>
     <string name="jumlah_text">Jumlah:</string>
@@ -26,6 +27,7 @@
     <string name="tidak">Tidak</string>
     <string name="iya">Iya</string>
     <string name="nama_obat">Nama Obat</string>
+    <string name="dosis_obat">Dosis Obat (mg)</string>
     <string name="jumlah_obat">Jumlah Obat</string>
     <string name="ubah_obat">Ubah Obat</string>
     <string name="confirm_add_obat">Konfirmasi Penambahan Data Obat</string>
@@ -72,7 +74,7 @@
     <string name="tambah_obat_guide_c_c">\ untuk</string>
     <string name="tambah_obat_guide_c_d">\ Membersihkan Penanda Penghapusan</string>
     <string name="title_riwayat_obat">Riwayat Transaksi Obat</string>
-    <string name="form_alamat">Form Alamat</string>
+    <string name="form_alamat">Form Pengajuan</string>
     <string name="hapus">Hapus</string>
 
     <!--    Jenis Pengajuan Obat-->

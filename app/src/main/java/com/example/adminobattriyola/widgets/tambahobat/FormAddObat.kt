@@ -47,6 +47,10 @@ fun FormAddObat(
     val jumlahObat = remember {
         FocusRequester()
     }
+
+    val dosisObat = remember {
+        FocusRequester()
+    }
     val focusManager = LocalFocusManager.current
     Surface(
         color = MaterialTheme.colors.onBackground,
@@ -78,6 +82,19 @@ fun FormAddObat(
                 isError = boolean,
                 modifier = Modifier.focusRequester(namaObat),
                 onDone = {
+                    dosisObat.requestFocus()
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextFields(
+                value = model.dosisObat,
+                label = stringResource(R.string.dosis_obat),
+                icon = R.drawable.dosis_obat_icon,
+                color = MaterialTheme.colors.onPrimary,
+                keyboardType = KeyboardType.Number,
+                isError = boolean,
+                modifier = Modifier.focusRequester(dosisObat),
+                onDone = {
                     jumlahObat.requestFocus()
                 }
             )
@@ -100,7 +117,8 @@ fun FormAddObat(
                 dropDown = model.booleanUpdateUnit,
                 poli = model.unitType,
                 listObat = listUnit,
-                icon = R.drawable.unit_icon
+                icon = R.drawable.unit_icon,
+                emptyText = "Satuan Obat"
             ) {
                 model.booleanUpdateUnit.value = !model.booleanUpdateUnit.value
             }
@@ -162,6 +180,9 @@ fun FormAddObatPengajuan(
     val jumlahObat = remember {
         FocusRequester()
     }
+    val dosis = remember {
+        FocusRequester()
+    }
     val focusManager = LocalFocusManager.current
     Surface(
         color = MaterialTheme.colors.onBackground,
@@ -193,6 +214,19 @@ fun FormAddObatPengajuan(
                 isError = boolean,
                 modifier = Modifier.focusRequester(namaObat),
                 onDone = {
+                    dosis.requestFocus()
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            OutlinedTextFields(
+                value = model.dosis,
+                label = stringResource(R.string.dosis_obat),
+                icon = R.drawable.dosis_obat_icon,
+                color = MaterialTheme.colors.onPrimary,
+                keyboardType = KeyboardType.Number,
+                isError = boolean,
+                modifier = Modifier.focusRequester(dosis),
+                onDone = {
                     jumlahObat.requestFocus()
                 }
             )
@@ -215,7 +249,8 @@ fun FormAddObatPengajuan(
                 dropDown = model.booleanUpdateUnit,
                 poli = model.unitType,
                 listObat = listUnit,
-                icon = R.drawable.unit_icon
+                icon = R.drawable.unit_icon,
+                emptyText = "Satuan Obat"
             ) {
                 model.booleanUpdateUnit.value = !model.booleanUpdateUnit.value
             }

@@ -18,11 +18,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.adminobattriyola.widgets.daftarobat.Category
 import com.example.adminobattriyola.widgets.statuspengajuan.RiwayatStatusPengajuanContent
 
 @Composable
-fun StatusPengajuan() {
+fun StatusPengajuan(
+    navController:NavController
+) {
     val listStatus = listOf(
         "Semua",
         "Diproses",
@@ -105,7 +108,8 @@ fun StatusPengajuan() {
                                 tanggal = tanggal[index],
                                 distributor = distributor[index],
                                 alamat = alamat[index],
-                                status = status[index]
+                                status = status[index],
+                                navController = navController
                             )
                             Spacer(modifier = Modifier.height(14.dp))
                         }

@@ -11,6 +11,8 @@ data class TambahObatModel(
     val id:Int = 0,
     @ColumnInfo(name = "jenis_obat")
     var jenisObat:String,
+    @ColumnInfo(name = "dosis_obat")
+    var dosisObat:String,
     @ColumnInfo(name = "nama_obat")
     var namaObat:String,
     @ColumnInfo(name = "jumlah_obat")

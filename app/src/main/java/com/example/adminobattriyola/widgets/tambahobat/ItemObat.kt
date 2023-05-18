@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.adminobattriyola.R
 import com.example.adminobattriyola.components.ButtonClickSecond
 import com.example.adminobattriyola.components.SwipeDismissEffect
@@ -93,22 +94,51 @@ fun ItemObat(
                 modifier = Modifier
                     .padding(14.dp)
             ) {
-
+                Text("Jenis Obat",
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.onPrimary,
+                    fontSize = 12.sp)
+                Spacer(modifier = Modifier.height(10.dp))
                 PreviewForm(
-                    icon = R.drawable.obat,
+                    icon = R.drawable.jenis_obat_icon,
                     label = value.jenisObat
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                Text("Nama Obat",
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.onPrimary,
+                    fontSize = 12.sp)
+                Spacer(modifier = Modifier.height(10.dp))
                 PreviewForm(
                     icon = R.drawable.obat,
                     label = value.namaObat
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                Text("Dosis Obat",
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.onPrimary,
+                    fontSize = 12.sp)
+                Spacer(modifier = Modifier.height(10.dp))
+                PreviewForm(
+                    icon = R.drawable.dosis_obat_icon,
+                    label = value.dosisObat
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text("Jumlah Obat",
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.onPrimary,
+                    fontSize = 12.sp)
+                Spacer(modifier = Modifier.height(10.dp))
                 PreviewForm(
                     icon = R.drawable.obat_quantity,
                     label = value.jumlahObat
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                Text("Satuan Obat",
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.onPrimary,
+                    fontSize = 12.sp)
+                Spacer(modifier = Modifier.height(10.dp))
                 PreviewForm(
                     icon = R.drawable.unit_icon,
                     label = value.satuanObat
@@ -154,22 +184,51 @@ fun ItemObatPengajuan(
                 modifier = Modifier
                     .padding(14.dp)
             ) {
-
+                Text("Jenis Obat",
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.onPrimary,
+                    fontSize = 12.sp)
+                Spacer(modifier = Modifier.height(10.dp))
                 PreviewForm(
-                    icon = R.drawable.obat,
+                    icon = R.drawable.jenis_obat_icon,
                     label = value.jenisObat
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                Text("Nama Obat",
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.onPrimary,
+                    fontSize = 12.sp)
+                Spacer(modifier = Modifier.height(10.dp))
                 PreviewForm(
                     icon = R.drawable.obat,
                     label = value.namaObat
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                Text("Dosis Obat",
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.onPrimary,
+                    fontSize = 12.sp)
+                Spacer(modifier = Modifier.height(10.dp))
+                PreviewForm(
+                    icon = R.drawable.dosis_obat_icon,
+                    label = value.dosis
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text("Jumlah Obat",
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.onPrimary,
+                    fontSize = 12.sp)
+                Spacer(modifier = Modifier.height(10.dp))
                 PreviewForm(
                     icon = R.drawable.obat_quantity,
                     label = value.jumlahObat
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                Text("Satuan Obat",
+                    style = MaterialTheme.typography.h1,
+                    color = MaterialTheme.colors.onPrimary,
+                    fontSize = 12.sp)
+                Spacer(modifier = Modifier.height(10.dp))
                 PreviewForm(
                     icon = R.drawable.unit_icon,
                     label = value.satuanObat

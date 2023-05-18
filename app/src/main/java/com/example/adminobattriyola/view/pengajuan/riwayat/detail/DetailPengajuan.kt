@@ -23,6 +23,7 @@ import com.example.adminobattriyola.components.TextTitle
 import com.example.adminobattriyola.util.downloadFile
 import com.example.adminobattriyola.util.shareFileLogic
 import com.example.adminobattriyola.util.shimeringColor
+import com.example.adminobattriyola.widgets.detailpengajuan.ItemTitle
 import com.rizzi.bouquet.ResourceType
 import com.rizzi.bouquet.VerticalPDFReader
 import com.rizzi.bouquet.rememberVerticalPdfReaderState
@@ -125,9 +126,12 @@ fun DetailPengajuan(
                         .background(MaterialTheme.colors.onPrimary)
                         .height(30.dp)
                 )
+                Spacer(modifier = Modifier.height(24.dp))
+                ItemTitle()
+                Spacer(modifier = Modifier.height(16.dp))
                 Surface(
                     modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp, top = 26.dp, bottom = 26.dp),
+                        .padding(start = 16.dp, end = 16.dp,  bottom = 16.dp),
                     shape = RoundedCornerShape(20.dp),
                     color = MaterialTheme.colors.background
                 ) {

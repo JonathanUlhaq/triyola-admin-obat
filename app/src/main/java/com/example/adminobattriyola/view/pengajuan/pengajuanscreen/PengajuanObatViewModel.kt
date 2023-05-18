@@ -27,6 +27,7 @@ class PengajuanObatViewModel @Inject constructor(private val repo: PengajuanObat
     val obatCurrentType = mutableStateOf("")
     val unitCurrentType = mutableStateOf("")
     val unitType = mutableStateOf("")
+    val dosis = mutableStateOf("")
     val obatCurrentQuantity = mutableStateOf("")
     val obatCurrentName = mutableStateOf("")
 

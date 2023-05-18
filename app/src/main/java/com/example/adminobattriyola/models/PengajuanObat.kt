@@ -24,6 +24,7 @@ data class PengajuanObat(
     var namaObat:String = "",
     var jumlahObat:String = "",
     var satuanObat:String = "",
+    var dosis:String = "",
     @ColumnInfo(index = true)
     var distributorId:Int = 0
 )

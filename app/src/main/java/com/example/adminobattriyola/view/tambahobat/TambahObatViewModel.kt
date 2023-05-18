@@ -28,6 +28,8 @@ class TambahObatViewModel @Inject constructor(private val repo: TambahObatRepo):
     val obatQuantity = mutableStateOf("")
     val obatCurrentType = mutableStateOf("")
     val unitCurrentType = mutableStateOf("")
+    val dosisObatCurrent = mutableStateOf("")
+    val dosisObat = mutableStateOf("")
     val unitType = mutableStateOf("")
     val obatCurrentQuantity = mutableStateOf("")
     val obatCurrentName = mutableStateOf("")
