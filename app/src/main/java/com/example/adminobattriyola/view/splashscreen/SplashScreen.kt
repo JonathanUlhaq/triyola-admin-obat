@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -21,12 +19,15 @@ import com.example.adminobattriyola.view.navigation.AppRoute
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 import com.example.adminobattriyola.R
+import com.example.adminobattriyola.view.navigation.NavigationViewModel
 
 @Composable
 fun SplashScreen(
-    navController: NavController
+    navController: NavController,
+    vm:NavigationViewModel
 ) {
 
+    val uiState = vm.uiState.collectAsState().value
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
         color = MaterialTheme.colors.primary
@@ -35,7 +36,11 @@ fun SplashScreen(
         color = MaterialTheme.colors.background
     )
 
+   val autoLogin = remember {
+       mutableStateOf(false)
+   }
 
+    autoLogin.value = !vm.getToken().isNullOrEmpty()
     val scalable = remember {
         Animatable(10F)
     }
@@ -67,8 +72,14 @@ fun SplashScreen(
             )
         )
         delay(200)
-        navController.navigate(AppRoute.LoginScreen.route) {
-            popUpTo(0)
+        if (!autoLogin.value) {
+            navController.navigate(AppRoute.LoginScreen.route) {
+                popUpTo(0)
+            }
+        } else {
+            navController.navigate(AppRoute.HomeNavigation.route) {
+                popUpTo(0)
+            }
         }
     } )
 

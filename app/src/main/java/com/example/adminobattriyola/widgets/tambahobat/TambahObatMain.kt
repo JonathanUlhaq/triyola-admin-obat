@@ -17,6 +17,7 @@ fun TambahObatMain(
     uiState: List<TambahObatModel>,
     model: TambahObatViewModel,
     addForm: MutableState<Boolean>,
+    saveDialog:MutableState<Boolean>,
     isError: MutableState<Boolean>
 ) {
     Column {
@@ -33,7 +34,7 @@ fun TambahObatMain(
             modifier = Modifier
                 .padding(start = 14.dp, end = 14.dp)
         ) {
-            ListObat(uiState, model, addForm, isError) { item ->
+            ListObat(uiState, model, addForm, isError,saveDialog) { item ->
                 model.deleteDatabyId(item)
             }
 

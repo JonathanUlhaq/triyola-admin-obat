@@ -25,6 +25,7 @@ class DistributorViewModel @Inject constructor(private val repo:DistributorRepo)
     val distributorCurrentAddress = mutableStateOf("")
     val distributorCurrentName = mutableStateOf("")
     val currentPengajuanType = mutableStateOf("")
+    val currentDosis = mutableStateOf("")
 
     fun getAllData() = viewModelScope.launch {
         repo.getAllData().collect {

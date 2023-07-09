@@ -1,10 +1,14 @@
 package com.example.adminobattriyola.view.tambahobat
 
+import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.adminobattriyola.models.TambahObatModel
+import com.example.adminobattriyola.models.addobat.AddObatResponse
+import com.example.adminobattriyola.repositories.AddObatRepo
 import com.example.adminobattriyola.repositories.TambahObatRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +19,10 @@ import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class TambahObatViewModel @Inject constructor(private val repo: TambahObatRepo):ViewModel() {
+class TambahObatViewModel @Inject constructor(
+    private val repo: TambahObatRepo,
+    private val apiRepo: AddObatRepo
+) : ViewModel() {
     private val _uiState = MutableStateFlow<List<TambahObatModel>>(emptyList())
     val uiState = _uiState.asStateFlow()
 
@@ -36,8 +43,7 @@ class TambahObatViewModel @Inject constructor(private val repo: TambahObatRepo):
 
     fun getAllData() =
         viewModelScope.launch {
-            repo.getAllData().distinctUntilChanged().collect {
-                list ->
+            repo.getAllData().distinctUntilChanged().collect { list ->
                 if (list.isNotEmpty()) {
                     _uiState.value = list
                 } else {
@@ -46,10 +52,53 @@ class TambahObatViewModel @Inject constructor(private val repo: TambahObatRepo):
             }
         }
 
-    fun getDataById(id:Int) =
+    fun insertObatSever(
+        namaObat: String,
+        jenisObat: String,
+        satuan: String,
+        dosis: String,
+        isError: MutableState<Boolean>,
+        event: (AddObatResponse) -> Unit
+    ) =
         viewModelScope.launch {
-            repo.getDataById(id).distinctUntilChanged().collect {
-                    list ->
+            try {
+                apiRepo.addObat(
+                    namaObat = namaObat,
+                    jenisObat = jenisObat,
+                    satuan = satuan,
+                    dosis = dosis
+                ).let {
+                    event.invoke(it)
+                    isError.value = !it.success!!
+                }
+            } catch (e: Exception) {
+                Log.e("ERROR ADD OBAT ", e.toString())
+                isError.value = true
+            }
+        }
+
+    fun insertTransaksiObat(
+        obat_id: Int,
+        satuan: String,
+        jumlah: Int,
+        jenis_transaksi: String,
+        event:() -> Unit
+    ) =
+        viewModelScope.launch {
+            try {
+                apiRepo.addTransaksiObat(
+                    obat_id, satuan, jumlah, jenis_transaksi
+                ).let {
+                    event.invoke()
+                }
+            } catch (e: Exception) {
+                Log.e("Insert transaksi error ",e.toString())
+            }
+        }
+
+    fun getDataById(id: Int) =
+        viewModelScope.launch {
+            repo.getDataById(id).distinctUntilChanged().collect { list ->
                 if (list.isNotEmpty()) {
                     _uiState.value = list
                 } else {
@@ -80,7 +129,6 @@ class TambahObatViewModel @Inject constructor(private val repo: TambahObatRepo):
         viewModelScope.launch {
             repo.deleteAllData()
         }
-
 
 
 }

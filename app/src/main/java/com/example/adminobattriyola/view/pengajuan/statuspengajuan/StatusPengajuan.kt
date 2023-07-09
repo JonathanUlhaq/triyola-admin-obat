@@ -13,6 +13,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -24,8 +25,15 @@ import com.example.adminobattriyola.widgets.statuspengajuan.RiwayatStatusPengaju
 
 @Composable
 fun StatusPengajuan(
-    navController:NavController
+    navController:NavController,
+    viewModel:StatusPengajuanViewModel
 ) {
+    val search = remember {
+        mutableStateOf("semua")
+    }
+    viewModel.getStatus(search.value)
+    val uiState = viewModel.uiState.collectAsState().value
+
     val listStatus = listOf(
         "Semua",
         "Diproses",
@@ -85,6 +93,7 @@ fun StatusPengajuan(
                         Category(category = item,
                             boolean = selected.value,
                             currentIndex = index,
+                            searchValue = search,
                             index = {
                                 currentSelected.value = it
                             })
@@ -102,17 +111,20 @@ fun StatusPengajuan(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     LazyColumn(content = {
-                        itemsIndexed(tipePengajuan) { index, item ->
-                            RiwayatStatusPengajuanContent(
-                                tipePengajuan = item,
-                                tanggal = tanggal[index],
-                                distributor = distributor[index],
-                                alamat = alamat[index],
-                                status = status[index],
-                                navController = navController
-                            )
-                            Spacer(modifier = Modifier.height(14.dp))
-                        }
+                       if (uiState.pengajuan != null) {
+                           itemsIndexed(uiState.pengajuan) { index, item ->
+                               RiwayatStatusPengajuanContent(
+                                   tipePengajuan = item.jenis!!,
+                                   tanggal = item.tanggal!!,
+                                   distributor = item.distributor!!,
+                                   alamat = item.alamat!!,
+                                   status = item.status!!,
+                                   obat = item.obat_ajuan!!,
+                                   navController = navController
+                               )
+                               Spacer(modifier = Modifier.height(14.dp))
+                           }
+                       }
                     })
                 }
             }

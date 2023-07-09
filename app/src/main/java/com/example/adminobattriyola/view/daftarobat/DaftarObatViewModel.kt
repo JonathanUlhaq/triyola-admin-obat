@@ -1,13 +1,56 @@
 package com.example.adminobattriyola.view.daftarobat
 
+import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.adminobattriyola.models.obat.Obat
+import com.example.adminobattriyola.models.obat.ObatResponse
+import com.example.adminobattriyola.repositories.ObatRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DaftarObatViewModel @Inject constructor():ViewModel() {
+class DaftarObatViewModel @Inject constructor(private val repo: ObatRepo):ViewModel() {
+
+    private val _uiState = MutableStateFlow<ObatResponse>(ObatResponse())
+    val uiState = _uiState.asStateFlow()
+    val selectedList:MutableList<Int> = mutableListOf()
+
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
+
+    fun getObat(event:() -> Unit = {}) =
+        viewModelScope.launch {
+            try {
+                repo.getObat().let {
+                    _uiState.value = it
+                    event.invoke()
+                }
+            } catch (e:Exception) {
+                Log.e("ERROR GET OBAT, ",e.toString())
+                event.invoke()
+
+            }
+        }
+
+    fun refresh() {
+        viewModelScope.launch {
+            _isRefreshing.emit(true)
+            getObat {
+                viewModelScope.launch {
+                    _isRefreshing.emit(false)
+                }
+            }
+        }
+    }
 
     val obatName =
         mutableStateListOf(
@@ -21,8 +64,6 @@ class DaftarObatViewModel @Inject constructor():ViewModel() {
             "Kombratin",
             "Mixagrip",
         )
-
-
     val obatType =
         mutableStateListOf(
             "Sirup",
@@ -58,7 +99,7 @@ class DaftarObatViewModel @Inject constructor():ViewModel() {
         )
 
     val selectedObatList = mutableStateOf(
-        (0..obatName.size).map {
+        (0..1000).map {
             ListItem(isSelected = false)
         }
     )
@@ -80,8 +121,7 @@ class DaftarObatViewModel @Inject constructor():ViewModel() {
         mutableStateOf(0)
 
 
-    val searchValue =
-        mutableStateOf("")
+
 
 }
 

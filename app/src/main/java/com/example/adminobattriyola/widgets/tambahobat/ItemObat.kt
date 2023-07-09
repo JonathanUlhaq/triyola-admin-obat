@@ -48,6 +48,8 @@ fun ItemObat(
         type = value.jenisObat,
         name = value.namaObat,
         quantity = value.jumlahObat,
+        dosis = value.dosisObat,
+        unit = value.satuanObat,
         boolean = showUpdateDialog
     )
 
@@ -160,7 +162,9 @@ fun ItemObatPengajuan(
     val showUpdateDialog = remember {
         mutableStateOf(false)
     }
-
+    val isError = remember {
+        mutableStateOf(false)
+    }
     val distributorId = model.uiState.collectAsState().value.first().distributor.id
 
     UpdateDialogPengajuan(
@@ -170,7 +174,10 @@ fun ItemObatPengajuan(
         type = value.jenisObat,
         name = value.namaObat,
         quantity = value.jumlahObat,
-        boolean = showUpdateDialog
+        boolean = showUpdateDialog,
+        dosis = value.dosis,
+        satuan = value.satuanObat,
+        isError = isError
     )
 
         Surface(

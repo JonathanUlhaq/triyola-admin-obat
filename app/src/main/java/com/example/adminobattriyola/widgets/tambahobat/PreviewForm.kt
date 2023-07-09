@@ -31,13 +31,13 @@ fun PreviewForm(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(24.dp)
+                .padding(14.dp)
         ) {
             Icon(
                 painter = painterResource(id = icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(16.dp)
+                    .size(14.dp)
             )
             Spacer(modifier = Modifier.width(12.dp))
             Text(

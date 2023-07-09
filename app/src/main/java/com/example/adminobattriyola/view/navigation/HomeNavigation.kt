@@ -15,6 +15,7 @@ import com.example.adminobattriyola.view.pengajuan.main.PengajuanMainScreen
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.DistributorViewModel
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanObatViewModel
 import com.example.adminobattriyola.view.pengajuan.riwayat.detail.DetailPengajuan
+import com.example.adminobattriyola.view.pengajuan.statuspengajuan.StatusPengajuanViewModel
 import com.example.adminobattriyola.view.riwayatobat.RiwayatObatScreen
 import com.example.adminobattriyola.view.riwayatobat.RiwayatObatViewModel
 import com.example.adminobattriyola.view.tambahobat.DetailTambahObatViewModel
@@ -39,6 +40,8 @@ fun HomeNavigation(
     val riwayatObat = hiltViewModel<RiwayatObatViewModel>()
     val distributor = hiltViewModel<DistributorViewModel>()
     val pengajuanObat = hiltViewModel< PengajuanObatViewModel>()
+    val statusViewModel = hiltViewModel<StatusPengajuanViewModel>()
+    val navVm = hiltViewModel<NavigationViewModel>()
     AnimatedNavHost(navController = navController, startDestination = AppRoute.DaftarObat.route) {
         composable(AppRoute.DaftarObat.route,
             enterTransition = {fadeIn(tween(700))}
@@ -53,7 +56,7 @@ fun HomeNavigation(
                 color = MaterialTheme.colors.background
             )
             hideBotNavBar.value = false
-            DaftarObatScreen(daftarObat)
+            DaftarObatScreen(daftarObat, navVm = navVm,navController = navController )
         }
 
         composable(AppRoute.TambahObat.route,
@@ -67,7 +70,7 @@ fun HomeNavigation(
                 color = MaterialTheme.colors.background
             )
             hideBotNavBar.value = true
-            TambahObatScreen(navController,tambahObat)
+            TambahObatScreen(navController,tambahObat,daftarObat)
         }
         composable(AppRoute.History.route,
             enterTransition = {fadeIn(tween(700))}
@@ -97,7 +100,7 @@ fun HomeNavigation(
                 color = MaterialTheme.colors.background
             )
             hideBotNavBar.value = false
-            PengajuanMainScreen(distributor,pengajuanObat, navController)
+            PengajuanMainScreen(distributor,pengajuanObat,statusViewModel, navController,)
         }
         composable(AppRoute.DetailPengajuan.route,
             enterTransition = {fadeIn(tween(700))}
@@ -114,7 +117,21 @@ fun HomeNavigation(
             hideBotNavBar.value = true
             DetailPengajuan(navController = navController,activity)
         }
+        composable(AppRoute.SplashScreen.route,
+            enterTransition = {fadeIn(tween(700))}
+        ) {
+            mainObat.value = false
+            hideFAB.value = true
+            systemUiController.setStatusBarColor(
+                color = MaterialTheme.colors.primaryVariant
+            )
 
+            systemUiController.setNavigationBarColor(
+                color = MaterialTheme.colors.background
+            )
+            hideBotNavBar.value = true
+            MainNavigation(activity = activity)
+        }
 
     }
 }

@@ -8,7 +8,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
@@ -17,6 +19,7 @@ fun Category(
     category: String,
     boolean: Boolean,
     currentIndex: Int,
+    searchValue:MutableState<String> = mutableStateOf(""),
     index: (Int) -> Unit
 ) {
 
@@ -27,7 +30,14 @@ fun Category(
         )
     )
 
-    IconButton(onClick = { index.invoke(currentIndex) }) {
+    IconButton(onClick = {
+        index.invoke(currentIndex)
+        if (category == "Semua") {
+            searchValue.value = ""
+        } else {
+            searchValue.value = category
+        }
+    }) {
         Surface(
             shape = RoundedCornerShape(14.dp),
             color = backgroundColor,

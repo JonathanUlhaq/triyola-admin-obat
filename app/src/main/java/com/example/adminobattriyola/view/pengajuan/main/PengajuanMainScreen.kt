@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -16,6 +18,7 @@ import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanObat
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanScreen
 import com.example.adminobattriyola.view.pengajuan.riwayat.RiwayatPengajuanScreen
 import com.example.adminobattriyola.view.pengajuan.statuspengajuan.StatusPengajuan
+import com.example.adminobattriyola.view.pengajuan.statuspengajuan.StatusPengajuanViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
@@ -27,8 +30,13 @@ import kotlinx.coroutines.launch
 fun PengajuanMainScreen(
     distributorViewModel: DistributorViewModel,
     obat: PengajuanObatViewModel,
+    statusViewModel:StatusPengajuanViewModel,
     navController:NavController
 ) {
+    val currentIndex = remember {
+        mutableStateOf(0)
+    }
+    val coroutine = rememberCoroutineScope()
    Scaffold(
        backgroundColor = MaterialTheme.colors.background
    ) {
@@ -73,12 +81,17 @@ fun PengajuanMainScreen(
                }
                HorizontalPager(count = listPengajuan.size,
                                 state = pagerState) { index ->
+                   currentIndex.value = index
                    when(index) {
                        0 -> {
-                           PengajuanScreen(distributorViewModel,obat)
+                           PengajuanScreen(distributorViewModel,obat) {
+                               coroutine.launch {
+                                   pagerState.scrollToPage(1)
+                               }
+                           }
                        }
                        1 -> {
-                           StatusPengajuan(navController)
+                           StatusPengajuan(navController,statusViewModel)
                        }
                        2 -> {
                            RiwayatPengajuanScreen(navController = navController)

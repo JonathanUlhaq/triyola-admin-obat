@@ -1,5 +1,6 @@
 package com.example.adminobattriyola.widgets.tambahobat
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -9,12 +10,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,6 +33,8 @@ import com.example.adminobattriyola.R
 import com.example.adminobattriyola.components.ButtonDropDown
 import com.example.adminobattriyola.components.OutlinedTextFields
 import com.example.adminobattriyola.models.TambahObatModel
+import com.example.adminobattriyola.models.obat.Obat
+import com.example.adminobattriyola.view.daftarobat.DaftarObatViewModel
 import com.example.adminobattriyola.view.tambahobat.TambahObatViewModel
 
 @Composable
@@ -121,17 +126,20 @@ fun UpdateDialog(
     type: String,
     name: String,
     quantity: String,
+    dosis: String,
+    unit:String,
     boolean: MutableState<Boolean>
 ) {
     if (boolean.value) {
         Dialog(onDismissRequest = {
         }
         ) {
-            UpdateDialogUI(model = model, type = type, name = name, quantity = quantity, batal = {
+            UpdateDialogUI(unit = unit,model = model, type = type, name = name, quantity = quantity, dosis = dosis , batal = {
                 boolean.value = false
                 model.obatCurrentName.value = ""
                 model.obatCurrentQuantity.value = ""
                 model.obatCurrentType.value = ""
+                model.dosisObatCurrent.value = ""
             }) {
                 if (name.isNotEmpty() && quantity.isNotEmpty() && type.isNotEmpty()) {
                     model.insertData(
@@ -148,6 +156,7 @@ fun UpdateDialog(
                     model.obatCurrentName.value = ""
                     model.obatCurrentQuantity.value = ""
                     model.obatCurrentType.value = ""
+                    model.dosisObatCurrent.value = ""
                 }
             }
         }
@@ -155,18 +164,79 @@ fun UpdateDialog(
 }
 
 @Composable
-fun UpdateDialogUI(
-    model: TambahObatViewModel,
-    type: String,
-    name: String,
-    quantity: String,
+fun UpdateTransaksi(
+    model: DaftarObatViewModel,
+    obat:MutableState<String>,
+    jenis:MutableState<String>,
+    dosis: MutableState<String>,
+    unit:MutableState<String>,
+    jumlah:MutableState<String>,
+    boolean: MutableState<Boolean>
+) {
+
+
+
+    if (boolean.value) {
+        Dialog(onDismissRequest = {
+        }
+        ) {
+            UpdateTransaksiUI(
+                obat = obat,
+                dosis = dosis,
+                jenisObat = jenis,
+                satuan = unit,
+                jumlah = jumlah, batal = {
+//                    obat.value = ""
+//                    jenisObat.value = ""
+//                    satuan.value = ""
+//                    dosie.value = ""
+//                    jumlah.value = ""
+                boolean.value = false
+            }) {
+//                    model.insertData(
+//                        TambahObatModel(
+//                            id = id,
+//                            namaObat = model.obatCurrentName.value,
+//                            jenisObat = model.obatCurrentType.value,
+//                            jumlahObat = model.obatCurrentQuantity.value,
+//                            satuanObat = model.unitCurrentType.value,
+//                            dosisObat = model.dosisObatCurrent.value
+//                        )
+//                    )
+                    boolean.value = false
+
+
+            }
+        }
+    }
+}
+
+@Composable
+fun UpdateTransaksiUI(
+    obat:MutableState<String>,
+    jenisObat:MutableState<String>,
+    dosis:MutableState<String>,
+    satuan:MutableState<String>,
+    jumlah:MutableState<String>,
     batal: () -> Unit,
     ubah: () -> Unit
 ) {
+    val update = remember {
+        mutableStateOf(false)
+    }
     val scroll = rememberScrollState()
-    model.obatCurrentName.value = name
-    model.obatCurrentQuantity.value = quantity
-    model.obatCurrentType.value = type
+    val showError = remember {
+        mutableStateOf(false)
+    }
+
+
+
+//    model.obatCurrentName.value = name
+//    model.obatCurrentQuantity.value = quantity
+//    model.obatCurrentType.value = type
+//    model.dosisObatCurrent.value = dosis
+//    model.unitCurrentType.value = unit
+
     val listObat = listOf(
         stringResource(R.string.sirup),
         stringResource(R.string.tablet),
@@ -181,7 +251,177 @@ fun UpdateDialogUI(
     val namaObat = remember {
         FocusRequester()
     }
+    val dosisObat = remember {
+        FocusRequester()
+    }
+    val jumlahObat = remember {
+        FocusRequester()
+    }
+    val updateUnit = remember {
+        mutableStateOf(false)
+    }
+    val focusManager = LocalFocusManager.current
+    Surface(
+        color = MaterialTheme.colors.onBackground,
+        contentColor = MaterialTheme.colors.onPrimary,
+        shape = RoundedCornerShape(20.dp),
+        modifier = Modifier.verticalScroll(scroll)
 
+    ) {
+        Column {
+            Column(
+                modifier = Modifier
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(R.string.ubah_obat),
+                    style = MaterialTheme.typography.h2,
+                    color = MaterialTheme.colors.onPrimary
+                )
+                Spacer(modifier = Modifier.height(24.dp))
+                ButtonDropDown(dropDown = update,
+                    poli = jenisObat,
+                    listObat = listObat,
+                    icon = R.drawable.obat_type,
+                    focusNext = {
+                        namaObat.requestFocus()
+                    }) {
+                    update.value = !update.value
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                OutlinedTextFields(
+                    value = obat,
+                    label = stringResource(R.string.nama_obat),
+                    icon = R.drawable.obat,
+                    color = MaterialTheme.colors.onPrimary,
+                    keyboardType = KeyboardType.Text,
+                    isError = false,
+                    modifier = Modifier
+                        .focusRequester(namaObat),
+                    onDone = {
+                        jumlahObat.requestFocus()
+                    }
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                OutlinedTextFields(
+                    value = dosis,
+                    label = stringResource(R.string.dosis_obat),
+                    icon = R.drawable.dosis_obat_icon,
+                    color = MaterialTheme.colors.onPrimary,
+                    keyboardType = KeyboardType.Number,
+                    isError = false,
+                    modifier = Modifier.focusRequester(dosisObat),
+                    onDone = {
+                        jumlahObat.requestFocus()
+                    }
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                OutlinedTextFields(
+                    value = jumlah,
+                    label = stringResource(R.string.jumlah_obat),
+                    icon = R.drawable.obat_quantity,
+                    color = MaterialTheme.colors.onPrimary,
+                    keyboardType = KeyboardType.Number,
+                    isError = false,
+                    modifier = Modifier
+                        .focusRequester(jumlahObat),
+                    onDone = {
+                        focusManager.clearFocus()
+                        updateUnit.value = true
+                    }
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                ButtonDropDown(
+                    dropDown = updateUnit,
+                    poli =satuan,
+                    listObat = listUnit,
+                    icon = R.drawable.unit_icon
+                ) {
+                    updateUnit.value = !updateUnit.value
+                }
+                Spacer(modifier = Modifier.height(2.dp))
+                AnimatedVisibility(visible = showError.value) {
+                    Text(text = "* Mohon form dilengkapi",
+                        style = MaterialTheme.typography.caption,
+                        color = Color.Black.copy(0.8f))
+                }
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.onPrimary.copy(0.05F)),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                TextButton(onClick = { batal.invoke() }) {
+                    Text(
+                        text = stringResource(R.string.tidak),
+                        style = MaterialTheme.typography.h2,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.surface.copy(0.4F)
+                    )
+                }
+                TextButton(onClick = {
+                    if (jenisObat.value.isNotEmpty() && jumlah.value.isNotEmpty() && obat.value.isNotEmpty() && dosis.value.isNotEmpty() && satuan.value.isNotEmpty()) {
+                        ubah.invoke()
+                    } else {
+                        showError.value = true
+                    }
+
+                }) {
+                    Text(
+                        text = "Ubah",
+                        style = MaterialTheme.typography.h2,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun UpdateDialogUI(
+    unit:String,
+    model: TambahObatViewModel,
+    type: String,
+    name: String,
+    quantity: String,
+    dosis:String,
+    batal: () -> Unit,
+    ubah: () -> Unit
+) {
+    val scroll = rememberScrollState()
+    val showError = remember {
+        mutableStateOf(false)
+    }
+
+    model.obatCurrentName.value = name
+    model.obatCurrentQuantity.value = quantity
+    model.obatCurrentType.value = type
+    model.dosisObatCurrent.value = dosis
+    model.unitCurrentType.value = unit
+
+    val listObat = listOf(
+        stringResource(R.string.sirup),
+        stringResource(R.string.tablet),
+        stringResource(R.string.injeksi)
+    )
+    val listUnit = listOf(
+        stringResource(R.string.box),
+        stringResource(R.string.flash),
+        stringResource(R.string.ampul),
+        stringResource(R.string.pcs)
+    )
+    val namaObat = remember {
+        FocusRequester()
+    }
+    val dosisObat = remember {
+        FocusRequester()
+    }
     val jumlahObat = remember {
         FocusRequester()
     }
@@ -230,6 +470,19 @@ fun UpdateDialogUI(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 OutlinedTextFields(
+                    value = model.dosisObatCurrent,
+                    label = stringResource(R.string.dosis_obat),
+                    icon = R.drawable.dosis_obat_icon,
+                    color = MaterialTheme.colors.onPrimary,
+                    keyboardType = KeyboardType.Number,
+                    isError = false,
+                    modifier = Modifier.focusRequester(dosisObat),
+                    onDone = {
+                        jumlahObat.requestFocus()
+                    }
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                OutlinedTextFields(
                     value = model.obatCurrentQuantity,
                     label = stringResource(R.string.jumlah_obat),
                     icon = R.drawable.obat_quantity,
@@ -252,6 +505,12 @@ fun UpdateDialogUI(
                 ) {
                     model.booleanUpdateUnit.value = !model.booleanUpdateUnit.value
                 }
+                Spacer(modifier = Modifier.height(2.dp))
+                AnimatedVisibility(visible = showError.value) {
+                    Text(text = "* Mohon form dilengkapi",
+                        style = MaterialTheme.typography.caption,
+                        color = Color.Black.copy(0.8f))
+                }
             }
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -269,7 +528,14 @@ fun UpdateDialogUI(
                         color = MaterialTheme.colors.surface.copy(0.4F)
                     )
                 }
-                TextButton(onClick = { ubah.invoke() }) {
+                TextButton(onClick = {
+                    if (model.obatCurrentType.value.isNotEmpty() && model.obatCurrentQuantity.value.isNotEmpty() && model.obatCurrentName.value.isNotEmpty() && model.dosisObatCurrent.value.isNotEmpty() && model.unitCurrentType.value.isNotEmpty()) {
+                        ubah.invoke()
+                    } else {
+                        showError.value = true
+                    }
+
+                }) {
                     Text(
                         text = "Ubah",
                         style = MaterialTheme.typography.h2,
@@ -283,7 +549,24 @@ fun UpdateDialogUI(
 }
 
 @Composable
+fun LoadingDialog(
+    boolean: MutableState<Boolean>
+) {
+    if (boolean.value) {
+        Dialog(onDismissRequest = {
+            boolean.value = true
+        }) {
+            CircularProgressIndicator(
+                color = MaterialTheme.colors.primary
+            )
+        }
+    }
+}
+
+@Composable
 fun SaveConfirmDialog(
+    title: String = "Konfirmasi Penambahan Data Obat",
+    desc: String = "Apakah anda yakin ingin menambahkan data - data tersebut ?",
     boolean: MutableState<Boolean>,
     confirm: () -> Unit
 ) {
@@ -291,7 +574,10 @@ fun SaveConfirmDialog(
         Dialog(onDismissRequest = {
             boolean.value = false
         }) {
-            SaveConfirmDialogUI(cancel = { boolean.value = false }) {
+            SaveConfirmDialogUI(
+                title = title,
+                desc = desc,
+                cancel = { boolean.value = false }) {
                 confirm.invoke()
                 boolean.value = false
             }
@@ -301,6 +587,8 @@ fun SaveConfirmDialog(
 
 @Composable
 fun SaveConfirmDialogUI(
+    title:String,
+    desc:String,
     cancel: () -> Unit,
     confirm: () -> Unit
 ) {
@@ -317,13 +605,14 @@ fun SaveConfirmDialogUI(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = stringResource(R.string.confirm_add_obat),
+                    text = title,
                     style = MaterialTheme.typography.h2,
-                    color = MaterialTheme.colors.onPrimary
+                    color = MaterialTheme.colors.onPrimary,
+                    textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
-                    text = stringResource(R.string.confirm_add_obat_question),
+                    text = desc,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center
                 )

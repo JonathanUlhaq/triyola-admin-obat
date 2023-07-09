@@ -36,6 +36,7 @@ fun OutlinedTextFields(
     color: Color = Color.White,
     visualTransformation:VisualTransformation = VisualTransformation.None,
     modifier:Modifier = Modifier,
+    trailingIcon:@Composable () ->Unit = {},
     onDone:() -> Unit = {}
 ) {
 
@@ -68,7 +69,7 @@ fun OutlinedTextFields(
                 painter = painterResource(id = icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(16.dp)
+                    .size(14.dp)
             )   
         },
         modifier = modifier
@@ -83,8 +84,9 @@ fun OutlinedTextFields(
             imeAction = ImeAction.Done,
             keyboardType = keyboardType),
         singleLine = true,
-        isError = false,
-        visualTransformation = visualTransformation
+        isError = isError,
+        visualTransformation = visualTransformation,
+        trailingIcon = {trailingIcon.invoke()}
     )
 }
 

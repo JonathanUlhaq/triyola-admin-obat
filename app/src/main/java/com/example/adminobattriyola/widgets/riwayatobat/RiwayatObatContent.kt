@@ -19,7 +19,12 @@ import androidx.compose.ui.unit.sp
 import com.example.adminobattriyola.R
 
 @Composable
-fun RiwayatObatContent(boolean: Boolean, contentDetailTransaksi:@Composable () -> Unit, onClick:() -> Unit) {
+fun RiwayatObatContent(
+    boolean: Boolean,
+    bulan:String,
+    contentDetailTransaksi: @Composable () -> Unit,
+    onClick: () -> Unit
+) {
 
     val animateIcon by animateIntAsState(targetValue = if (boolean) R.drawable.arrow_down else R.drawable.arrow_right)
 
@@ -32,7 +37,7 @@ fun RiwayatObatContent(boolean: Boolean, contentDetailTransaksi:@Composable () -
                 onClick.invoke()
             }
     ) {
-        Column (
+        Column(
             modifier = Modifier
                 .padding(22.dp)
         ) {
@@ -43,17 +48,19 @@ fun RiwayatObatContent(boolean: Boolean, contentDetailTransaksi:@Composable () -
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Januari 2023",
+                    text = bulan,
                     style = MaterialTheme.typography.h1,
-                    fontSize = 14.sp ,
+                    fontSize = 14.sp,
                     color = MaterialTheme.colors.onPrimary
                 )
 
-                Icon(painter = painterResource(id = animateIcon),
+                Icon(
+                    painter = painterResource(id = animateIcon),
                     contentDescription = null,
                     modifier = Modifier
                         .size(12.dp),
-                    tint = MaterialTheme.colors.onPrimary)
+                    tint = MaterialTheme.colors.onPrimary
+                )
 
             }
             AnimatedVisibility(visible = boolean) {

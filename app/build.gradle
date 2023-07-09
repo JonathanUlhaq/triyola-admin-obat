@@ -53,6 +53,9 @@ dependencies {
     implementation 'androidx.test:runner:1.5.2'
     implementation "androidx.test:core:1.5.0"
 
+    //    swipe up refresh
+    implementation "com.google.accompanist:accompanist-swiperefresh:0.29.1-alpha"
+
 //    Compose Testing
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_ui_version")
     // For Robolectric tests.
@@ -89,6 +92,7 @@ dependencies {
 //    Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:4.11.0"
 
 //    Status Bar
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.1"

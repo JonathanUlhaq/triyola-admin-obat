@@ -9,6 +9,7 @@ import androidx.room.Update
 import com.example.adminobattriyola.models.Distributor
 import com.example.adminobattriyola.models.PengajuanObat
 import com.example.adminobattriyola.models.TambahObatModel
+import com.example.adminobattriyola.models.UserLogin
 import com.example.adminobattriyola.relations.DistributorWithObat
 import kotlinx.coroutines.flow.Flow
 
@@ -58,4 +59,15 @@ interface Dao {
     suspend fun insertPengajuanObat(obat: PengajuanObat)
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updatePengajuanObat(obat: PengajuanObat)
+
+    @Query("SELECT * FROM tb_login")
+    fun getStatusLogin():Flow<List<UserLogin>>
+
+    @Query("DELETE FROM tb_login")
+    suspend fun logoutAccount()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertStatus(status:UserLogin)
+
+
 }

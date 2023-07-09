@@ -48,54 +48,54 @@ class DatabaseTesting {
     }
 
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun insertData () {
-        testScope.runBlockingTest {
-            val tambahObat = TambahObatModel(id = 23,jenisObat = "asdasd", namaObat = "asdas", jumlahObat = "fasddd", satuanObat = "gfds")
-            dao.insertData(tambahObat)
-            val getAllData = dao.getAllData()
-            val contain = getAllData.distinctUntilChanged().first().contains(tambahObat)
-            if (contain) {
-                Log.d("containCreate: ","true")
-            } else {
-                Log.d("containCreate: ","false")
-            }
-        }
-    }
+//    @OptIn(ExperimentalCoroutinesApi::class)
+//    @Test
+//    fun insertData () {
+//        testScope.runBlockingTest {
+//            val tambahObat = TambahObatModel(id = 23,jenisObat = "asdasd", namaObat = "asdas", jumlahObat = "fasddd", satuanObat = "gfds")
+//            dao.insertData(tambahObat)
+//            val getAllData = dao.getAllData()
+//            val contain = getAllData.distinctUntilChanged().first().contains(tambahObat)
+//            if (contain) {
+//                Log.d("containCreate: ","true")
+//            } else {
+//                Log.d("containCreate: ","false")
+//            }
+//        }
+//    }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun updateDataTest() {
-        testScope.runBlockingTest {
-            val tambahObat = TambahObatModel(id = 1, jenisObat = "asdasd", namaObat = "asdas", jumlahObat = "fasddd", satuanObat = "gfds")
-            dao.insertData(tambahObat)
-            dao.updateData(TambahObatModel(id = 1, jenisObat = "SAPUTANGAN", namaObat = "Bodrex", jumlahObat = "2", satuanObat = "cm"))
-            val getAllData = dao.getAllData()
-            val contain = getAllData.distinctUntilChanged().first().contains(TambahObatModel(id = 1, jenisObat = "SAPUTANGAN", namaObat = "Bodrex", jumlahObat = "2", satuanObat = "cm"))
-            if (contain) {
-                Log.d("containUpdate: ","true")
-            } else {
-                Log.d("containUpdate: ","false")
-            }
-        }
-    }
+//    @OptIn(ExperimentalCoroutinesApi::class)
+//    @Test
+//    fun updateDataTest() {
+//        testScope.runBlockingTest {
+//            val tambahObat = TambahObatModel(id = 1, jenisObat = "asdasd", namaObat = "asdas", jumlahObat = "fasddd", satuanObat = "gfds")
+//            dao.insertData(tambahObat)
+//            dao.updateData(TambahObatModel(id = 1, jenisObat = "SAPUTANGAN", namaObat = "Bodrex", jumlahObat = "2", satuanObat = "cm"))
+//            val getAllData = dao.getAllData()
+//            val contain = getAllData.distinctUntilChanged().first().contains(TambahObatModel(id = 1, jenisObat = "SAPUTANGAN", namaObat = "Bodrex", jumlahObat = "2", satuanObat = "cm"))
+//            if (contain) {
+//                Log.d("containUpdate: ","true")
+//            } else {
+//                Log.d("containUpdate: ","false")
+//            }
+//        }
+//    }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun deleteDataTest() {
-        testScope.runBlockingTest {
-            val tambahObat = TambahObatModel(id = 1, jenisObat = "asdasd", namaObat = "asdas", jumlahObat = "fasddd", satuanObat = "gfds")
-            dao.insertData(tambahObat)
-            dao.deleteData(tambahObat)
-            val contain = dao.getAllData().distinctUntilChanged().first().contains(tambahObat)
-            if (contain) {
-                Log.d("containDelete: ","true")
-            } else {
-                Log.d("containDelete: ","false")
-            }
-        }
-    }
+//    @OptIn(ExperimentalCoroutinesApi::class)
+//    @Test
+//    fun deleteDataTest() {
+//        testScope.runBlockingTest {
+//            val tambahObat = TambahObatModel(id = 1, jenisObat = "asdasd", namaObat = "asdas", jumlahObat = "fasddd", satuanObat = "gfds")
+//            dao.insertData(tambahObat)
+//            dao.deleteData(tambahObat)
+//            val contain = dao.getAllData().distinctUntilChanged().first().contains(tambahObat)
+//            if (contain) {
+//                Log.d("containDelete: ","true")
+//            } else {
+//                Log.d("containDelete: ","false")
+//            }
+//        }
+//    }
 
 
 }

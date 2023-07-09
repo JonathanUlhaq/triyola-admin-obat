@@ -4,6 +4,7 @@ import com.example.adminobattriyola.R
 
 sealed class AppRoute(val route:String, val icon:Int = 0) {
     object SplashScreen:AppRoute("splashscreen")
+    object OTP:AppRoute("otp")
     object LoginScreen:AppRoute("loginscreen")
     object HomeNavigation:AppRoute("homenavigation")
     object DaftarObat:AppRoute("daftarobat", R.drawable.obat)

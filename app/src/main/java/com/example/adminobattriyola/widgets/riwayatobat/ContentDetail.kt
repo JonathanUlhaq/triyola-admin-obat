@@ -14,7 +14,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ContentDetail(status:String) {
+fun ContentDetail(
+    status:String,
+    nama_obat:String,
+    jenis_obat:String,
+    jumlah:String,
+    satuan:String,
+    tanggal:String) {
     val animateColor by animateColorAsState(targetValue = if (status == "Keluar") MaterialTheme.colors.error else MaterialTheme.colors.onPrimary)
     Surface(
         shape = RoundedCornerShape(12.dp),
@@ -29,28 +35,28 @@ fun ContentDetail(status:String) {
             Column(
                 horizontalAlignment = Alignment.Start,
             ) {
-                Text(text = "Hufagrip",
+                Text(text = nama_obat,
                     style = MaterialTheme.typography.h1,
                     color = MaterialTheme.colors.onSurface,
                     fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(14.dp))
-                Text(text = "Hufagrip",
+                Text(text = jenis_obat,
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.onSurface)
             }
             Column(
                 horizontalAlignment = Alignment.Start,
             ) {
-                Text(text = "$status: 4",
+                Text(text = "$status: $jumlah",
                     style = MaterialTheme.typography.h1,
                     color = MaterialTheme.colors.onSurface,
                     fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(14.dp))
-                Text(text = "Box",
+                Text(text = "$satuan",
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.onSurface)
             }
-            Text(text = "03/03/2023",
+            Text(text = "$tanggal",
                 style = MaterialTheme.typography.h1,
                 color = MaterialTheme.colors.onSurface,
                 fontSize = 14.sp)

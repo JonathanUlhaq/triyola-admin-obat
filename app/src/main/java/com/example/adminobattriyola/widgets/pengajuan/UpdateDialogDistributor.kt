@@ -1,5 +1,6 @@
 package com.example.adminobattriyola.widgets.pengajuan
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -11,11 +12,13 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,11 +43,15 @@ fun UpdateDialogDistributor(
         Dialog(onDismissRequest = {
         }
         ) {
+            val isError = remember {
+                mutableStateOf(false)
+            }
             UpdateDialogDistributorUI(
                 model = model,
                 type = type,
                 name = name,
                 address = address,
+                error = isError.value,
                 batal = {
                     boolean.value = false
                     model.distributorCurrentName.value = ""
@@ -64,6 +71,8 @@ fun UpdateDialogDistributor(
                     model.distributorCurrentName.value = ""
                     model.distributorCurrentAddress.value = ""
                     model.currentPengajuanType.value = ""
+                } else {
+                    isError.value = true
                 }
             }
         }
@@ -76,6 +85,7 @@ fun UpdateDialogDistributorUI(
     type: String,
     name: String,
     address: String,
+    error:Boolean,
     batal: () -> Unit,
     ubah: () -> Unit
 ) {
@@ -154,7 +164,14 @@ fun UpdateDialogDistributorUI(
                     }
                 )
             }
-
+            Spacer(modifier = Modifier.height(2.dp))
+            AnimatedVisibility(visible = error,
+                modifier = Modifier
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
+                Text(text = "* Mohon form dilengkapi",
+                    style = MaterialTheme.typography.caption,
+                    color = Color.Black.copy(0.8f))
+            }
             Spacer(modifier = Modifier.height(24.dp))
             Row(
                 modifier = Modifier

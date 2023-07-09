@@ -1,15 +1,19 @@
 package com.example.adminobattriyola.widgets.tambahobat
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -79,7 +83,7 @@ fun FormAddObat(
                 icon = R.drawable.obat,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Text,
-                isError = boolean,
+                isError = false,
                 modifier = Modifier.focusRequester(namaObat),
                 onDone = {
                     dosisObat.requestFocus()
@@ -92,7 +96,7 @@ fun FormAddObat(
                 icon = R.drawable.dosis_obat_icon,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Number,
-                isError = boolean,
+                isError = false,
                 modifier = Modifier.focusRequester(dosisObat),
                 onDone = {
                     jumlahObat.requestFocus()
@@ -105,7 +109,7 @@ fun FormAddObat(
                 icon = R.drawable.obat_quantity,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Number,
-                isError = boolean,
+                isError = false,
                 modifier = Modifier.focusRequester(jumlahObat),
                 onDone = {
                     focusManager.clearFocus()
@@ -121,6 +125,12 @@ fun FormAddObat(
                 emptyText = "Satuan Obat"
             ) {
                 model.booleanUpdateUnit.value = !model.booleanUpdateUnit.value
+            }
+            Spacer(modifier = Modifier.height(2.dp))
+            AnimatedVisibility(visible = boolean) {
+                Text(text = "* Mohon form dilengkapi",
+                    style = MaterialTheme.typography.caption,
+                    color = Color.Black.copy(0.8f))
             }
             Spacer(modifier = Modifier.height(16.dp))
             Box(
@@ -211,7 +221,7 @@ fun FormAddObatPengajuan(
                 icon = R.drawable.obat,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Text,
-                isError = boolean,
+                isError = false,
                 modifier = Modifier.focusRequester(namaObat),
                 onDone = {
                     dosis.requestFocus()
@@ -224,7 +234,7 @@ fun FormAddObatPengajuan(
                 icon = R.drawable.dosis_obat_icon,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Number,
-                isError = boolean,
+                isError = false,
                 modifier = Modifier.focusRequester(dosis),
                 onDone = {
                     jumlahObat.requestFocus()
@@ -237,7 +247,7 @@ fun FormAddObatPengajuan(
                 icon = R.drawable.obat_quantity,
                 color = MaterialTheme.colors.onPrimary,
                 keyboardType = KeyboardType.Number,
-                isError = boolean,
+                isError = false,
                 modifier = Modifier.focusRequester(jumlahObat),
                 onDone = {
                     focusManager.clearFocus()
@@ -253,6 +263,12 @@ fun FormAddObatPengajuan(
                 emptyText = "Satuan Obat"
             ) {
                 model.booleanUpdateUnit.value = !model.booleanUpdateUnit.value
+            }
+            Spacer(modifier = Modifier.height(2.dp))
+            AnimatedVisibility(visible = boolean) {
+                Text(text = "* Mohon form dilengkapi",
+                    style = MaterialTheme.typography.caption,
+                    color = Color.Black.copy(0.8f))
             }
             Spacer(modifier = Modifier.height(16.dp))
             Box(
@@ -289,6 +305,7 @@ fun FormAddObatPengajuan(
 @Composable
 fun FormPengajuanDistributor(
     model: DistributorViewModel,
+    isError:MutableState<Boolean>,
     add: () -> Unit
 ) {
     val listPengajuan = listOf(
@@ -352,6 +369,12 @@ fun FormPengajuanDistributor(
                     focusManager.clearFocus()
                 }
             )
+            Spacer(modifier = Modifier.height(2.dp))
+            AnimatedVisibility(visible = isError.value) {
+                Text(text = "* Mohon form dilengkapi",
+                    style = MaterialTheme.typography.caption,
+                    color = Color.Black.copy(0.8f))
+            }
             Spacer(modifier = Modifier.height(16.dp))
             Box(
                 modifier = Modifier

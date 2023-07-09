@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.adminobattriyola.components.ButtonClick
+import com.example.adminobattriyola.models.status.ObatAjuan
 import com.example.adminobattriyola.view.navigation.AppRoute
 
 @Composable
@@ -30,44 +31,12 @@ fun RiwayatStatusPengajuanContent(
     distributor: String,
     alamat: String,
     status: String,
+    obat:List<ObatAjuan>,
     navController:NavController
 ) {
     val expand = remember {
         mutableStateOf(false)
     }
-
-    val namaObat = listOf(
-        "Hufagrip",
-        "Mixagrip",
-        "Paramex",
-        "Hufagrip",
-        "Mixagrip",
-        "Paramex",
-    )
-    val jenisObat = listOf(
-        "Sirup",
-        "Tablet",
-        "Tablet",
-        "Sirup",
-        "Tablet",
-        "Tablet",
-    )
-    val jumlahObat = listOf(
-        3,
-        4,
-        6,
-        3,
-        4,
-        6,
-    )
-    val satuanObat = listOf(
-        "Box",
-        "Pcs",
-        "Pcs",
-        "Box",
-        "Pcs",
-        "Pcs",
-    )
     Surface(
         color = MaterialTheme.colors.background,
         border = BorderStroke(
@@ -125,16 +94,17 @@ fun RiwayatStatusPengajuanContent(
                 color = MaterialTheme.colors.surface
             )
             Spacer(modifier = Modifier.height(12.dp))
-            for (it in 0..if (expand.value) namaObat.size-1 else 2) {
+            for (it in 0..if (expand.value) obat.size-1 else if (obat.size < 2) 0 else 2) {
                 RiwayatStatusPengajuanObatList(
-                    namaObat = namaObat[it],
-                    jenisObat = jenisObat[it],
-                    jumlahObat = jumlahObat[it].toString(),
-                    satuanObat = satuanObat[it]
+                    namaObat = obat[it].nama_obat!!,
+                    jenisObat = obat[it].jenis_obat!!,
+                    jumlahObat = obat[it].jumlah!!.toString(),
+                    satuanObat = obat[it].satuan!!,
+                    dosisObat = obat[it].dosis!!.toString()
                 )
                 Spacer(modifier = Modifier.height(15.dp))
             }
-            if (namaObat.size > 2) {
+            if (obat.size > 3) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

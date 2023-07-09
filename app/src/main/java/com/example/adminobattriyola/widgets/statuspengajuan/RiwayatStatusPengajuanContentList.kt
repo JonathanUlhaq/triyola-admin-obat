@@ -19,7 +19,8 @@ fun RiwayatStatusPengajuanObatList(
     namaObat: String,
     jenisObat: String,
     jumlahObat: String,
-    satuanObat: String
+    satuanObat: String,
+    dosisObat:String
 
 ) {
     Row(
@@ -54,6 +55,19 @@ fun RiwayatStatusPengajuanObatList(
         )
         Text(
             text = jenisObat,
+            style = MaterialTheme.typography.body2,
+            color = MaterialTheme.colors.surface,
+            modifier = Modifier.width(50.dp)
+        )
+        Divider(
+            color = MaterialTheme.colors.surface.copy(0.2F),
+            modifier = Modifier
+                .width(1.dp)
+                .height(12.dp)
+                .clip(RoundedCornerShape(50))
+        )
+        Text(
+            text = dosisObat,
             style = MaterialTheme.typography.body2,
             color = MaterialTheme.colors.surface,
             modifier = Modifier.width(50.dp)
