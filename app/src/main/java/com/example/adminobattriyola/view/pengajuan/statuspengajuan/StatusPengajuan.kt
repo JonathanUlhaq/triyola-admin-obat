@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.adminobattriyola.models.status.ObatAjuan
 import com.example.adminobattriyola.widgets.daftarobat.Category
 import com.example.adminobattriyola.widgets.statuspengajuan.RiwayatStatusPengajuanContent
 
@@ -67,6 +68,11 @@ fun StatusPengajuan(
         "Diproses"
     )
 
+    val listObat = listOf(
+        ObatAjuan("Panadol","Sirup",24,10,"Box"),
+        ObatAjuan("Paramex","Sirup",24,10,"Pcs"),
+    )
+
     val selected = remember {
         mutableStateOf(false)
     }
@@ -111,20 +117,20 @@ fun StatusPengajuan(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     LazyColumn(content = {
-                       if (uiState.pengajuan != null) {
-                           itemsIndexed(uiState.pengajuan) { index, item ->
+//                       if (uiState.pengajuan != null) {
+                           itemsIndexed(tipePengajuan) { index, item ->
                                RiwayatStatusPengajuanContent(
-                                   tipePengajuan = item.jenis!!,
-                                   tanggal = item.tanggal!!,
-                                   distributor = item.distributor!!,
-                                   alamat = item.alamat!!,
-                                   status = item.status!!,
-                                   obat = item.obat_ajuan!!,
+                                   tipePengajuan = item,
+                                   tanggal = tanggal[index],
+                                   distributor = distributor[index],
+                                   alamat = alamat[index],
+                                   status = status[index],
+                                   obat = listObat ,
                                    navController = navController
                                )
                                Spacer(modifier = Modifier.height(14.dp))
                            }
-                       }
+//                       }
                     })
                 }
             }

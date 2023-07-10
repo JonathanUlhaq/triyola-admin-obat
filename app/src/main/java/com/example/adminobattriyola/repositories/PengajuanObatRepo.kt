@@ -4,6 +4,7 @@ import com.example.adminobattriyola.database.Dao
 import com.example.adminobattriyola.models.PengajuanObat
 import com.example.adminobattriyola.models.pengajuanobat.DistributorResponse
 import com.example.adminobattriyola.models.pengajuanobat.PengajuanObatResponse
+import com.example.adminobattriyola.models.pengajuanobat.riwayat.RiwayatPengajuanResponse
 import com.example.adminobattriyola.netowrk.ObatApi
 import com.example.adminobattriyola.relations.DistributorWithObat
 import kotlinx.coroutines.flow.Flow
@@ -41,4 +42,6 @@ class PengajuanObatRepo @Inject constructor(private val dao: Dao, private val ap
         satuan_obat = satuan_obat,
         distributor_id = distributor_id
     )
+
+    suspend fun getRiwayatPengajuanByTahun(tahun:String):RiwayatPengajuanResponse = api.getRiwayatPengajuan(tahun)
 }

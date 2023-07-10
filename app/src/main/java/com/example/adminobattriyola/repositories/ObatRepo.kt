@@ -7,5 +7,6 @@ import javax.inject.Inject
 
 class ObatRepo @Inject constructor(private val api:ObatApi) {
     suspend fun getObat():ObatResponse = api.getObat()
+    suspend fun cariObat(search:String):ObatResponse = api.cariObat(search)
     suspend fun getObatDetail(type:String) = api.getDetailObat(type)
 }

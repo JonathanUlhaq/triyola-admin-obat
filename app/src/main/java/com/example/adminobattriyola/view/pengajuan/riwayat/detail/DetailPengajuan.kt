@@ -34,7 +34,7 @@ fun DetailPengajuan(
     activity: MainActivity
 ) {
     val pdfState = rememberVerticalPdfReaderState(
-        resource = ResourceType.Remote("https://myreport.altervista.org/Lorem_Ipsum.pdf"),
+        resource = ResourceType.Remote("https://kliniktriyola.com/pdf/PT_Medikaa_Virar_10072023.pdf"),
         isZoomEnable = true
     )
     val context = LocalContext.current
@@ -69,8 +69,8 @@ fun DetailPengajuan(
                     if (pdfState.file != null) {
                         IconButton(onClick = {
                             downloadFile(
-                                "Coba Ajuan.pdf",
-                                "https://myreport.altervista.org/Lorem_Ipsum.pdf",
+                                "Pengajuan Pembelian Obat.pdf",
+                                "https://kliniktriyola.com/pdf/PT_Medikaa_Virar_10072023.pdf",
                                 activity
                             )
                         }) {
@@ -92,8 +92,8 @@ fun DetailPengajuan(
                     onClick = {
                         shareFileLogic(
                             context,
-                            "Coba Ajuan.pdf",
-                            "https://myreport.altervista.org/Lorem_Ipsum.pdf",
+                            "Pengajuan Pembelian Obat.pdf",
+                            "https://kliniktriyola.com/pdf/PT_Medikaa_Virar_10072023.pdf",
                             activity
                         )
                     },

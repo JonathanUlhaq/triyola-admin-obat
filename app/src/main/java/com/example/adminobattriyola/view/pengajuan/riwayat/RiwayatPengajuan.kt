@@ -25,8 +25,20 @@ import com.example.adminobattriyola.widgets.riwayatpengajuan.ListItemRiwayat
 
 @Composable
 fun RiwayatPengajuanScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel:RiwayatPengajuanViewModel
 ) {
+
+    val searchValue = remember {
+        mutableStateOf("2023")
+    }
+
+    val isLoading = remember {
+        mutableStateOf(false)
+    }
+
+//    viewModel.getRiwayatPengajuan(searchValue.value,isLoading)
+//    val uiSta
 
     val year = listOf(
         2023,
@@ -58,6 +70,8 @@ fun RiwayatPengajuanScreen(
         mutableStateOf<Int?>(null)
     }
 
+
+
     Scaffold(
         backgroundColor = MaterialTheme.colors.background
     ) {
@@ -78,6 +92,7 @@ fun RiwayatPengajuanScreen(
                             category = item.toString(),
                             boolean = selected.value,
                             currentIndex = index,
+                            searchValue = searchValue,
                             index = {indexs ->
                                 currentIndex.value = indexs })
                     }

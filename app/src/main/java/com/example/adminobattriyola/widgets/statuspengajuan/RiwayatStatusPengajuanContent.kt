@@ -94,36 +94,37 @@ fun RiwayatStatusPengajuanContent(
                 color = MaterialTheme.colors.surface
             )
             Spacer(modifier = Modifier.height(12.dp))
-            for (it in 0..if (expand.value) obat.size-1 else if (obat.size < 2) 0 else 2) {
+            obat.forEachIndexed { index, obatAjuan ->
                 RiwayatStatusPengajuanObatList(
-                    namaObat = obat[it].nama_obat!!,
-                    jenisObat = obat[it].jenis_obat!!,
-                    jumlahObat = obat[it].jumlah!!.toString(),
-                    satuanObat = obat[it].satuan!!,
-                    dosisObat = obat[it].dosis!!.toString()
+                    namaObat = obat[index].nama_obat!!,
+                    jenisObat = obat[index].jenis_obat!!,
+                    jumlahObat = obat[index].jumlah!!.toString(),
+                    satuanObat = obat[index].satuan!!,
+                    dosisObat = obat[index].dosis!!.toString()
                 )
                 Spacer(modifier = Modifier.height(15.dp))
             }
-            if (obat.size > 3) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentWidth(Alignment.End)
-                ) {
-                    Text(
-                        text = if (expand.value) "Secukupnya" else "Selengkapnya",
-                        style = MaterialTheme.typography.caption,
-                        fontSize = 10.sp,
-                        color = MaterialTheme.colors.onPrimary.copy(0.7F),
-                        textDecoration = TextDecoration.Underline,
-                        modifier = Modifier.clickable {
-                            expand.value = !expand.value
-                            Log.d("EXPAND VALUE: ",expand.value.toString())
-                        }
-                    )
-                }
-                Spacer(modifier = Modifier.height(6.dp))
-            }
+
+//            if (obat.size > 3) {
+//                Box(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .wrapContentWidth(Alignment.End)
+//                ) {
+//                    Text(
+//                        text = if (expand.value) "Secukupnya" else "Selengkapnya",
+//                        style = MaterialTheme.typography.caption,
+//                        fontSize = 10.sp,
+//                        color = MaterialTheme.colors.onPrimary.copy(0.7F),
+//                        textDecoration = TextDecoration.Underline,
+//                        modifier = Modifier.clickable {
+//                            expand.value = !expand.value
+//                            Log.d("EXPAND VALUE: ",expand.value.toString())
+//                        }
+//                    )
+//                }
+//                Spacer(modifier = Modifier.height(6.dp))
+//            }
             if (status == "Disetujui") {
                 ButtonClick(
                     backgroundColor = MaterialTheme.colors.secondary.copy(0.6F),

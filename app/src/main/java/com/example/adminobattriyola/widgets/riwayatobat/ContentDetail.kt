@@ -38,11 +38,12 @@ fun ContentDetail(
                 Text(text = nama_obat,
                     style = MaterialTheme.typography.h1,
                     color = MaterialTheme.colors.onSurface,
-                    fontSize = 14.sp)
+                    fontSize = 12.sp)
                 Spacer(modifier = Modifier.height(14.dp))
                 Text(text = jenis_obat,
                     style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.onSurface)
+                    color = MaterialTheme.colors.onSurface,
+                    fontSize = 12.sp)
             }
             Column(
                 horizontalAlignment = Alignment.Start,
@@ -50,16 +51,16 @@ fun ContentDetail(
                 Text(text = "$status: $jumlah",
                     style = MaterialTheme.typography.h1,
                     color = MaterialTheme.colors.onSurface,
-                    fontSize = 14.sp)
+                    fontSize = 12.sp)
                 Spacer(modifier = Modifier.height(14.dp))
                 Text(text = "$satuan",
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.onSurface)
             }
             Text(text = "$tanggal",
-                style = MaterialTheme.typography.h1,
+                style = MaterialTheme.typography.caption,
                 color = MaterialTheme.colors.onSurface,
-                fontSize = 14.sp)
+                fontSize = 12.sp)
         }
     }
 }

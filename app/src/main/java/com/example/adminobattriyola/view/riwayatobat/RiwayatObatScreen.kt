@@ -146,10 +146,10 @@ fun RiwayatObatScreen(
                                                         ContentDetail(
                                                             status = item.jenis_transaksi!!,
                                                             jumlah = item.jumlah!!.toString(),
-                                                            jenis_obat = item.nomer_transaksi!!,
+                                                            jenis_obat = "Sirup",
                                                             nama_obat = "Paramex",
                                                             satuan = "Box",
-                                                            tanggal = item.tanggal_transaksi!!)
+                                                            tanggal = item.tanggal_transaksi!!.subSequence(0,10).toString())
                                                         Spacer(modifier = Modifier.height(8.dp))
                                                     }
                                                 }) {

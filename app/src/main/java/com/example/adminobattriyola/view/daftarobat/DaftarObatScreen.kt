@@ -44,11 +44,25 @@ fun DaftarObatScreen(
     navVm: NavigationViewModel,
     navController: NavController
 ) {
-    viewModel.getObat()
-    val isRefresh by viewModel.isRefreshing.collectAsState()
+
+
     val searchValue = remember {
         mutableStateOf("")
     }
+    val search = remember {
+        mutableStateOf("")
+    }
+
+    val isLoading = remember {
+        mutableStateOf(false)
+    }
+    if (searchValue.value == "Semua") {
+        search.value = ""
+    } else {
+        search.value = searchValue.value
+    }
+    viewModel.getObat(search.value,isLoading)
+    val isRefresh by viewModel.isRefreshing.collectAsState()
     val showDropDown = remember {
         mutableStateOf(false)
     }
@@ -107,6 +121,9 @@ fun DaftarObatScreen(
     val jumlah = remember {
         mutableStateOf("")
     }
+    val selectedList = remember {
+        mutableStateListOf<Int>()
+    }
     UpdateTransaksi(
         model = viewModel,
         jenis = jenis,
@@ -117,7 +134,7 @@ fun DaftarObatScreen(
         boolean = updateShowed
     )
 
-    SwipeRefresh(state = rememberSwipeRefreshState(isRefreshing = isRefresh), onRefresh = { viewModel.refresh() }) {
+    SwipeRefresh(state = rememberSwipeRefreshState(isRefreshing = isRefresh), onRefresh = { viewModel.refresh(search.value,isLoading) }) {
 
         Scaffold(
             backgroundColor = MaterialTheme.colors.background,
@@ -235,6 +252,7 @@ fun DaftarObatScreen(
                                             searchValue = searchValue,
                                             index = {
                                                 viewModel.currentIndex.value = index
+
                                             })
                                     }
                                 },
@@ -267,7 +285,7 @@ fun DaftarObatScreen(
                                                     style = MaterialTheme.typography.body1,
                                                     modifier = Modifier
                                                         .clickable {
-                                                            viewModel.selectedList.clear()
+                                                            selectedList.clear()
                                                             multipleSelect.value = false
 
 
@@ -285,7 +303,7 @@ fun DaftarObatScreen(
 //                                                                }
 //                                                        }
 
-                                                            viewModel.selectedList.clear()
+                                                           selectedList.clear()
                                                         })
                                             }
                                             Spacer(modifier = Modifier.height(14.dp))
@@ -294,7 +312,7 @@ fun DaftarObatScreen(
                                     LazyColumn(
 //                                    state = state,
                                         content = {
-                                            if (uiState.data != null) {
+                                            if (uiState.data != null && !isLoading.value) {
                                                 itemsIndexed(uiState.data) { index, item ->
                                                     if (vibrateState.value) {
                                                         Vibrate(context = context)
@@ -308,10 +326,10 @@ fun DaftarObatScreen(
                                                         id = item.id!!.toString()!!,
                                                         name = item.nama_obat!!,
                                                         type = item.jenis_obat!!,
-                                                        amount = item.jumlah!!,
+                                                        amount = 3,
                                                         dosis = item.dosis_obat!!.toInt(),
                                                         satuan = item.satuan_obat!!,
-                                                        boolean = viewModel.selectedList.contains(item.id!!),
+                                                        boolean = selectedList.contains(item.id),
                                                         multipleSelect = multipleSelect.value,
                                                         onClick = {
                                                             if (multipleSelect.value) {
@@ -325,10 +343,11 @@ fun DaftarObatScreen(
 //                                                               viewModel.selectedList.add(item.id!!)
 //
 //                                                           }
-                                                                if (viewModel.selectedList.contains(item.id)) {
-                                                                    viewModel.selectedList.remove(item.id)
+                                                                if (selectedList.contains(item.id)) {
+                                                                    selectedList.remove(item.id)
                                                                 } else {
-                                                                    viewModel.selectedList.add(item.id)
+                                                                   selectedList.add(item.id)
+                                                                    Log.d("ISI MUTABLE STATE",selectedList.toString())
                                                                 }
 
                                                             } else {
@@ -336,7 +355,7 @@ fun DaftarObatScreen(
                                                                 jenis.value = item.jenis_obat
                                                                 dosis.value = item.dosis_obat
                                                                 satuan.value = item.satuan_obat
-                                                                jumlah.value = item.jumlah.toString()
+                                                                jumlah.value = 3.toString()
                                                                 updateShowed.value = true
                                                             }
 

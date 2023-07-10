@@ -17,6 +17,7 @@ import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.DistributorVi
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanObatViewModel
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanScreen
 import com.example.adminobattriyola.view.pengajuan.riwayat.RiwayatPengajuanScreen
+import com.example.adminobattriyola.view.pengajuan.riwayat.RiwayatPengajuanViewModel
 import com.example.adminobattriyola.view.pengajuan.statuspengajuan.StatusPengajuan
 import com.example.adminobattriyola.view.pengajuan.statuspengajuan.StatusPengajuanViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -31,6 +32,7 @@ fun PengajuanMainScreen(
     distributorViewModel: DistributorViewModel,
     obat: PengajuanObatViewModel,
     statusViewModel:StatusPengajuanViewModel,
+    riwayatVm:RiwayatPengajuanViewModel,
     navController:NavController
 ) {
     val currentIndex = remember {
@@ -94,7 +96,7 @@ fun PengajuanMainScreen(
                            StatusPengajuan(navController,statusViewModel)
                        }
                        2 -> {
-                           RiwayatPengajuanScreen(navController = navController)
+                           RiwayatPengajuanScreen(navController = navController,riwayatVm)
                        }
                    }
 

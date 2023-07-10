@@ -43,7 +43,7 @@ fun RiwayatStatusPengajuanObatList(
                 text = namaObat,
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.surface,
-                modifier = Modifier.width(50.dp)
+                modifier = Modifier.width(40.dp)
             )
         }
         Divider(
@@ -57,7 +57,7 @@ fun RiwayatStatusPengajuanObatList(
             text = jenisObat,
             style = MaterialTheme.typography.body2,
             color = MaterialTheme.colors.surface,
-            modifier = Modifier.width(50.dp)
+            modifier = Modifier.width(40.dp)
         )
         Divider(
             color = MaterialTheme.colors.surface.copy(0.2F),
@@ -70,7 +70,6 @@ fun RiwayatStatusPengajuanObatList(
             text = dosisObat,
             style = MaterialTheme.typography.body2,
             color = MaterialTheme.colors.surface,
-            modifier = Modifier.width(50.dp)
         )
         Divider(
             color = MaterialTheme.colors.surface.copy(0.2F),
@@ -84,7 +83,6 @@ fun RiwayatStatusPengajuanObatList(
                 text = jumlahObat,
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.surface,
-                modifier = Modifier.width(10.dp)
             )
             Spacer(modifier = Modifier.width(2.dp))
             Text(
@@ -92,7 +90,6 @@ fun RiwayatStatusPengajuanObatList(
                 style = MaterialTheme.typography.caption,
                 color = MaterialTheme.colors.surface,
                 fontSize = 10.sp,
-                modifier = Modifier.width(24.dp)
             )
         }
     }

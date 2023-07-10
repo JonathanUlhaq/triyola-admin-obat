@@ -7,6 +7,7 @@ import com.example.adminobattriyola.models.login.LoginResponse
 import com.example.adminobattriyola.models.obat.ObatResponse
 import com.example.adminobattriyola.models.pengajuanobat.DistributorResponse
 import com.example.adminobattriyola.models.pengajuanobat.PengajuanObatResponse
+import com.example.adminobattriyola.models.pengajuanobat.riwayat.RiwayatPengajuanResponse
 import com.example.adminobattriyola.models.riwayat.RiwayatResponse
 import com.example.adminobattriyola.models.status.StatusResponse
 import kotlinx.coroutines.flow.Flow
@@ -80,15 +81,22 @@ interface ObatApi {
     @GET("/api/admin/obat")
     suspend fun getObat():ObatResponse
 
+    @FormUrlEncoded
+    @POST("/api/cari-obat")
+    suspend fun cariObat(
+        @Field("cari")cari:String
+    ):ObatResponse
+
     @GET("obat/{type}")
     suspend fun getDetailObat(
         @Path("type")type:String
     ):ObatResponse
 
-//    @GET("riwayat/{tahun}")
-//    suspend fun getRiwayatTahun(
-//        @Path("tahun")tahun:String
-//    ):RiwayatResponse
+    @FormUrlEncoded
+    @POST("/api/cari-pengajuan")
+    suspend fun getRiwayatPengajuan(
+        @Field("tahun")tahun:String
+    ): RiwayatPengajuanResponse
 
     @GET("status/{proses}")
     suspend fun getStatusPengajuan(

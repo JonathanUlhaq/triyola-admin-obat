@@ -14,6 +14,7 @@ import com.example.adminobattriyola.view.daftarobat.DaftarObatViewModel
 import com.example.adminobattriyola.view.pengajuan.main.PengajuanMainScreen
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.DistributorViewModel
 import com.example.adminobattriyola.view.pengajuan.pengajuanscreen.PengajuanObatViewModel
+import com.example.adminobattriyola.view.pengajuan.riwayat.RiwayatPengajuanViewModel
 import com.example.adminobattriyola.view.pengajuan.riwayat.detail.DetailPengajuan
 import com.example.adminobattriyola.view.pengajuan.statuspengajuan.StatusPengajuanViewModel
 import com.example.adminobattriyola.view.riwayatobat.RiwayatObatScreen
@@ -42,6 +43,8 @@ fun HomeNavigation(
     val pengajuanObat = hiltViewModel< PengajuanObatViewModel>()
     val statusViewModel = hiltViewModel<StatusPengajuanViewModel>()
     val navVm = hiltViewModel<NavigationViewModel>()
+    val riwayatPengajuanVm = hiltViewModel<RiwayatPengajuanViewModel>()
+
     AnimatedNavHost(navController = navController, startDestination = AppRoute.DaftarObat.route) {
         composable(AppRoute.DaftarObat.route,
             enterTransition = {fadeIn(tween(700))}
@@ -100,7 +103,7 @@ fun HomeNavigation(
                 color = MaterialTheme.colors.background
             )
             hideBotNavBar.value = false
-            PengajuanMainScreen(distributor,pengajuanObat,statusViewModel, navController,)
+            PengajuanMainScreen(distributor,pengajuanObat,statusViewModel,riwayatPengajuanVm, navController)
         }
         composable(AppRoute.DetailPengajuan.route,
             enterTransition = {fadeIn(tween(700))}

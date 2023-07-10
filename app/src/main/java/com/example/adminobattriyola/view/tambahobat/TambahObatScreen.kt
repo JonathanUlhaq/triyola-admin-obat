@@ -78,7 +78,7 @@ fun TambahObatScreen(
                                 navController.navigate(AppRoute.DaftarObat.route) {
                                     popUpTo(0)
                                 }
-                                daftarObat.getObat()
+//                                daftarObat.getObat()
                                 model.deleteAllData()
                             } else {
                                 Toast.makeText(context,"Kesalahn Server, data gagal ditambahkan, coba lagi",

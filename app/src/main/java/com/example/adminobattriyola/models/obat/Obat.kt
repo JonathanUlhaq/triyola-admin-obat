@@ -6,5 +6,5 @@ data class Obat(
     val nama_obat:String? = null,
     val dosis_obat:String? = null,
     val satuan_obat:String? = null,
-    val jumlah:Int? = null
+//    val jumlah:Int? = null
     )
